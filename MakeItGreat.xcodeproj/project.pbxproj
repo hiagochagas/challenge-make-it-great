@@ -9,13 +9,12 @@
 /* Begin PBXBuildFile section */
 		E9D63A572563FAC300C154F4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A562563FAC300C154F4 /* AppDelegate.swift */; };
 		E9D63A592563FAC300C154F4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A582563FAC300C154F4 /* SceneDelegate.swift */; };
-		E9D63A5B2563FAC300C154F4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A5A2563FAC300C154F4 /* ViewController.swift */; };
-		E9D63A5E2563FAC300C154F4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9D63A5C2563FAC300C154F4 /* Main.storyboard */; };
 		E9D63A612563FAC300C154F4 /* MakeItGreat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A5F2563FAC300C154F4 /* MakeItGreat.xcdatamodeld */; };
 		E9D63A632563FAC600C154F4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9D63A622563FAC600C154F4 /* Assets.xcassets */; };
 		E9D63A662563FAC600C154F4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9D63A642563FAC600C154F4 /* LaunchScreen.storyboard */; };
 		E9D63A712563FAC700C154F4 /* MakeItGreatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A702563FAC700C154F4 /* MakeItGreatTests.swift */; };
 		E9D63A7C2563FAC700C154F4 /* MakeItGreatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A7B2563FAC700C154F4 /* MakeItGreatUITests.swift */; };
+		E9D63A932564109400C154F4 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A922564109400C154F4 /* TabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +38,6 @@
 		E9D63A532563FAC300C154F4 /* MakeItGreat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakeItGreat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9D63A562563FAC300C154F4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E9D63A582563FAC300C154F4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E9D63A5A2563FAC300C154F4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		E9D63A5D2563FAC300C154F4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E9D63A602563FAC300C154F4 /* MakeItGreat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MakeItGreat.xcdatamodel; sourceTree = "<group>"; };
 		E9D63A622563FAC600C154F4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E9D63A652563FAC600C154F4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +48,7 @@
 		E9D63A772563FAC700C154F4 /* MakeItGreatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MakeItGreatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9D63A7B2563FAC700C154F4 /* MakeItGreatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeItGreatUITests.swift; sourceTree = "<group>"; };
 		E9D63A7D2563FAC700C154F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E9D63A922564109400C154F4 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,12 +101,11 @@
 			children = (
 				E9D63A562563FAC300C154F4 /* AppDelegate.swift */,
 				E9D63A582563FAC300C154F4 /* SceneDelegate.swift */,
-				E9D63A5A2563FAC300C154F4 /* ViewController.swift */,
-				E9D63A5C2563FAC300C154F4 /* Main.storyboard */,
 				E9D63A622563FAC600C154F4 /* Assets.xcassets */,
 				E9D63A642563FAC600C154F4 /* LaunchScreen.storyboard */,
 				E9D63A672563FAC600C154F4 /* Info.plist */,
 				E9D63A5F2563FAC300C154F4 /* MakeItGreat.xcdatamodeld */,
+				E9D63A922564109400C154F4 /* TabBarController.swift */,
 			);
 			path = MakeItGreat;
 			sourceTree = "<group>";
@@ -236,7 +233,6 @@
 			files = (
 				E9D63A662563FAC600C154F4 /* LaunchScreen.storyboard in Resources */,
 				E9D63A632563FAC600C154F4 /* Assets.xcassets in Resources */,
-				E9D63A5E2563FAC300C154F4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,8 +257,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E9D63A5B2563FAC300C154F4 /* ViewController.swift in Sources */,
 				E9D63A572563FAC300C154F4 /* AppDelegate.swift in Sources */,
+				E9D63A932564109400C154F4 /* TabBarController.swift in Sources */,
 				E9D63A612563FAC300C154F4 /* MakeItGreat.xcdatamodeld in Sources */,
 				E9D63A592563FAC300C154F4 /* SceneDelegate.swift in Sources */,
 			);
@@ -300,14 +296,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		E9D63A5C2563FAC300C154F4 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E9D63A5D2563FAC300C154F4 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		E9D63A642563FAC600C154F4 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -450,7 +438,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.talesconrado.MakeItGreat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -469,7 +457,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.talesconrado.MakeItGreat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
