@@ -15,6 +15,7 @@
 		E9D63A712563FAC700C154F4 /* MakeItGreatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A702563FAC700C154F4 /* MakeItGreatTests.swift */; };
 		E9D63A7C2563FAC700C154F4 /* MakeItGreatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A7B2563FAC700C154F4 /* MakeItGreatUITests.swift */; };
 		E9D63A932564109400C154F4 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A922564109400C154F4 /* TabBarController.swift */; };
+		E9D63A992564131B00C154F4 /* ViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A982564131B00C154F4 /* ViewCode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		E9D63A7B2563FAC700C154F4 /* MakeItGreatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeItGreatUITests.swift; sourceTree = "<group>"; };
 		E9D63A7D2563FAC700C154F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9D63A922564109400C154F4 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		E9D63A982564131B00C154F4 /* ViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 		E9D63A552563FAC300C154F4 /* MakeItGreat */ = {
 			isa = PBXGroup;
 			children = (
+				E9D63A972564130E00C154F4 /* Protocols */,
 				E9D63A562563FAC300C154F4 /* AppDelegate.swift */,
 				E9D63A582563FAC300C154F4 /* SceneDelegate.swift */,
 				E9D63A622563FAC600C154F4 /* Assets.xcassets */,
@@ -126,6 +129,14 @@
 				E9D63A7D2563FAC700C154F4 /* Info.plist */,
 			);
 			path = MakeItGreatUITests;
+			sourceTree = "<group>";
+		};
+		E9D63A972564130E00C154F4 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				E9D63A982564131B00C154F4 /* ViewCode.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,6 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9D63A572563FAC300C154F4 /* AppDelegate.swift in Sources */,
+				E9D63A992564131B00C154F4 /* ViewCode.swift in Sources */,
 				E9D63A932564109400C154F4 /* TabBarController.swift in Sources */,
 				E9D63A612563FAC300C154F4 /* MakeItGreat.xcdatamodeld in Sources */,
 				E9D63A592563FAC300C154F4 /* SceneDelegate.swift in Sources */,
