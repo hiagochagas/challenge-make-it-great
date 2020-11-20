@@ -2,8 +2,7 @@
 //  TabBarController.swift
 //  MakeItGreat
 //
-//  Created by Tales Conrado on 17/11/20.
-//
+
 
 import UIKit
 
