@@ -36,6 +36,12 @@
 		E9D63A7C2563FAC700C154F4 /* MakeItGreatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A7B2563FAC700C154F4 /* MakeItGreatUITests.swift */; };
 		E9D63A932564109400C154F4 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A922564109400C154F4 /* TabBarController.swift */; };
 		E9D63A992564131B00C154F4 /* ViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A982564131B00C154F4 /* ViewCode.swift */; };
+		EF517656256BF1A900533B11 /* List+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF517652256BF19000533B11 /* List+CoreDataClass.swift */; };
+		EF517657256BF1A900533B11 /* Task+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF517650256BF19000533B11 /* Task+CoreDataClass.swift */; };
+		EF517658256BF1A900533B11 /* List+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF517653256BF19000533B11 /* List+CoreDataProperties.swift */; };
+		EF517659256BF1A900533B11 /* Project+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF517654256BF19000533B11 /* Project+CoreDataClass.swift */; };
+		EF51765A256BF1A900533B11 /* Project+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF517655256BF19000533B11 /* Project+CoreDataProperties.swift */; };
+		EF51765B256BF1A900533B11 /* Task+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF517651256BF19000533B11 /* Task+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +97,12 @@
 		E9D63A7D2563FAC700C154F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9D63A922564109400C154F4 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		E9D63A982564131B00C154F4 /* ViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCode.swift; sourceTree = "<group>"; };
+		EF517650256BF19000533B11 /* Task+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataClass.swift"; sourceTree = "<group>"; };
+		EF517651256BF19000533B11 /* Task+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		EF517652256BF19000533B11 /* List+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+CoreDataClass.swift"; sourceTree = "<group>"; };
+		EF517653256BF19000533B11 /* List+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		EF517654256BF19000533B11 /* Project+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+CoreDataClass.swift"; sourceTree = "<group>"; };
+		EF517655256BF19000533B11 /* Project+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +152,7 @@
 		E93EB8BB2567F18700E0071E /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				EF51765F256BF1CE00533B11 /* CoreDataModels */,
 				E93EB8E12567F4DA00E0071E /* HomeViewModel.swift */,
 			);
 			path = ViewModel;
@@ -319,6 +332,19 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		EF51765F256BF1CE00533B11 /* CoreDataModels */ = {
+			isa = PBXGroup;
+			children = (
+				EF517654256BF19000533B11 /* Project+CoreDataClass.swift */,
+				EF517655256BF19000533B11 /* Project+CoreDataProperties.swift */,
+				EF517650256BF19000533B11 /* Task+CoreDataClass.swift */,
+				EF517651256BF19000533B11 /* Task+CoreDataProperties.swift */,
+				EF517652256BF19000533B11 /* List+CoreDataClass.swift */,
+				EF517653256BF19000533B11 /* List+CoreDataProperties.swift */,
+			);
+			path = CoreDataModels;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -454,18 +480,24 @@
 				E93EB8DD2567F4A800E0071E /* BottomSheetView.swift in Sources */,
 				E93EB9272567F7AD00E0071E /* TabBarCoordinator.swift in Sources */,
 				E93EB92F2567F81200E0071E /* HomeCoordinator.swift in Sources */,
+				EF517659256BF1A900533B11 /* Project+CoreDataClass.swift in Sources */,
 				E93EB8E22567F4DA00E0071E /* HomeViewModel.swift in Sources */,
 				E93EB8CB2567F3C200E0071E /* Coordinator.swift in Sources */,
 				E9D63A932564109400C154F4 /* TabBarController.swift in Sources */,
 				E93EB8F12567F56D00E0071E /* AchievementsViewController.swift in Sources */,
+				EF517657256BF1A900533B11 /* Task+CoreDataClass.swift in Sources */,
 				E9D63A612563FAC300C154F4 /* MakeItGreat.xcdatamodeld in Sources */,
 				E93EB9132567F5B100E0071E /* BadgesCollectionView.swift in Sources */,
 				E93EB9222567F5D100E0071E /* SectionTitleCell.swift in Sources */,
+				EF51765B256BF1A900533B11 /* Task+CoreDataProperties.swift in Sources */,
 				E93EB8F72567F57B00E0071E /* BadgesViewController.swift in Sources */,
 				E93EB8E72567F54E00E0071E /* HomeViewController.swift in Sources */,
+				EF517656256BF1A900533B11 /* List+CoreDataClass.swift in Sources */,
 				E93EB9092567F59F00E0071E /* AchievementsView.swift in Sources */,
 				E93EB8D32567F3EA00E0071E /* BottomSheetViewModel.swift in Sources */,
+				EF517658256BF1A900533B11 /* List+CoreDataProperties.swift in Sources */,
 				E93EB8EC2567F55D00E0071E /* HomeView.swift in Sources */,
+				EF51765A256BF1A900533B11 /* Project+CoreDataProperties.swift in Sources */,
 				E9D63A592563FAC300C154F4 /* SceneDelegate.swift in Sources */,
 				E93EB90E2567F5A900E0071E /* CalendarView.swift in Sources */,
 				E93EB8D82567F41A00E0071E /* BottomSheetViewController.swift in Sources */,
