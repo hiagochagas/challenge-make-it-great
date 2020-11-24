@@ -12,7 +12,6 @@ class HomeView: UIView, ViewCode {
     let tasksTableView: UITableView = {
         let tbv = UITableView()
         tbv.translatesAutoresizingMaskIntoConstraints = false
-        
         return tbv
     }()
     

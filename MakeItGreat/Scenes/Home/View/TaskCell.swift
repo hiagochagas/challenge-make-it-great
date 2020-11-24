@@ -16,6 +16,7 @@ enum TaskCellPriority {
 class TaskCell: UITableViewCell, ViewCode {
     
     static let reuseIdentifier = "taskCell"
+
     
     var isChecked: Bool = false {
         didSet {
@@ -23,11 +24,11 @@ class TaskCell: UITableViewCell, ViewCode {
         }
     }
         
-    let taskLabel: UILabel = {
+    var taskLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
-        
+        label.isUserInteractionEnabled = true
         return label
     }()
     
@@ -41,9 +42,24 @@ class TaskCell: UITableViewCell, ViewCode {
         return bttn
     }()
     
+    lazy var taskTextField : UITextField = {
+        
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.textColor = .black
+        textField.borderStyle = .none
+        textField.isHidden = true
+        textField.delegate = self
+        
+        return textField
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        self.selectionStyle = .none
         setupViewCode()
+        editTaskLabel()
     }
     
     required init?(coder: NSCoder) {
@@ -51,8 +67,10 @@ class TaskCell: UITableViewCell, ViewCode {
     }
     
     internal func setViewHierarchy() {
+        
         contentView.addSubview(taskLabel)
         contentView.addSubview(checkbox)
+        contentView.addSubview(taskTextField)
     }
     
     internal func setConstraints() {
@@ -64,8 +82,19 @@ class TaskCell: UITableViewCell, ViewCode {
             
             taskLabel.leadingAnchor.constraint(equalTo: checkbox.trailingAnchor, constant: 8),
             taskLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            taskLabel.centerYAnchor.constraint(equalTo: checkbox.centerYAnchor)
+            taskLabel.centerYAnchor.constraint(equalTo: checkbox.centerYAnchor),
+            
+            taskTextField.leadingAnchor.constraint(equalTo: checkbox.trailingAnchor, constant: 8),
+            taskTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            taskTextField.centerYAnchor.constraint(equalTo: checkbox.centerYAnchor)
         ])
+    }
+    
+    private func editTaskLabel() {
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTouchLabel))
+        taskLabel.addGestureRecognizer(tap)
+       
     }
     
     public func setTaskLabelText(_ text: String) {
@@ -84,20 +113,55 @@ class TaskCell: UITableViewCell, ViewCode {
     }
         
     public func markCheckbox() {
+    
+        
+        let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: taskLabel.text ?? "")
+        attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
+        
         checkbox.setBackgroundImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+        
         //riscado
+        taskLabel.attributedText = attributeString
     }
     
     public func unmarkCheckbox() {
+        
+        let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: taskLabel.text ?? "")
+        
         checkbox.setBackgroundImage(UIImage(systemName: "square"), for: .normal)
+        
         //desriscado
+        taskLabel.attributedText = attributeString
     }
     
     public func changeCheckboxState() {
+        
         isChecked ? markCheckbox() : unmarkCheckbox()
     }
     
     @objc func didTouchCheckbox() {
+        
         isChecked.toggle()
+    }
+
+    @objc func didTouchLabel() {
+        
+        taskLabel.isHidden = true
+        taskTextField.isHidden = false
+        taskTextField.text = taskLabel.text
+        checkbox.isUserInteractionEnabled = false
+    }
+}
+
+extension TaskCell: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        textField.isHidden = true
+        taskLabel.isHidden = false
+        self.taskLabel.text = textField.text
+        checkbox.isUserInteractionEnabled = true
+        return true 
     }
 }

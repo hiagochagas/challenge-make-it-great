@@ -8,6 +8,7 @@
 import UIKit
 
 extension UIColor {
+    
     static var greenPriority: UIColor = {
         return UIColor(displayP3Red: 69/255, green: 216/255, blue: 173/255, alpha: 1)
     }()
@@ -28,4 +29,11 @@ extension UIColor {
         return UIColor(displayP3Red: 216/255, green: 216/255, blue: 216/255, alpha: 1)
     }()
     
+    static var infoActionBackground: UIColor = {
+        return UIColor(displayP3Red: 146/255, green: 141/255, blue: 171/255, alpha: 1)
+    }()
+    
+    static var deleteActionBackground: UIColor = {
+        return UIColor(displayP3Red: 255/255, green: 0/255, blue: 50/255, alpha: 1)
+    }()
 }
