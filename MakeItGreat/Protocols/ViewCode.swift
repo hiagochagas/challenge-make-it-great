@@ -19,11 +19,11 @@ protocol ViewCode {
     /// Use esse método para organizar suas constraints. Separe em subfunções se necessário.
     func setConstraints()
     /// Função que chama os outros métodos do protocolo. Chame-a no seu init, por exemplo.
-    func setup()
+    func setupViewCode()
 }
 
 extension ViewCode {
-    func setup() {
+    func setupViewCode() {
         setViewHierarchy()
         setConstraints()
     }

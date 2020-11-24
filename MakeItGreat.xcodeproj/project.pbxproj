@@ -27,6 +27,7 @@
 		E93EB9272567F7AD00E0071E /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93EB9262567F7AD00E0071E /* TabBarCoordinator.swift */; };
 		E93EB92F2567F81200E0071E /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93EB92E2567F81200E0071E /* HomeCoordinator.swift */; };
 		E93EB9342567FA7600E0071E /* AchievementsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93EB9332567FA7600E0071E /* AchievementsCoordinator.swift */; };
+		E94DA3D0256D2DF6008F3260 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94DA3CF256D2DF6008F3260 /* UIColorExtension.swift */; };
 		E9D63A572563FAC300C154F4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A562563FAC300C154F4 /* AppDelegate.swift */; };
 		E9D63A592563FAC300C154F4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A582563FAC300C154F4 /* SceneDelegate.swift */; };
 		E9D63A612563FAC300C154F4 /* MakeItGreat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A5F2563FAC300C154F4 /* MakeItGreat.xcdatamodeld */; };
@@ -82,6 +83,7 @@
 		E93EB9262567F7AD00E0071E /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		E93EB92E2567F81200E0071E /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		E93EB9332567FA7600E0071E /* AchievementsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsCoordinator.swift; sourceTree = "<group>"; };
+		E94DA3CF256D2DF6008F3260 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		E9D63A532563FAC300C154F4 /* MakeItGreat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakeItGreat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9D63A562563FAC300C154F4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E9D63A582563FAC300C154F4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				E9D63A642563FAC600C154F4 /* LaunchScreen.storyboard */,
 				E9D63A5F2563FAC300C154F4 /* MakeItGreat.xcdatamodeld */,
 				E93EB9262567F7AD00E0071E /* TabBarCoordinator.swift */,
+				E94DA3CF256D2DF6008F3260 /* UIColorExtension.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -485,6 +488,7 @@
 				E93EB8CB2567F3C200E0071E /* Coordinator.swift in Sources */,
 				E9D63A932564109400C154F4 /* TabBarController.swift in Sources */,
 				E93EB8F12567F56D00E0071E /* AchievementsViewController.swift in Sources */,
+				E94DA3D0256D2DF6008F3260 /* UIColorExtension.swift in Sources */,
 				EF517657256BF1A900533B11 /* Task+CoreDataClass.swift in Sources */,
 				E9D63A612563FAC300C154F4 /* MakeItGreat.xcdatamodeld in Sources */,
 				E93EB9132567F5B100E0071E /* BadgesCollectionView.swift in Sources */,
