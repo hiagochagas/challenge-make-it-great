@@ -13,12 +13,18 @@ enum TaskCellPriority {
     case low
 }
 
+protocol TaskCheckboxDelegate: class {
+    func didChangeStateCheckbox(to state: Bool?, id: Int?)
+}
+
 class TaskCell: UITableViewCell, ViewCode {
     
     static let reuseIdentifier = "taskCell"
-
+    var returnFromEditingModeAction: (() -> Void)?
+    weak var taskDelegate: TaskCheckboxDelegate?
+    var id: Int?
     
-    var isChecked: Bool = false {
+    var isChecked: Bool? {
         didSet {
             changeCheckboxState()
         }
@@ -27,7 +33,6 @@ class TaskCell: UITableViewCell, ViewCode {
     var taskLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .black
         label.isUserInteractionEnabled = true
         return label
     }()
@@ -35,9 +40,6 @@ class TaskCell: UITableViewCell, ViewCode {
     lazy var checkbox: UIButton = {
         let bttn = UIButton()
         bttn.translatesAutoresizingMaskIntoConstraints = false
-        bttn.setBackgroundImage(UIImage(systemName: "square"), for: .normal)
-        bttn.tintColor = .blueActionColor
-        bttn.addTarget(self, action: #selector(didTouchCheckbox), for: .touchUpInside)
         
         return bttn
     }()
@@ -67,7 +69,6 @@ class TaskCell: UITableViewCell, ViewCode {
     }
     
     internal func setViewHierarchy() {
-        
         contentView.addSubview(taskLabel)
         contentView.addSubview(checkbox)
         contentView.addSubview(taskTextField)
@@ -135,13 +136,34 @@ class TaskCell: UITableViewCell, ViewCode {
     }
     
     public func changeCheckboxState() {
-        
-        isChecked ? markCheckbox() : unmarkCheckbox()
+        let checked = isChecked ?? false
+        checked ? markCheckbox() : unmarkCheckbox()
+    }
+    
+    public func configureAsNormalTaskCell() {
+        taskLabel.textColor = .black
+        taskLabel.isUserInteractionEnabled = true
+        taskLabel.text = ""
+        editTaskLabel()
+        changeCheckboxState()
+        checkbox.tintColor = .blueActionColor
+        checkbox.addTarget(self, action: #selector(didTouchCheckbox), for: .touchUpInside)
+    }
+    
+    public func configureAsGhostCell() {
+        taskLabel.textColor = .gray
+        taskLabel.text = "Novo Item"
+        taskLabel.isUserInteractionEnabled = false
+        taskTextField.isHidden = true
+        checkbox.setBackgroundImage(UIImage(systemName: "plus"), for: .normal)
+        checkbox.tintColor = .gray
+        taskLabel.removeGestureRecognizer(UITapGestureRecognizer())
+        checkbox.removeTarget(self, action: #selector(didTouchCheckbox), for: .touchUpInside)
     }
     
     @objc func didTouchCheckbox() {
-        
-        isChecked.toggle()
+        isChecked?.toggle()
+        taskDelegate?.didChangeStateCheckbox(to: isChecked, id: id)
     }
 
     @objc func didTouchLabel() {
@@ -162,6 +184,7 @@ extension TaskCell: UITextFieldDelegate {
         taskLabel.isHidden = false
         self.taskLabel.text = textField.text
         checkbox.isUserInteractionEnabled = true
+        returnFromEditingModeAction?()
         return true 
     }
 }
