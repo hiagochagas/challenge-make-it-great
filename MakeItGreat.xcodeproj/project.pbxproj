@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E0B6E40256D338000597E18 /* CoreDataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0B6E3F256D338000597E18 /* CoreDataTest.swift */; };
+		6E0B6E4A256D4BCD00597E18 /* MakeItGreat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A5F2563FAC300C154F4 /* MakeItGreat.xcdatamodeld */; };
+		6E0B6E4E256D4BD900597E18 /* MakeItGreat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A5F2563FAC300C154F4 /* MakeItGreat.xcdatamodeld */; };
 		E93EB8CB2567F3C200E0071E /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93EB8CA2567F3C200E0071E /* Coordinator.swift */; };
 		E93EB8D32567F3EA00E0071E /* BottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93EB8D22567F3EA00E0071E /* BottomSheetViewModel.swift */; };
 		E93EB8D82567F41A00E0071E /* BottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93EB8D72567F41A00E0071E /* BottomSheetViewController.swift */; };
@@ -62,6 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6E0B6E3F256D338000597E18 /* CoreDataTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTest.swift; sourceTree = "<group>"; };
 		E93EB8CA2567F3C200E0071E /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		E93EB8D22567F3EA00E0071E /* BottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewModel.swift; sourceTree = "<group>"; };
 		E93EB8D72567F41A00E0071E /* BottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewController.swift; sourceTree = "<group>"; };
@@ -130,9 +134,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6E0B6E30256BF9F200597E18 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EF51765F256BF1CE00533B11 /* CoreDataModels */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		E93EB8B92567F16C00E0071E /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				6E0B6E30256BF9F200597E18 /* Model */,
 				E93EB8BB2567F18700E0071E /* ViewModel */,
 				E93EB8BA2567F17400E0071E /* Controllers */,
 				E93EB8BC2567F19100E0071E /* View */,
@@ -152,7 +165,6 @@
 		E93EB8BB2567F18700E0071E /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				EF51765F256BF1CE00533B11 /* CoreDataModels */,
 				E93EB8E12567F4DA00E0071E /* HomeViewModel.swift */,
 			);
 			path = ViewModel;
@@ -310,6 +322,7 @@
 			children = (
 				E9D63A702563FAC700C154F4 /* MakeItGreatTests.swift */,
 				E9D63A722563FAC700C154F4 /* Info.plist */,
+				6E0B6E3F256D338000597E18 /* CoreDataTest.swift */,
 			);
 			path = MakeItGreatTests;
 			sourceTree = "<group>";
@@ -512,7 +525,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E0B6E40256D338000597E18 /* CoreDataTest.swift in Sources */,
 				E9D63A712563FAC700C154F4 /* MakeItGreatTests.swift in Sources */,
+				6E0B6E4A256D4BCD00597E18 /* MakeItGreat.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,6 +535,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E0B6E4E256D4BD900597E18 /* MakeItGreat.xcdatamodeld in Sources */,
 				E9D63A7C2563FAC700C154F4 /* MakeItGreatUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -14,7 +14,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+            if UserDefaults.standard.bool(forKey: "First Launch") == false {
+                List.initAllLists()
+            }
+            UserDefaults.standard.set(true, forKey: "First Launch")
+
         return true
     }
 
@@ -60,9 +64,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         return container
     }()
-
+    
+    static var persistentContainer: NSPersistentContainer {
+             return (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+      }
+    
     // MARK: - Core Data Saving support
-
+    
+    static var viewContext: NSManagedObjectContext {
+                let viewContext = persistentContainer.viewContext
+                    viewContext.automaticallyMergesChangesFromParent = true
+                return viewContext
+        }
+    
     func saveContext () {
         let context = persistentContainer.viewContext
         if context.hasChanges {
