@@ -11,9 +11,10 @@ class HomeViewController: UIViewController {
     var viewModel: HomeViewModel
     weak var homeCoordinator: HomeCoordinator?
     let contentView = HomeView()
-    var mockDataSource: [(String, Bool)] = []
+    var mockDataSource: [(String, Bool, UUID)] = []
     
     init(viewModel: HomeViewModel) {
+        
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         mockDataSourceFunction()
@@ -34,14 +35,19 @@ class HomeViewController: UIViewController {
     }
     
     private func mockDataSourceFunction() {
-        mockDataSource = [("Oi hahah", false), ("Leticia ne?", false), ("Sou um meme", false), ("PindaMONHA GA-BA", false)]
+        mockDataSource = [("Oi hahah", false, UUID()), ("Leticia ne?", false, UUID()), ("Sou um meme", false, UUID()), ("PindaMONHA GA-BA", false,UUID())]
     }
     
     private func returnFromEditingModeAction() {
         let tableView = contentView.tasksTableView
         if mockDataSource.count == tableView.numberOfRows(inSection: 0) - 1 {
+            
             guard let cell = tableView.cellForRow(at: IndexPath(row: mockDataSource.count, section: 0)) as? TaskCell else { return }
-            mockDataSource.append((cell.taskLabel.text ?? "", false))
+            
+            mockDataSource.append((cell.taskLabel.text ?? "", false, UUID()))
+            
+            
+            
             tableView.reloadData()
         }
     }
@@ -67,6 +73,8 @@ extension HomeViewController: UITableViewDelegate {
     //swipe actions: information and delete
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
+        guard indexPath.row != mockDataSource.count else { return nil }
+        
         let infoAction = UIContextualAction(style: .normal, title: "Info") { (action, view, completionHandler) in
             
             view.backgroundColor = .infoActionBackground
@@ -80,6 +88,9 @@ extension HomeViewController: UITableViewDelegate {
             view.backgroundColor = .deleteActionBackground
             
             //delete task from core data through viewModel
+            
+            self.mockDataSource.remove(at: indexPath.row)
+            tableView.reloadData()
         }
         
         return UISwipeActionsConfiguration(actions: [deleteAction, infoAction])
@@ -106,7 +117,7 @@ extension HomeViewController: UITableViewDataSource {
         } else {
             cell.isChecked = mockDataSource[indexPath.row].1
             cell.configureAsNormalTaskCell()
-            cell.id = indexPath.row
+            cell.id = mockDataSource[indexPath.row].2
             cell.taskLabel.text = mockDataSource[indexPath.row].0
         }
         
@@ -115,8 +126,15 @@ extension HomeViewController: UITableViewDataSource {
 }
 
 extension HomeViewController: TaskCheckboxDelegate {
-    func didChangeStateCheckbox(to state: Bool?, id: Int?) {
+    
+    func didChangeStateCheckbox(to state: Bool?, id: UUID?) {
+        
         let state = state ?? false
-        mockDataSource[id!].1 = state
+        var cell = mockDataSource.filter({
+            $0.2 == id
+        })
+        
+        cell[0].1 = state
+        print(cell[0])
     }
 }

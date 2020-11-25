@@ -14,7 +14,7 @@ enum TaskCellPriority {
 }
 
 protocol TaskCheckboxDelegate: class {
-    func didChangeStateCheckbox(to state: Bool?, id: Int?)
+    func didChangeStateCheckbox(to state: Bool?, id: UUID?)
 }
 
 class TaskCell: UITableViewCell, ViewCode {
@@ -22,7 +22,7 @@ class TaskCell: UITableViewCell, ViewCode {
     static let reuseIdentifier = "taskCell"
     var returnFromEditingModeAction: (() -> Void)?
     weak var taskDelegate: TaskCheckboxDelegate?
-    var id: Int?
+    var id: UUID?
     
     var isChecked: Bool? {
         didSet {
