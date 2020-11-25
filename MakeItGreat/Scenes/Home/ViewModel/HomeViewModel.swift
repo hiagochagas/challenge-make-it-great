@@ -114,9 +114,30 @@ class HomeViewModel {
         }
     }
     
-    func remove( objectID: NSManagedObjectID ) {
-        let obj = backgroundContext.object(with: objectID)
-        backgroundContext.delete(obj)
+    func removeTask(task taskToDelete: Task, context: NSManagedObjectContext) {
+        let listName = taskToDelete.list?.name
+        var listNameEnum: EnumLists = .Inbox
+        switch listName {
+        case "Inbox":
+            listNameEnum = .Inbox
+        case "Maybe":
+            listNameEnum = .Maybe
+        case "Next":
+            listNameEnum = .Next
+        case "Waiting":
+            listNameEnum = .Waiting
+        default:
+            print("no lists")
+        }
+        let list = getList(list: listNameEnum)
+        
+        guard let listOfTasks = list?.tasks else {return}
+        for task in listOfTasks {
+            if task as! NSObject == taskToDelete {
+                list?.removeFromTasks(taskToDelete)
+                context.delete(taskToDelete)
+            }
+        }
     }
     
 }

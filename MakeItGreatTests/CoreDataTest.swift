@@ -67,6 +67,17 @@ class CoreDataTest: XCTestCase {
         XCTAssertNotNil(list4)
     }
     
+    func test_remove_task() {
+        guard let task = sut.createTask(name: "Task Created for Tests", viewContext: mockPersistantContainer.viewContext) else { return }
+        sut.insertTaskToList(task: task, list: .Inbox)
+        let listBeforeRemoving = sut.inbox?.tasks?.count ?? 0
+        sut.removeTask(task: task, context: mockPersistantContainer.viewContext)
+        let listAfterRemoving = sut.inbox?.tasks?.count ?? 0
+        XCTAssertTrue(listBeforeRemoving == listAfterRemoving + 1)
+        
+    
+    }
+    
     //MARK: mock in-memory persistant store
       lazy var managedObjectModel: NSManagedObjectModel = {
           let managedObjectModel = NSManagedObjectModel.mergedModel(from: [Bundle(for: type(of: self))] )!
