@@ -38,10 +38,33 @@ class CoreDataTest: XCTestCase {
     
     func test_insert_task_into_list() {
         guard let task = sut.createTask(name: "Task Created for Tests", viewContext: mockPersistantContainer.viewContext) else { return }
-        let countBeforeChanges = sut.inbox?.tasks?.count ?? 0
+        var countBeforeChanges = sut.inbox?.tasks?.count ?? 0
         sut.insertTaskToList(task: task, list: .Inbox)
-        let countAfterChanges = sut.inbox?.tasks?.count ?? 0
+        var countAfterChanges = sut.inbox?.tasks?.count ?? 0
         XCTAssertTrue(countBeforeChanges == countAfterChanges - 1)
+        countBeforeChanges = sut.next?.tasks?.count ?? 0
+        sut.insertTaskToList(task: task, list: .Next)
+        countAfterChanges = sut.next?.tasks?.count ?? 0
+        XCTAssertTrue(countBeforeChanges == countAfterChanges - 1)
+        countBeforeChanges = sut.waiting?.tasks?.count ?? 0
+        sut.insertTaskToList(task: task, list: .Waiting)
+        countAfterChanges = sut.waiting?.tasks?.count ?? 0
+        XCTAssertTrue(countBeforeChanges == countAfterChanges - 1)
+        countBeforeChanges = sut.maybe?.tasks?.count ?? 0
+        sut.insertTaskToList(task: task, list: .Maybe)
+        countAfterChanges = sut.maybe?.tasks?.count ?? 0
+        XCTAssertTrue(countBeforeChanges == countAfterChanges - 1)
+    }
+    
+    func test_get_list() {
+        let list = sut.getList(list: .Inbox)
+        XCTAssertNotNil(list)
+        let list2 = sut.getList(list: .Maybe)
+        XCTAssertNotNil(list2)
+        let list3 = sut.getList(list: .Waiting)
+        XCTAssertNotNil(list3)
+        let list4 = sut.getList(list: .Next)
+        XCTAssertNotNil(list4)
     }
     
     //MARK: mock in-memory persistant store

@@ -77,7 +77,7 @@ class HomeViewModel {
                 taskItem.tags = tags
             return taskItem
     }
-    
+    //After creating the task, please, insert it into its respective List
     func insertTaskToList(task: Task, list: EnumLists) {
         switch list {
         case .Inbox:
@@ -89,9 +89,20 @@ class HomeViewModel {
         case .Waiting:
             waiting?.addToTasks(task)
         }
-        
     }
     
+    func getList(list: EnumLists) -> List? {
+        switch list {
+        case .Inbox:
+            return self.inbox
+        case .Maybe:
+            return self.maybe
+        case .Next:
+            return self.next
+        case .Waiting:
+            return self.waiting
+        }
+    }
     
     func save() {
         if backgroundContext.hasChanges {
