@@ -67,15 +67,21 @@ class CoreDataTest: XCTestCase {
         XCTAssertNotNil(list4)
     }
     
-    func test_remove_task() {
+    func test_remove_task_from_list() {
         guard let task = sut.createTask(name: "Task Created for Tests", viewContext: mockPersistantContainer.viewContext) else { return }
         sut.insertTaskToList(task: task, list: .Inbox)
         let listBeforeRemoving = sut.inbox?.tasks?.count ?? 0
-        sut.removeTask(task: task, context: mockPersistantContainer.viewContext)
+        sut.removeTaskFromList(task: task, context: mockPersistantContainer.viewContext)
         let listAfterRemoving = sut.inbox?.tasks?.count ?? 0
         XCTAssertTrue(listBeforeRemoving == listAfterRemoving + 1)
-        
+    }
     
+    func test_update_task(){
+        guard let task = sut.createTask(name: "Task Created for Tests", viewContext: mockPersistantContainer.viewContext) else { return }
+        let nameAfterEditing = "Task Updated"
+        sut.updateTask(task: task, name: nameAfterEditing, finishedAt: Date(), lastMovedAt: Date(), priority: 3, status: false, tags: "", viewContext: mockPersistantContainer.viewContext)
+        XCTAssertTrue(task.name == nameAfterEditing)
+        
     }
     
     //MARK: mock in-memory persistant store

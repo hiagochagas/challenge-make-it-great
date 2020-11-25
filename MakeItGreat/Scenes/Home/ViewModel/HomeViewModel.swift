@@ -104,33 +104,34 @@ class HomeViewModel {
         }
     }
     
-    func save() {
-        if backgroundContext.hasChanges {
+    func save(context: NSManagedObjectContext) {
+        if context.hasChanges {
             do {
-                try backgroundContext.save()
+                try context.save()
             } catch {
                 print("Save error \(error)")
             }
         }
     }
     
-    func removeTask(task taskToDelete: Task, context: NSManagedObjectContext) {
-        let listName = taskToDelete.list?.name
-        var listNameEnum: EnumLists = .Inbox
+    private func getListFromName(task: Task) -> List? {
+        let listName = task.list?.name
         switch listName {
         case "Inbox":
-            listNameEnum = .Inbox
+            return getList(list: .Inbox)
         case "Maybe":
-            listNameEnum = .Maybe
+            return getList(list: .Maybe)
         case "Next":
-            listNameEnum = .Next
+            return getList(list: .Next)
         case "Waiting":
-            listNameEnum = .Waiting
+            return getList(list: .Waiting)
         default:
-            print("no lists")
+            return nil
         }
-        let list = getList(list: listNameEnum)
-        
+    }
+    
+    func removeTaskFromList(task taskToDelete: Task, context: NSManagedObjectContext) {
+        let list = getListFromName(task: taskToDelete)
         guard let listOfTasks = list?.tasks else {return}
         for task in listOfTasks {
             if task as! NSObject == taskToDelete {
@@ -138,6 +139,17 @@ class HomeViewModel {
                 context.delete(taskToDelete)
             }
         }
+    }
+    
+    func updateTask(task: Task, name: String, finishedAt: Date, lastMovedAt: Date, priority: Int64 = 0, status: Bool = false, tags: String = "", viewContext: NSManagedObjectContext) {
+        task.finishedAt = finishedAt
+        task.lastMovedAt = lastMovedAt
+        task.priority = priority
+        task.status = status
+        task.tags = tags
+        task.name = name
+        save(context: viewContext)
+        
     }
     
 }
