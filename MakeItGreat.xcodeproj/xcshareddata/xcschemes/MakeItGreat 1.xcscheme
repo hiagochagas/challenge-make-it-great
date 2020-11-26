@@ -28,26 +28,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E9D63A6B2563FAC700C154F4"
-               BuildableName = "MakeItGreatTests.xctest"
-               BlueprintName = "MakeItGreatTests"
-               ReferencedContainer = "container:MakeItGreat.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E9D63A762563FAC700C154F4"
-               BuildableName = "MakeItGreatUITests.xctest"
-               BlueprintName = "MakeItGreatUITests"
-               ReferencedContainer = "container:MakeItGreat.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
