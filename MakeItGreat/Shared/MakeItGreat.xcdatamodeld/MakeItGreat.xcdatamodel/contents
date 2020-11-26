@@ -34,9 +34,9 @@
         <relationship name="project" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="tasks" inverseEntity="Project"/>
     </entity>
     <elements>
-        <element name="Task" positionX="30.84375" positionY="-133.94140625" width="128" height="193"/>
+        <element name="Badge" positionX="-362.58984375" positionY="167.46875" width="128" height="118"/>
         <element name="List" positionX="242.53515625" positionY="161.7109375" width="128" height="88"/>
         <element name="Project" positionX="-173.40234375" positionY="151.50390625" width="128" height="148"/>
-        <element name="Badge" positionX="-362.58984375" positionY="167.46875" width="128" height="118"/>
+        <element name="Task" positionX="30.84375" positionY="-133.94140625" width="128" height="193"/>
     </elements>
 </model>
