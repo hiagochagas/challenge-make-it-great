@@ -23,7 +23,7 @@ class HomeView: UIView, ViewCode {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .black
+        collectionView.backgroundColor = .clear
         
         collectionView.delegate = self
         collectionView.dataSource = self

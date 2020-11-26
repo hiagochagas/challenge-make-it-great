@@ -14,21 +14,30 @@ enum TaskCellPriority {
 }
 
 protocol TaskCheckboxDelegate: class {
-    func didChangeStateCheckbox(to state: Bool?, id: UUID?)
+    func didChangeStateCheckbox(id: UUID?)
 }
 
 class TaskCell: UITableViewCell, ViewCode {
     
     static let reuseIdentifier = "taskCell"
-    var returnFromEditingModeAction: (() -> Void)?
+    var returnFromEditingModeAction: ((Bool?) -> Void)?
     weak var taskDelegate: TaskCheckboxDelegate?
     var id: UUID?
+    var taskInfo: (String, Bool, UUID)! {
+        didSet {
+            taskLabel.text = taskInfo.0
+            id = taskInfo.2
+            isChecked = taskInfo.1
+        }
+    }
     
-    var isChecked: Bool? {
+    var isChecked: Bool? = nil {
         didSet {
             changeCheckboxState()
         }
     }
+    
+    var isGhostCell: Bool?
         
     var taskLabel: UILabel = {
         let label = UILabel()
@@ -91,6 +100,10 @@ class TaskCell: UITableViewCell, ViewCode {
         ])
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+    }
+    
     private func editTaskLabel() {
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTouchLabel))
@@ -143,7 +156,6 @@ class TaskCell: UITableViewCell, ViewCode {
     public func configureAsNormalTaskCell() {
         taskLabel.textColor = .black
         taskLabel.isUserInteractionEnabled = true
-        taskLabel.text = ""
         editTaskLabel()
         changeCheckboxState()
         checkbox.tintColor = .blueActionColor
@@ -163,7 +175,7 @@ class TaskCell: UITableViewCell, ViewCode {
     
     @objc func didTouchCheckbox() {
         isChecked?.toggle()
-        taskDelegate?.didChangeStateCheckbox(to: isChecked, id: id)
+        taskDelegate?.didChangeStateCheckbox(id: id)
     }
 
     @objc func didTouchLabel() {
@@ -172,6 +184,14 @@ class TaskCell: UITableViewCell, ViewCode {
         taskTextField.isHidden = false
         taskTextField.text = taskLabel.text
         checkbox.isUserInteractionEnabled = false
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        isChecked = nil
+        isGhostCell = nil
+        taskLabel.text = ""
+        taskTextField.text = ""
     }
 }
 
@@ -184,7 +204,7 @@ extension TaskCell: UITextFieldDelegate {
         taskLabel.isHidden = false
         self.taskLabel.text = textField.text
         checkbox.isUserInteractionEnabled = true
-        returnFromEditingModeAction?()
+        returnFromEditingModeAction?(isGhostCell)
         return true 
     }
 }

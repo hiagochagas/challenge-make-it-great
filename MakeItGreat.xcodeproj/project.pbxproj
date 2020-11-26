@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E930FC50256FC8B3000705E3 /* MockHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E930FC4F256FC8B3000705E3 /* MockHomeViewModel.swift */; };
 		E93EB8CB2567F3C200E0071E /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93EB8CA2567F3C200E0071E /* Coordinator.swift */; };
 		E93EB8D32567F3EA00E0071E /* BottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93EB8D22567F3EA00E0071E /* BottomSheetViewModel.swift */; };
 		E93EB8D82567F41A00E0071E /* BottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93EB8D72567F41A00E0071E /* BottomSheetViewController.swift */; };
@@ -63,6 +64,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E930FC4F256FC8B3000705E3 /* MockHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeViewModel.swift; sourceTree = "<group>"; };
 		E93EB8CA2567F3C200E0071E /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		E93EB8D22567F3EA00E0071E /* BottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewModel.swift; sourceTree = "<group>"; };
 		E93EB8D72567F41A00E0071E /* BottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewController.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 			children = (
 				EF51765F256BF1CE00533B11 /* CoreDataModels */,
 				E93EB8E12567F4DA00E0071E /* HomeViewModel.swift */,
+				E930FC4F256FC8B3000705E3 /* MockHomeViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -508,6 +511,7 @@
 				E93EB9182567F5BC00E0071E /* FinishedTasksView.swift in Sources */,
 				E93EB9342567FA7600E0071E /* AchievementsCoordinator.swift in Sources */,
 				E93EB9042567F59500E0071E /* AchievementsViewModel.swift in Sources */,
+				E930FC50256FC8B3000705E3 /* MockHomeViewModel.swift in Sources */,
 				E93EB8FF2567F58500E0071E /* GraphicsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -684,7 +688,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.talesconrado.MakeItGreat;
+				MARKETING_VERSION = 1.0.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.talesconrado.Atarefados;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -704,7 +709,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.talesconrado.MakeItGreat;
+				MARKETING_VERSION = 1.0.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.talesconrado.Atarefados;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

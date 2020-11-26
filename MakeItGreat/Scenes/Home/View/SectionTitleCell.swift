@@ -13,7 +13,7 @@ class ListCollectionViewCell: UICollectionViewCell, ViewCode {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor = .green
+        self.backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {

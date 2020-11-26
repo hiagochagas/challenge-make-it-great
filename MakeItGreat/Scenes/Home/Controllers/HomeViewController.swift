@@ -8,16 +8,15 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    var viewModel: HomeViewModel
+    //var viewModel: HomeViewModel
+    var viewModel: MockHomeViewModel
     weak var homeCoordinator: HomeCoordinator?
     let contentView = HomeView()
-    var mockDataSource: [(String, Bool, UUID)] = []
     
-    init(viewModel: HomeViewModel) {
+    init(viewModel: MockHomeViewModel) {
         
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        mockDataSourceFunction()
         setupTableView()
     }
     
@@ -34,21 +33,15 @@ class HomeViewController: UIViewController {
         contentView.tasksTableView.dataSource = self
     }
     
-    private func mockDataSourceFunction() {
-        mockDataSource = [("Oi hahah", false, UUID()), ("Leticia ne?", false, UUID()), ("Sou um meme", false, UUID()), ("PindaMONHA GA-BA", false,UUID())]
-    }
+
     
-    private func returnFromEditingModeAction() {
+    private func returnFromEditingModeAction(_ state: Bool?) {
         let tableView = contentView.tasksTableView
-        if mockDataSource.count == tableView.numberOfRows(inSection: 0) - 1 {
-            
-            guard let cell = tableView.cellForRow(at: IndexPath(row: mockDataSource.count, section: 0)) as? TaskCell else { return }
-            
-            mockDataSource.append((cell.taskLabel.text ?? "", false, UUID()))
-            
-            
-            
-            tableView.reloadData()
+        guard let cell = tableView.cellForRow(at: viewModel.getLastCellIndexPath()) as? TaskCell else { return }
+        let isGhostCell = state ?? false
+        if isGhostCell {
+            viewModel.addNewTask(description: cell.taskTextField.text ?? "")
+            tableView.insertRows(at: [viewModel.getLastCellIndexPath()], with: .automatic)
         }
     }
 }
@@ -73,7 +66,7 @@ extension HomeViewController: UITableViewDelegate {
     //swipe actions: information and delete
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        guard indexPath.row != mockDataSource.count else { return nil }
+        guard !(viewModel.isGhostCell(at: indexPath.row)) else { return nil }
         
         let infoAction = UIContextualAction(style: .normal, title: "Info") { (action, view, completionHandler) in
             
@@ -89,7 +82,8 @@ extension HomeViewController: UITableViewDelegate {
             
             //delete task from core data through viewModel
             
-            self.mockDataSource.remove(at: indexPath.row)
+            self.viewModel.deleteTask(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
             tableView.reloadData()
         }
         
@@ -102,7 +96,7 @@ extension HomeViewController: UITableViewDelegate {
 extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        mockDataSource.count + 1
+        viewModel.getNumberOfCells()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -112,13 +106,12 @@ extension HomeViewController: UITableViewDataSource {
         }
         cell.returnFromEditingModeAction = returnFromEditingModeAction
         cell.taskDelegate = self
-        if indexPath.row == mockDataSource.count {
+        if viewModel.isGhostCell(at: indexPath.row){
+            cell.isGhostCell = true
             cell.configureAsGhostCell()
         } else {
-            cell.isChecked = mockDataSource[indexPath.row].1
+            cell.taskInfo = viewModel.getTaskInfo(at: indexPath.row)
             cell.configureAsNormalTaskCell()
-            cell.id = mockDataSource[indexPath.row].2
-            cell.taskLabel.text = mockDataSource[indexPath.row].0
         }
         
         return cell
@@ -127,14 +120,8 @@ extension HomeViewController: UITableViewDataSource {
 
 extension HomeViewController: TaskCheckboxDelegate {
     
-    func didChangeStateCheckbox(to state: Bool?, id: UUID?) {
-        
-        let state = state ?? false
-        var cell = mockDataSource.filter({
-            $0.2 == id
-        })
-        
-        cell[0].1 = state
-        print(cell[0])
+    func didChangeStateCheckbox(id: UUID?) {
+        guard let id = id else { return }
+        viewModel.toggleTaskById(id: id)
     }
 }
