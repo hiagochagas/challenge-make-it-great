@@ -37,11 +37,15 @@ class HomeViewController: UIViewController {
     
     private func returnFromEditingModeAction(_ state: Bool?) {
         let tableView = contentView.tasksTableView
+        
         guard let cell = tableView.cellForRow(at: viewModel.getLastCellIndexPath()) as? TaskCell else { return }
+        
         let isGhostCell = state ?? false
+        
         if isGhostCell {
             viewModel.addNewTask(description: cell.taskTextField.text ?? "")
             tableView.insertRows(at: [viewModel.getLastCellIndexPath()], with: .automatic)
+            tableView.reloadData()
         }
     }
 }
@@ -84,7 +88,6 @@ extension HomeViewController: UITableViewDelegate {
             
             self.viewModel.deleteTask(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
-            tableView.reloadData()
         }
         
         return UISwipeActionsConfiguration(actions: [deleteAction, infoAction])
