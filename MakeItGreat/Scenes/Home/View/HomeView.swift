@@ -43,6 +43,7 @@ class HomeView: UIView, ViewCode {
     private func setupHomeView() {
         
         self.backgroundColor = .grayBackground
+        setupDismissKeyboard()
     }
     
     required init?(coder: NSCoder) {
@@ -55,9 +56,20 @@ class HomeView: UIView, ViewCode {
         tasksTableView.separatorStyle = .none
     }
     
+    private func setupDismissKeyboard() {
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        self.addGestureRecognizer(tapGesture)
+    }
+    
     private func setupCollectionView() {
         
         listsCollectionView.register(ListCollectionViewCell.self, forCellWithReuseIdentifier: "listCollectionViewCell")
+    }
+    
+    @objc func hideKeyboard() {
+        self.endEditing(true)
     }
     
     func setViewHierarchy() {

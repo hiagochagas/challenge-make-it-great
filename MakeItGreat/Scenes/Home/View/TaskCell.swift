@@ -87,7 +87,7 @@ class TaskCell: UITableViewCell, ViewCode {
         NSLayoutConstraint.activate([
             checkbox.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
             checkbox.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            checkbox.heightAnchor.constraint(equalTo: taskLabel.heightAnchor),
+            checkbox.heightAnchor.constraint(equalToConstant: 27),
             checkbox.widthAnchor.constraint(equalTo: checkbox.heightAnchor),
             
             taskLabel.leadingAnchor.constraint(equalTo: checkbox.trailingAnchor, constant: 8),
@@ -116,6 +116,7 @@ class TaskCell: UITableViewCell, ViewCode {
     }
     
     public func setTaskCellPriorityColor(priority: TaskCellPriority) {
+        
         switch priority {
         case .high:
             checkbox.tintColor = .redPriority
@@ -197,14 +198,23 @@ class TaskCell: UITableViewCell, ViewCode {
 
 extension TaskCell: UITextFieldDelegate {
     
+    func callAddCellDelegate() {
+    
+        taskTextField.isHidden = true
+        taskLabel.isHidden = false
+        self.taskLabel.text = taskTextField.text
+        checkbox.isUserInteractionEnabled = true
+        returnFromEditingModeAction?(isGhostCell)
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         textField.resignFirstResponder()
-        textField.isHidden = true
-        taskLabel.isHidden = false
-        self.taskLabel.text = textField.text
-        checkbox.isUserInteractionEnabled = true
-        returnFromEditingModeAction?(isGhostCell)
-        return true 
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        callAddCellDelegate()
     }
 }
