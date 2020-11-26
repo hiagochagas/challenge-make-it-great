@@ -31,7 +31,8 @@ class HomeViewModel {
     init(container: NSPersistentContainer) {
         self.persistentContainer = container
         self.persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
-        fetchAllLists(viewContext: container.viewContext) 
+        fetchAllLists(viewContext: container.viewContext)
+        _ = fetchProjects(viewContext: container.viewContext)
     }
 
     convenience init() {
@@ -41,8 +42,90 @@ class HomeViewModel {
         }
         self.init(container: appDelegate.persistentContainer)
         fetchAllLists(viewContext: persistentContainer.viewContext)
+        _ = fetchProjects(viewContext: persistentContainer.viewContext)
     }
     
+    func save(context: NSManagedObjectContext) {
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                print("Save error \(error)")
+            }
+        }
+    }
+    
+    //MARK:- Task Functions - Core Data
+    func fetchAllTasks(viewContext: NSManagedObjectContext) -> [Task] {
+        return Task.fetchAllTasks(viewContext: viewContext)
+    }
+    
+    func createTask(id: UUID = UUID(), name: String, createdAt: Date = Date(), finishedAt: Date = Date(), lastMovedAt: Date = Date(), priority: Int64 = 0, status: Bool = false, tags: String = "", viewContext: NSManagedObjectContext) -> Task? {
+        guard let taskItem = NSEntityDescription.insertNewObject(forEntityName: "Task", into: viewContext) as? Task else { return nil }
+                taskItem.id = id
+                taskItem.name = name
+                taskItem.createdAt = createdAt
+                taskItem.finishedAt = finishedAt
+                taskItem.lastMovedAt = lastMovedAt
+                taskItem.priority = priority
+                taskItem.status = status
+                taskItem.tags = tags
+            save(context: viewContext)
+            return taskItem
+    }
+    //After creating the task, please, insert it into its respective List
+    func insertTaskToList(task: Task, list: EnumLists) {
+        switch list {
+        case .Inbox:
+            inbox?.addToTasks(task)
+        case .Maybe:
+            maybe?.addToTasks(task)
+        case .Next:
+            next?.addToTasks(task)
+        case .Waiting:
+            waiting?.addToTasks(task)
+        }
+    }
+    
+    func insertTaskToProject(task: Task, project: Project) {
+        project.addToTasks(task)
+    }
+    
+    func removeTaskFromList(task taskToDelete: Task, context: NSManagedObjectContext) {
+        let list = getListFromName(task: taskToDelete)
+        guard let listOfTasks = list?.tasks else {return}
+        for task in listOfTasks {
+            if task as! NSObject == taskToDelete {
+                list?.removeFromTasks(taskToDelete)
+                context.delete(taskToDelete)
+                save(context: context)
+            }
+        }
+    }
+    
+    func removeTaskFromProject(viewContext: NSManagedObjectContext, taskToDelete: Task) {
+        let project = taskToDelete.project
+        guard let listOfTasks = project?.tasks else {return}
+        for task in listOfTasks {
+            if task as! NSObject == taskToDelete {
+                project?.removeFromTasks(taskToDelete)
+                viewContext.delete(taskToDelete)
+                save(context: viewContext)
+            }
+        }
+    }
+    
+    func updateTask(task: Task, name: String, finishedAt: Date, lastMovedAt: Date, priority: Int64, status: Bool, tags: String = "", viewContext: NSManagedObjectContext) {
+        task.finishedAt = finishedAt
+        task.lastMovedAt = lastMovedAt
+        task.priority = priority
+        task.status = status
+        task.tags = tags
+        task.name = name
+        save(context: viewContext)
+    }
+    
+    //MARK:- List Function - Core Data
     func fetchAllLists(viewContext: NSManagedObjectContext) {
         let fetchResults = List.fetchAllLists(viewContext: viewContext)
         for list in fetchResults {
@@ -61,35 +144,6 @@ class HomeViewModel {
             }
         }
     }
-    func fetchAllTasks(viewContext: NSManagedObjectContext) -> [Task] {
-        return Task.fetchAllTasks(viewContext: viewContext)
-    }
-    
-    func createTask(id: UUID = UUID(), name: String, createdAt: Date = Date(), finishedAt: Date = Date(), lastMovedAt: Date = Date(), priority: Int64 = 0, status: Bool = false, tags: String = "", viewContext: NSManagedObjectContext) -> Task? {
-        guard let taskItem = NSEntityDescription.insertNewObject(forEntityName: "Task", into: viewContext) as? Task else { return nil }
-                taskItem.id = id
-                taskItem.name = name
-                taskItem.createdAt = createdAt
-                taskItem.finishedAt = finishedAt
-                taskItem.lastMovedAt = lastMovedAt
-                taskItem.priority = priority
-                taskItem.status = status
-                taskItem.tags = tags
-            return taskItem
-    }
-    //After creating the task, please, insert it into its respective List
-    func insertTaskToList(task: Task, list: EnumLists) {
-        switch list {
-        case .Inbox:
-            inbox?.addToTasks(task)
-        case .Maybe:
-            maybe?.addToTasks(task)
-        case .Next:
-            next?.addToTasks(task)
-        case .Waiting:
-            waiting?.addToTasks(task)
-        }
-    }
     
     func getList(list: EnumLists) -> List? {
         switch list {
@@ -101,16 +155,6 @@ class HomeViewModel {
             return self.next
         case .Waiting:
             return self.waiting
-        }
-    }
-    
-    func save(context: NSManagedObjectContext) {
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                print("Save error \(error)")
-            }
         }
     }
     
@@ -129,28 +173,42 @@ class HomeViewModel {
             return nil
         }
     }
+    //MARK:- Project Functions - Core Data
     
-    func removeTaskFromList(task taskToDelete: Task, context: NSManagedObjectContext) {
-        let list = getListFromName(task: taskToDelete)
-        guard let listOfTasks = list?.tasks else {return}
-        for task in listOfTasks {
-            if task as! NSObject == taskToDelete {
-                list?.removeFromTasks(taskToDelete)
-                context.delete(taskToDelete)
-            }
-        }
+    func createProject(viewContext: NSManagedObjectContext, name: String, status: Bool = false) -> Project?{
+        guard let projectItem = NSEntityDescription.insertNewObject(forEntityName: "Project", into: viewContext) as? Project else { return nil }
+        projectItem.id = UUID()
+        projectItem.name = name
+        projectItem.createdAt = Date()
+        projectItem.movedAt = Date()
+        self.projects?.append(projectItem)
+        save(context: viewContext)
+        return projectItem
     }
     
-    func updateTask(task: Task, name: String, finishedAt: Date, lastMovedAt: Date, priority: Int64 = 0, status: Bool = false, tags: String = "", viewContext: NSManagedObjectContext) {
-        task.finishedAt = finishedAt
-        task.lastMovedAt = lastMovedAt
-        task.priority = priority
-        task.status = status
-        task.tags = tags
-        task.name = name
+    func fetchProjects(viewContext: NSManagedObjectContext) -> [Project] {
+        let fetchResults = Project.fetchAllProjects(viewContext: viewContext)
+        self.projects = fetchResults
+        return fetchResults
+    }
+    
+    func updateProject(viewContext: NSManagedObjectContext, project: Project, name: String, status: Bool, movedAt: Date, finishedAt: Date) {
+        project.name = name
+        project.status = status
+        project.movedAt = movedAt
+        project.finishedAt = finishedAt
         save(context: viewContext)
-        
+    }
+    
+    func deleteProject(viewContext: NSManagedObjectContext, project: Project) {
+        project.tasks?.forEach{ viewContext.delete($0 as! NSManagedObject) }
+        viewContext.delete(project)
+        _ = fetchProjects(viewContext: viewContext)
     }
     
 }
+
+
+    
+
  

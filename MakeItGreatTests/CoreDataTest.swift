@@ -29,6 +29,11 @@ class CoreDataTest: XCTestCase {
     }
     
     func test_fetch_all_lists() {
+        sut.insertTaskToList(task: sut.createTask(name: "1", viewContext: mockPersistantContainer.viewContext)!, list: .Inbox)
+        sut.insertTaskToList(task: sut.createTask(name: "2", viewContext: mockPersistantContainer.viewContext)!, list: .Inbox)
+        sut.insertTaskToList(task: sut.createTask(name: "3", viewContext: mockPersistantContainer.viewContext)!, list: .Next)
+        sut.insertTaskToList(task: sut.createTask(name: "4", viewContext: mockPersistantContainer.viewContext)!, list: .Maybe)
+        sut.insertTaskToList(task: sut.createTask(name: "5", viewContext: mockPersistantContainer.viewContext)!, list: .Waiting)
         let _ = sut.fetchAllLists(viewContext: mockPersistantContainer.viewContext)
         XCTAssertEqual(sut.inbox?.tasks?.count, 2)
         XCTAssertEqual(sut.waiting?.tasks?.count, 1)
@@ -70,18 +75,86 @@ class CoreDataTest: XCTestCase {
     func test_remove_task_from_list() {
         guard let task = sut.createTask(name: "Task Created for Tests", viewContext: mockPersistantContainer.viewContext) else { return }
         sut.insertTaskToList(task: task, list: .Inbox)
-        let listBeforeRemoving = sut.inbox?.tasks?.count ?? 0
+        var listBeforeRemoving = sut.inbox?.tasks?.count ?? 0
         sut.removeTaskFromList(task: task, context: mockPersistantContainer.viewContext)
-        let listAfterRemoving = sut.inbox?.tasks?.count ?? 0
+        var listAfterRemoving = sut.inbox?.tasks?.count ?? 0
+        XCTAssertTrue(listBeforeRemoving == listAfterRemoving + 1)
+        
+        guard let task2 = sut.createTask(name: "Task Created for Tests", viewContext: mockPersistantContainer.viewContext) else { return }
+        sut.insertTaskToList(task: task2, list: .Next)
+        listBeforeRemoving = sut.next?.tasks?.count ?? 0
+        sut.removeTaskFromList(task: task2, context: mockPersistantContainer.viewContext)
+        listAfterRemoving = sut.next?.tasks?.count ?? 0
+        XCTAssertTrue(listBeforeRemoving == listAfterRemoving + 1)
+        
+        guard let task3 = sut.createTask(name: "Task Created for Tests", viewContext: mockPersistantContainer.viewContext) else { return }
+        sut.insertTaskToList(task: task3, list: .Maybe)
+        listBeforeRemoving = sut.maybe?.tasks?.count ?? 0
+        sut.removeTaskFromList(task: task3, context: mockPersistantContainer.viewContext)
+        listAfterRemoving = sut.maybe?.tasks?.count ?? 0
+        XCTAssertTrue(listBeforeRemoving == listAfterRemoving + 1)
+        
+        guard let task4 = sut.createTask(name: "Task Created for Tests", viewContext: mockPersistantContainer.viewContext) else { return }
+        sut.insertTaskToList(task: task4, list: .Waiting)
+        listBeforeRemoving = sut.waiting?.tasks?.count ?? 0
+        sut.removeTaskFromList(task: task4, context: mockPersistantContainer.viewContext)
+        listAfterRemoving = sut.waiting?.tasks?.count ?? 0
         XCTAssertTrue(listBeforeRemoving == listAfterRemoving + 1)
     }
     
-    func test_update_task(){
+    func test_update_task() {
         guard let task = sut.createTask(name: "Task Created for Tests", viewContext: mockPersistantContainer.viewContext) else { return }
         let nameAfterEditing = "Task Updated"
         sut.updateTask(task: task, name: nameAfterEditing, finishedAt: Date(), lastMovedAt: Date(), priority: 3, status: false, tags: "", viewContext: mockPersistantContainer.viewContext)
         XCTAssertTrue(task.name == nameAfterEditing)
-        
+    }
+    
+    func test_create_project() {
+        let projectsBeforeChanges = sut.fetchProjects(viewContext: mockPersistantContainer.viewContext)
+        _ = sut.createProject(viewContext: mockPersistantContainer.viewContext, name: "Project Created for Tests")
+        let projectsAfterChanges = sut.fetchProjects(viewContext: mockPersistantContainer.viewContext)
+        XCTAssertEqual(projectsBeforeChanges.count, projectsAfterChanges.count - 1)
+    }
+    
+    func test_fetch_projects() {
+        let projectsBeforeChanges = sut.fetchProjects(viewContext: mockPersistantContainer.viewContext).count
+        _ = sut.createProject(viewContext: mockPersistantContainer.viewContext, name: "1")
+        _ = sut.createProject(viewContext: mockPersistantContainer.viewContext, name: "2")
+        let projectsAfterChanges = sut.fetchProjects(viewContext: mockPersistantContainer.viewContext).count
+        XCTAssertFalse(projectsAfterChanges == projectsBeforeChanges)
+    }
+    
+    func test_update_project() {
+        guard let project = sut.createProject(viewContext: mockPersistantContainer.viewContext, name: "Project For Tasks") else {return}
+        let nameAfterEditing = "NameAfterEditing"
+        sut.updateProject(viewContext: mockPersistantContainer.viewContext, project: project, name: "NameAfterEditing", status: true, movedAt: Date(), finishedAt: Date())
+        XCTAssertTrue(nameAfterEditing == project.name)
+    }
+    
+    func test_delete_project() {
+        _ = sut.createProject(viewContext: mockPersistantContainer.viewContext, name: "Project Created for Tests")
+        guard let secondProject = sut.createProject(viewContext: mockPersistantContainer.viewContext, name: "Project Created for Tests") else { return }
+        let countBeforeDeleting = sut.fetchProjects(viewContext: mockPersistantContainer.viewContext).count
+        sut.deleteProject(viewContext: mockPersistantContainer.viewContext, project: secondProject)
+        let countAfterDeleting = sut.fetchProjects(viewContext: mockPersistantContainer.viewContext).count
+        XCTAssertFalse(countAfterDeleting == countBeforeDeleting)
+    }
+    
+    func test_insert_task_into_project() {
+        guard let project = sut.createProject(viewContext: mockPersistantContainer.viewContext, name: "Project Created for Tests") else {return}
+        guard let task = sut.createTask(name: "Task Created for Tests", viewContext: mockPersistantContainer.viewContext) else { return }
+        sut.insertTaskToProject(task: task, project: project)
+        XCTAssertTrue(project.tasks?.count ?? 0 > 0)
+    }
+    
+    func test_delete_task_from_project() {
+        guard let project = sut.createProject(viewContext: mockPersistantContainer.viewContext, name: "Project Created for Tests") else {return}
+        guard let task = sut.createTask(name: "Task Created for Tests", viewContext: mockPersistantContainer.viewContext) else { return }
+        guard let task2 = sut.createTask(name: "Task Created for Tests", viewContext: mockPersistantContainer.viewContext) else { return }
+        sut.insertTaskToProject(task: task, project: project)
+        sut.insertTaskToProject(task: task2, project: project)
+        sut.removeTaskFromProject(viewContext: mockPersistantContainer.viewContext, taskToDelete: task2)
+        XCTAssertTrue(project.tasks?.count ?? 0 == 1)
     }
     
     //MARK: mock in-memory persistant store
@@ -125,25 +198,6 @@ extension CoreDataTest {
         sut.waiting = insertListItem(name: "Waiting")
         sut.maybe = insertListItem(name: "Maybe")
         sut.next = insertListItem(name: "Next")
-        
-        func insertTaskItem(id: UUID = UUID(), name: String, createdAt: Date = Date(), finishedAt: Date = Date(), lastMovedAt: Date = Date(), priority: Int64 = 0, status: Bool = false, tags: String = "") -> Task? {
-            let taskItem = NSEntityDescription.insertNewObject(forEntityName: "Task", into: mockPersistantContainer.viewContext)
-            taskItem.setValue(id, forKey: "id")
-            taskItem.setValue(name, forKey: "name")
-            taskItem.setValue(createdAt, forKey: "createdAt")
-            taskItem.setValue(finishedAt, forKey: "finishedAt")
-            taskItem.setValue(lastMovedAt, forKey: "lastMovedAt")
-            taskItem.setValue(priority, forKey: "priority")
-            taskItem.setValue(status, forKey: "status")
-            taskItem.setValue(tags, forKey: "tags")
-            return taskItem as? Task
-        }
-        
-        sut.inbox?.addToTasks(insertTaskItem(name: "1", status: false)!)
-        sut.maybe?.addToTasks(insertTaskItem(name: "2", status: false)!)
-        sut.waiting?.addToTasks(insertTaskItem(name: "3", status: false)!)
-        sut.next?.addToTasks(insertTaskItem(name: "4", status: false)!)
-        sut.inbox?.addToTasks(insertTaskItem(name: "5", status: false)!)
         
         do {
             try mockPersistantContainer.viewContext.save()
