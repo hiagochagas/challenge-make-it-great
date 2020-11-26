@@ -23,5 +23,11 @@ class TabBarCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
         super.init()
         
         tabBarController.delegate = self
+        setupTabBar()
+    }
+    
+    func setupTabBar() {
+        tabBarController.viewControllers = [homeCoordinator.homeViewController]
+        tabBarController.tabBar.isHidden = true
     }
 }
