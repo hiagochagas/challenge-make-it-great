@@ -7,7 +7,7 @@ import XCTest
 import CoreData
 @testable import MakeItGreat
 
-class CoreDataTest: XCTestCase {
+class HomeViewModelTest: XCTestCase {
     var sut: HomeViewModel!
     
     override func setUp() {
@@ -184,7 +184,7 @@ class CoreDataTest: XCTestCase {
       }()
 }
 
-extension CoreDataTest {
+extension HomeViewModelTest {
     func initStubs() {
         func insertListItem(id: UUID = UUID(), name: String) -> List? {
             let listItem = NSEntityDescription.insertNewObject(forEntityName: "List", into: mockPersistantContainer.viewContext)

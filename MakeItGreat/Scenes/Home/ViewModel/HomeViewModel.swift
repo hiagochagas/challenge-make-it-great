@@ -21,28 +21,10 @@ class HomeViewModel {
     var projects: [Project]?
     var maybe: List?
     
-    let persistentContainer: NSPersistentContainer!
-
-    lazy var backgroundContext: NSManagedObjectContext = {
-        return self.persistentContainer.newBackgroundContext()
-    }()
-
     //MARK: Init with dependency
-    init(container: NSPersistentContainer) {
-        self.persistentContainer = container
-        self.persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
+    init(container: NSPersistentContainer = AppDelegate.persistentContainer) {
         fetchAllLists(viewContext: container.viewContext)
         _ = fetchProjects(viewContext: container.viewContext)
-    }
-
-    convenience init() {
-        //Use the default container for production environment
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            fatalError("Can not get shared app delegate")
-        }
-        self.init(container: appDelegate.persistentContainer)
-        fetchAllLists(viewContext: persistentContainer.viewContext)
-        _ = fetchProjects(viewContext: persistentContainer.viewContext)
     }
     
     func save(context: NSManagedObjectContext) {
