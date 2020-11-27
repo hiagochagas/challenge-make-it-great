@@ -8,12 +8,11 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    //var viewModel: HomeViewModel
-    var viewModel: MockHomeViewModel
+    var viewModel: HomeViewModel
     weak var homeCoordinator: HomeCoordinator?
     let contentView = HomeView()
     
-    init(viewModel: MockHomeViewModel) {
+    init(viewModel: HomeViewModel) {
         
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -38,13 +37,13 @@ class HomeViewController: UIViewController {
     private func returnFromEditingModeAction(_ state: Bool?) {
         let tableView = contentView.tasksTableView
         
-        guard let cell = tableView.cellForRow(at: viewModel.getLastCellIndexPath()) as? TaskCell else { return }
+        guard let cell = tableView.cellForRow(at: viewModel.getLastCellIndexPath(list: .Inbox)) as? TaskCell else { return }
         
         let isGhostCell = state ?? false
         
         if isGhostCell {
-            viewModel.addNewTask(description: cell.taskTextField.text ?? "")
-            tableView.insertRows(at: [viewModel.getLastCellIndexPath()], with: .automatic)
+            viewModel.addNewTask(name: cell.taskTextField.text ?? "", to: .Inbox)
+            tableView.insertRows(at: [viewModel.getLastCellIndexPath(list: .Inbox)], with: .automatic)
             tableView.reloadData()
         }
     }
@@ -70,7 +69,7 @@ extension HomeViewController: UITableViewDelegate {
     //swipe actions: information and delete
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        guard !(viewModel.isGhostCell(at: indexPath.row)) else { return nil }
+        guard !(viewModel.isGhostCell(list: .Inbox, at: indexPath.row)) else { return nil }
         
         let infoAction = UIContextualAction(style: .normal, title: "Info") { (action, view, completionHandler) in
             
@@ -86,7 +85,7 @@ extension HomeViewController: UITableViewDelegate {
             
             //delete task from core data through viewModel
             
-            self.viewModel.deleteTask(at: indexPath.row)
+            self.viewModel.deleteTask(at: indexPath.row, from: .Inbox)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         
@@ -99,7 +98,7 @@ extension HomeViewController: UITableViewDelegate {
 extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.getNumberOfCells()
+        viewModel.getNumberOfCells(from: .Inbox)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -109,11 +108,11 @@ extension HomeViewController: UITableViewDataSource {
         }
         cell.returnFromEditingModeAction = returnFromEditingModeAction
         cell.taskDelegate = self
-        if viewModel.isGhostCell(at: indexPath.row){
+        if viewModel.isGhostCell(list: .Inbox, at: indexPath.row){
             cell.isGhostCell = true
             cell.configureAsGhostCell()
         } else {
-            cell.taskInfo = viewModel.getTaskInfo(at: indexPath.row)
+            cell.taskInfo = viewModel.getTaskList(list: .Inbox)[indexPath.row]
             cell.configureAsNormalTaskCell()
         }
         

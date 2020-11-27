@@ -15,11 +15,27 @@ import CoreData
 
 class HomeViewModel {
     //lists
-    var inbox: List?
+    var inbox: List? {
+        didSet {
+            sortedInbox = inbox?.tasks?.allObjects as? [Task]
+            sortedInbox = sortedInbox?.sorted(by: { ( $0.createdAt ?? Date() < $1.createdAt ?? Date() ) })
+        }
+    }
     var waiting: List?
     var next: List?
     var projects: [Project]?
     var maybe: List?
+    
+    //sorted lists
+    var sortedInbox: [Task]?
+    var sortedWaiting: [Task]?
+    var sortedNext: [Task]?
+    var sortedProjects: [Project]?
+    var sortedMaybe: [Task]?
+
+    
+    //context
+    static let context: NSManagedObjectContext = AppDelegate.viewContext
     
     //MARK: Init with dependency
     init(container: NSPersistentContainer = AppDelegate.persistentContainer) {
@@ -27,7 +43,7 @@ class HomeViewModel {
         _ = fetchProjects(viewContext: container.viewContext)
     }
     
-    func save(context: NSManagedObjectContext) {
+    func save(context: NSManagedObjectContext = context) {
         if context.hasChanges {
             do {
                 try context.save()
@@ -38,11 +54,11 @@ class HomeViewModel {
     }
     
     //MARK:- Task Functions - Core Data
-    func fetchAllTasks(viewContext: NSManagedObjectContext) -> [Task] {
+    func fetchAllTasks(viewContext: NSManagedObjectContext = context) -> [Task] {
         return Task.fetchAllTasks(viewContext: viewContext)
     }
     
-    func createTask(id: UUID = UUID(), name: String, createdAt: Date = Date(), finishedAt: Date = Date(), lastMovedAt: Date = Date(), priority: Int64 = 0, status: Bool = false, tags: String = "", viewContext: NSManagedObjectContext) -> Task? {
+    func createTask(id: UUID = UUID(), name: String, createdAt: Date = Date(), finishedAt: Date = Date(), lastMovedAt: Date = Date(), priority: Int64 = 0, status: Bool = false, tags: String = "", viewContext: NSManagedObjectContext = context) -> Task? {
         guard let taskItem = NSEntityDescription.insertNewObject(forEntityName: "Task", into: viewContext) as? Task else { return nil }
                 taskItem.id = id
                 taskItem.name = name
@@ -73,7 +89,7 @@ class HomeViewModel {
         project.addToTasks(task)
     }
     
-    func removeTaskFromList(task taskToDelete: Task, context: NSManagedObjectContext) {
+    func removeTaskFromList(task taskToDelete: Task, context: NSManagedObjectContext = context) {
         let list = getListFromName(task: taskToDelete)
         guard let listOfTasks = list?.tasks else {return}
         for task in listOfTasks {
@@ -85,7 +101,7 @@ class HomeViewModel {
         }
     }
     
-    func removeTaskFromProject(viewContext: NSManagedObjectContext, taskToDelete: Task) {
+    func removeTaskFromProject(viewContext: NSManagedObjectContext = context, taskToDelete: Task) {
         let project = taskToDelete.project
         guard let listOfTasks = project?.tasks else {return}
         for task in listOfTasks {
@@ -97,7 +113,7 @@ class HomeViewModel {
         }
     }
     
-    func updateTask(task: Task, name: String, finishedAt: Date, lastMovedAt: Date, priority: Int64, status: Bool, tags: String = "", viewContext: NSManagedObjectContext) {
+    func updateTask(task: Task, name: String, finishedAt: Date, lastMovedAt: Date, priority: Int64, status: Bool, tags: String = "", viewContext: NSManagedObjectContext = context) {
         task.finishedAt = finishedAt
         task.lastMovedAt = lastMovedAt
         task.priority = priority
@@ -108,7 +124,7 @@ class HomeViewModel {
     }
     
     //MARK:- List Function - Core Data
-    func fetchAllLists(viewContext: NSManagedObjectContext) {
+    func fetchAllLists(viewContext: NSManagedObjectContext = context) {
         let fetchResults = List.fetchAllLists(viewContext: viewContext)
         for list in fetchResults {
             switch(list.name) {
@@ -157,7 +173,7 @@ class HomeViewModel {
     }
     //MARK:- Project Functions - Core Data
     
-    func createProject(viewContext: NSManagedObjectContext, name: String, status: Bool = false) -> Project?{
+    func createProject(viewContext: NSManagedObjectContext = context, name: String, status: Bool = false) -> Project?{
         guard let projectItem = NSEntityDescription.insertNewObject(forEntityName: "Project", into: viewContext) as? Project else { return nil }
         projectItem.id = UUID()
         projectItem.name = name
@@ -168,13 +184,13 @@ class HomeViewModel {
         return projectItem
     }
     
-    func fetchProjects(viewContext: NSManagedObjectContext) -> [Project] {
+    func fetchProjects(viewContext: NSManagedObjectContext = context) -> [Project] {
         let fetchResults = Project.fetchAllProjects(viewContext: viewContext)
         self.projects = fetchResults
         return fetchResults
     }
     
-    func updateProject(viewContext: NSManagedObjectContext, project: Project, name: String, status: Bool, movedAt: Date, finishedAt: Date) {
+    func updateProject(viewContext: NSManagedObjectContext = context, project: Project, name: String, status: Bool, movedAt: Date, finishedAt: Date) {
         project.name = name
         project.status = status
         project.movedAt = movedAt
@@ -182,7 +198,7 @@ class HomeViewModel {
         save(context: viewContext)
     }
     
-    func deleteProject(viewContext: NSManagedObjectContext, project: Project) {
+    func deleteProject(viewContext: NSManagedObjectContext = context, project: Project) {
         project.tasks?.forEach{ viewContext.delete($0 as! NSManagedObject) }
         viewContext.delete(project)
         _ = fetchProjects(viewContext: viewContext)

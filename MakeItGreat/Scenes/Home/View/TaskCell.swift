@@ -23,11 +23,11 @@ class TaskCell: UITableViewCell, ViewCode {
     var returnFromEditingModeAction: ((Bool?) -> Void)?
     weak var taskDelegate: TaskCheckboxDelegate?
     var id: UUID?
-    var taskInfo: (String, Bool, UUID)! {
+    var taskInfo: Task! {
         didSet {
-            taskLabel.text = taskInfo.0
-            id = taskInfo.2
-            isChecked = taskInfo.1
+            taskLabel.text = taskInfo.name
+            isChecked = taskInfo.status
+            id = taskInfo.id
         }
     }
     
