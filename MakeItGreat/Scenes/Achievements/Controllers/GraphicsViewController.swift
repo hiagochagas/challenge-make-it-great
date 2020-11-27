@@ -2,7 +2,10 @@
 //  GraphicsViewController.swift
 //  MakeItGreat
 //
-//  Created by Tales Conrado on 20/11/20.
-//
 
-import Foundation
+import UIKit
+class GraphicsViewController: UIViewController {
+    override func viewDidLoad() {
+        view.backgroundColor = .blue
+    }
+}
