@@ -85,6 +85,7 @@ class TaskCell: UITableViewCell, ViewCode {
     
     internal func setConstraints() {
         NSLayoutConstraint.activate([
+            
             checkbox.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
             checkbox.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             checkbox.heightAnchor.constraint(equalToConstant: 27),

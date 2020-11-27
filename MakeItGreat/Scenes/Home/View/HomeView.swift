@@ -9,13 +9,16 @@ import UIKit
 
 class HomeView: UIView, ViewCode {    
     
+    let listName = ["Next", "Inbox", "Waiting", "Maybe", "Projects"]
+    
     let tasksTableView: UITableView = {
         let tbv = UITableView()
         tbv.translatesAutoresizingMaskIntoConstraints = false
         return tbv
     }()
-
     
+    var collectionViewIndexPaths: [IndexPath] = []
+
     lazy var listsCollectionView: UICollectionView = {
         
         let layout = UICollectionViewFlowLayout()
@@ -23,7 +26,7 @@ class HomeView: UIView, ViewCode {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .clear
+        collectionView.backgroundColor = .grayBackground
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -82,7 +85,7 @@ class HomeView: UIView, ViewCode {
         NSLayoutConstraint.activate([
             
             listsCollectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 24),
-            listsCollectionView.heightAnchor.constraint(equalToConstant: 50),
+            listsCollectionView.heightAnchor.constraint(equalToConstant: 70),
             listsCollectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
             listsCollectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
@@ -103,7 +106,21 @@ extension HomeView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "listCollectionViewCell", for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "listCollectionViewCell", for: indexPath) as? ListCollectionViewCell else { return ListCollectionViewCell() }
+        
+        cell.setListNameLabel(listName[indexPath.item])
+        collectionViewIndexPaths.append(indexPath)
+        
+        
+        if indexPath.item == 1 {
+            
+            cell.selectCell()
+            
+        } else {
+            
+            cell.deselectCell()
+        }
+        
         
         return cell
     }
@@ -111,7 +128,61 @@ extension HomeView: UICollectionViewDataSource {
 
 extension HomeView: UICollectionViewDelegate {
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        var listOfIndexsToDeselected = [IndexPath]()
+        
+        for index in collectionViewIndexPaths {
+            if index != indexPath {
+                
+                listOfIndexsToDeselected.append(index)
+            }
+        }
+        
+        switch indexPath.item {
+        
+        case 0:
+            
+            selectCollectionViewCell(at: indexPath)
+            deselectItemsCollectionViewCell(at: listOfIndexsToDeselected)
+
+        case 1:
+            selectCollectionViewCell(at: indexPath)
+            deselectItemsCollectionViewCell(at: listOfIndexsToDeselected)
+            
+        case 2:
+            selectCollectionViewCell(at: indexPath)
+            deselectItemsCollectionViewCell(at: listOfIndexsToDeselected)
+            
+        case 3:
+            selectCollectionViewCell(at: indexPath)
+            deselectItemsCollectionViewCell(at: listOfIndexsToDeselected)
+            
+        case 4:
+            selectCollectionViewCell(at: indexPath)
+            deselectItemsCollectionViewCell(at: listOfIndexsToDeselected)
+            
+        default:
+            tasksTableView.backgroundColor = .cyan
+        }
+    }
     
+    func selectCollectionViewCell(at indexPath: IndexPath) {
+        
+        guard let cell = listsCollectionView.cellForItem(at: indexPath) as? ListCollectionViewCell else { return }
+    
+        cell.selectCell()
+    }
+    
+    func deselectItemsCollectionViewCell(at indexPaths: [IndexPath]) {
+        
+        for index in indexPaths {
+            
+            guard let cell = listsCollectionView.cellForItem(at: index) as? ListCollectionViewCell else { return }
+            
+            cell.deselectCell()
+        }
+    }
 }
 
 
@@ -122,7 +193,8 @@ extension HomeView: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: collectionView.frame.width / 5, height: collectionView.frame.height)
+        
+        return CGSize(width: collectionView.frame.width / 5, height: collectionView.frame.height)
     }
     
 }
