@@ -46,7 +46,7 @@ class CalendarView: UIView, ViewCode {
         let height = UIScreen.main.bounds.height * 0.4
         let width = UIScreen.main.bounds.width * 0.8
         let distanceFromLeft = (UIScreen.main.bounds.width - width) / 2
-
+//        self.backgroundColor = .white
         self.calendar = FSCalendar(frame: CGRect(x: distanceFromLeft, y: 0, width: width, height: height))
         setupViewCode()
     }

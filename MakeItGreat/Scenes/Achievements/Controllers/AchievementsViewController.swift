@@ -21,11 +21,11 @@ class AchievementsViewController: UIViewController {
         add(asChildViewController: graphicsVC)
         add(asChildViewController: badgesVC)
         contentView.segmentedControl.addTarget(self, action: #selector(segmentedControlDidChange), for: .valueChanged)
-        graphicsVC.contentView.calendar.delegate = self
-        graphicsVC.contentView.calendar.dataSource = self
+//        graphicsVC.contentView.calendar.delegate = self
+//        graphicsVC.contentView.calendar.dataSource = self
 
         setupView()
-//        contentView.containerView.backgroundColor = .red
+
     }
     
     func setupView() {
