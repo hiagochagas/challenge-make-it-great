@@ -7,6 +7,12 @@
 
 import UIKit
 
+protocol HomeViewDelegate: class {
+    
+    func changeCurrentListView(list: EnumLists, shouldShowProjects: Bool)
+}
+
+
 class HomeView: UIView, ViewCode {    
     
     let listName = ["Next", "Inbox", "Waiting", "Maybe", "Projects"]
@@ -14,8 +20,11 @@ class HomeView: UIView, ViewCode {
     let tasksTableView: UITableView = {
         let tbv = UITableView()
         tbv.translatesAutoresizingMaskIntoConstraints = false
+        tbv.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
         return tbv
     }()
+    
+    weak var delegate: HomeViewDelegate?
     
     var collectionViewIndexPaths: [IndexPath] = []
 
@@ -76,9 +85,9 @@ class HomeView: UIView, ViewCode {
     }
     
     func setViewHierarchy() {
-        
-        addSubview(tasksTableView)
+    
         addSubview(listsCollectionView)
+        addSubview(tasksTableView)
     }
     
     func setConstraints() {
@@ -89,7 +98,7 @@ class HomeView: UIView, ViewCode {
             listsCollectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
             listsCollectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
-            tasksTableView.topAnchor.constraint(equalTo: listsCollectionView.bottomAnchor, constant: 0),
+            tasksTableView.topAnchor.constraint(equalTo: listsCollectionView.bottomAnchor, constant: -7),
             tasksTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -8),
             tasksTableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
             tasksTableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16)
@@ -143,22 +152,30 @@ extension HomeView: UICollectionViewDelegate {
         
         case 0:
             
+            delegate?.changeCurrentListView(list: .Next, shouldShowProjects: false)
             selectCollectionViewCell(at: indexPath)
             deselectItemsCollectionViewCell(at: listOfIndexsToDeselected)
 
         case 1:
+            
+            delegate?.changeCurrentListView(list: .Inbox, shouldShowProjects: false)
             selectCollectionViewCell(at: indexPath)
             deselectItemsCollectionViewCell(at: listOfIndexsToDeselected)
             
         case 2:
+            
+            delegate?.changeCurrentListView(list: .Maybe, shouldShowProjects: false)
             selectCollectionViewCell(at: indexPath)
             deselectItemsCollectionViewCell(at: listOfIndexsToDeselected)
             
         case 3:
+            delegate?.changeCurrentListView(list: .Waiting, shouldShowProjects: false)
             selectCollectionViewCell(at: indexPath)
             deselectItemsCollectionViewCell(at: listOfIndexsToDeselected)
             
         case 4:
+            
+            delegate?.changeCurrentListView(list: .Inbox, shouldShowProjects: true)
             selectCollectionViewCell(at: indexPath)
             deselectItemsCollectionViewCell(at: listOfIndexsToDeselected)
             

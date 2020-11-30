@@ -12,10 +12,19 @@ class HomeViewController: UIViewController {
     weak var homeCoordinator: HomeCoordinator?
     
     // Should change with each touch on lists menu cells
-    var currentShowingList: EnumLists = .Inbox
+    var currentShowingList: EnumLists = .Inbox {
+        
+        didSet {
+            contentView.tasksTableView.reloadData()
+        }
+    }
     
     // Change when tapping another list
-    var isShowingProjects: Bool = false
+    var isShowingProjects: Bool = false {
+        didSet {
+            contentView.tasksTableView.reloadData()
+        }
+    }
 
     let contentView = HomeView()
     
@@ -31,12 +40,17 @@ class HomeViewController: UIViewController {
     }
     
     override func loadView() {
+        
         view = contentView
+        contentView.delegate = self
     }
     
     func setupTableView() {
+        
         contentView.tasksTableView.delegate = self
         contentView.tasksTableView.dataSource = self
+        
+        contentView.tasksTableView.layer.cornerRadius = 10
     }
     
 
@@ -148,5 +162,14 @@ extension HomeViewController: TaskCheckboxDelegate {
     func didChangeStateCheckbox(id: UUID?) {
         guard let id = id else { return }
         viewModel.toggleTaskById(id: id)
+    }
+}
+
+extension HomeViewController: HomeViewDelegate {
+    
+    func changeCurrentListView(list: EnumLists, shouldShowProjects: Bool) {
+        
+        self.currentShowingList = list
+        self.isShowingProjects = shouldShowProjects
     }
 }
