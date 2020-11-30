@@ -21,16 +21,35 @@ class HomeViewModel {
             sortedInbox = sortedInbox?.sorted(by: { ( $0.createdAt ?? Date() < $1.createdAt ?? Date() ) })
         }
     }
-    var waiting: List?
-    var next: List?
-    var projects: [Project]?
+    var waiting: List? {
+        didSet {
+            sortedWaiting = waiting?.tasks?.allObjects as? [Task]
+            sortedWaiting = sortedWaiting?.sorted(by: { ( $0.createdAt ?? Date() < $1.createdAt ?? Date() ) })
+        }
+    }
+    var next: List? {
+        didSet {
+            sortedNext = next?.tasks?.allObjects as? [Task]
+            sortedNext = sortedNext?.sorted(by: { ( $0.createdAt ?? Date() < $1.createdAt ?? Date() ) })
+        }
+    }
+    var projects: [Project]? {
+        didSet {
+            // Order by date
+            let orderedProjects = projects?.sorted(by: {($0.createdAt ?? Date() < $1.createdAt ?? Date())})
+            
+            guard let projectsList = orderedProjects else { return }
+            
+            for project in projectsList { sortedProjects?[project] = project.getTasks() }
+        }
+    }
     var maybe: List?
     
     //sorted lists
     var sortedInbox: [Task]?
     var sortedWaiting: [Task]?
     var sortedNext: [Task]?
-    var sortedProjects: [Project]?
+    var sortedProjects: [Project: [Task]?]?
     var sortedMaybe: [Task]?
 
     

@@ -20,9 +20,10 @@ protocol TaskCheckboxDelegate: class {
 class TaskCell: UITableViewCell, ViewCode {
     
     static let reuseIdentifier = "taskCell"
-    var returnFromEditingModeAction: ((Bool?) -> Void)?
+    var returnFromEditingModeAction: ((Bool?, IndexPath?) -> Void)?
     weak var taskDelegate: TaskCheckboxDelegate?
     var id: UUID?
+    var indexPath: IndexPath?
     var taskInfo: Task! {
         didSet {
             taskLabel.text = taskInfo.name
@@ -204,12 +205,15 @@ extension TaskCell: UITextFieldDelegate {
         taskLabel.isHidden = false
         self.taskLabel.text = taskTextField.text
         checkbox.isUserInteractionEnabled = true
-        returnFromEditingModeAction?(isGhostCell)
+        returnFromEditingModeAction?(isGhostCell, self.indexPath)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         textField.resignFirstResponder()
+        if textField.text == "" {
+            textField.text = "                  "
+        }
         return true
     }
     

@@ -50,16 +50,18 @@ extension HomeViewModel {
         }
     }
     
+    
+    
     func getTaskList(list: EnumLists) -> [Task] {
         switch list {
         case .Inbox:
             return sortedInbox ?? []
         case .Maybe:
-            return inbox?.tasks?.allObjects as! [Task]
+            return sortedMaybe ?? []
         case .Next:
-            return inbox?.tasks?.allObjects as! [Task]
+            return sortedNext ?? []
         case .Waiting:
-            return inbox?.tasks?.allObjects as! [Task]
+            return sortedWaiting ?? []
         }
     }
     
@@ -103,8 +105,15 @@ extension HomeViewModel {
         case .Inbox:
             guard let task = sortedInbox?[index] else { return }
             removeTaskFromList(task: task, context: context)
-        default:
-            print("IMPLEMENT")
+        case .Maybe:
+            guard let task = sortedMaybe?[index] else { return }
+            removeTaskFromList(task: task, context: context)
+        case .Next:
+            guard let task = sortedNext?[index] else { return }
+            removeTaskFromList(task: task, context: context)
+        case .Waiting:
+            guard let task = sortedWaiting?[index] else { return }
+            removeTaskFromList(task: task, context: context)
         }
     }
     
