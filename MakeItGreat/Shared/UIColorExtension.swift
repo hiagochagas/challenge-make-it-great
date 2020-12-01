@@ -30,7 +30,7 @@ extension UIColor {
     }()
     
     static var grayBackground: UIColor = {
-        return UIColor(displayP3Red: 216/255, green: 216/255, blue: 216/255, alpha: 1)
+        return UIColor(displayP3Red: 244/255, green: 244/255, blue: 244/255, alpha: 1)
     }()
     
     static var infoActionBackground: UIColor = {

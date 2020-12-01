@@ -20,14 +20,15 @@ protocol TaskCheckboxDelegate: class {
 class TaskCell: UITableViewCell, ViewCode {
     
     static let reuseIdentifier = "taskCell"
-    var returnFromEditingModeAction: ((Bool?) -> Void)?
+    var returnFromEditingModeAction: ((Bool?, IndexPath?) -> Void)?
     weak var taskDelegate: TaskCheckboxDelegate?
     var id: UUID?
-    var taskInfo: (String, Bool, UUID)! {
+    var indexPath: IndexPath?
+    var taskInfo: Task! {
         didSet {
-            taskLabel.text = taskInfo.0
-            id = taskInfo.2
-            isChecked = taskInfo.1
+            taskLabel.text = taskInfo.name
+            isChecked = taskInfo.status
+            id = taskInfo.id
         }
     }
     
@@ -85,6 +86,7 @@ class TaskCell: UITableViewCell, ViewCode {
     
     internal func setConstraints() {
         NSLayoutConstraint.activate([
+            
             checkbox.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
             checkbox.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             checkbox.heightAnchor.constraint(equalToConstant: 27),
@@ -204,12 +206,15 @@ extension TaskCell: UITextFieldDelegate {
         taskLabel.isHidden = false
         self.taskLabel.text = taskTextField.text
         checkbox.isUserInteractionEnabled = true
-        returnFromEditingModeAction?(isGhostCell)
+        returnFromEditingModeAction?(isGhostCell, self.indexPath)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         textField.resignFirstResponder()
+        if textField.text == "" {
+            textField.text = "                  "
+        }
         return true
     }
     

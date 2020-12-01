@@ -24,4 +24,9 @@ public class Project: NSManagedObject {
         }
         return Projects
     }
+    
+    func getTasks() -> [Task] {
+        let taskList = tasks?.allObjects as! [Task]
+        return taskList.sorted(by: { ( $0.createdAt ?? Date() < $1.createdAt ?? Date() ) })
+    }
 }
