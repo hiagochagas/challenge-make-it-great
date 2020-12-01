@@ -11,7 +11,6 @@ class AchievementsViewController: UIViewController {
     let graphicsVC = GraphicsViewController()
     let badgesVC = BadgesViewController()
     
-    
     override func loadView() {
         view = contentView
     }
@@ -21,11 +20,7 @@ class AchievementsViewController: UIViewController {
         add(asChildViewController: graphicsVC)
         add(asChildViewController: badgesVC)
         contentView.segmentedControl.addTarget(self, action: #selector(segmentedControlDidChange), for: .valueChanged)
-//        graphicsVC.contentView.calendar.delegate = self
-//        graphicsVC.contentView.calendar.dataSource = self
-
         setupView()
-
     }
     
     func setupView() {
@@ -67,8 +62,4 @@ class AchievementsViewController: UIViewController {
         viewController.removeFromParent()
     }
 
-}
-
-extension AchievementsViewController: FSCalendarDataSource, FSCalendarDelegate {
-    
 }

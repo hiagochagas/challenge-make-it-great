@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/hiagochagas/Developer/MakeItGreat/challenge-make-it-great/MakeItGreat/Scenes/Achievements/Model/Badge+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:MakeItGreat.xcodeproj">
    </FileRef>
    <FileRef
