@@ -77,7 +77,11 @@ extension HomeViewController: UITableViewDelegate {
             view.backgroundColor = .infoActionBackground
             
             //open bottomsheet through coordinator
-            print("go to bottomsheet")
+//            print("go to bottomsheet")
+//            test
+            let modalViewController = BottomSheetViewController()
+            modalViewController.modalPresentationStyle = .overCurrentContext
+            self.present(modalViewController, animated: true, completion: nil)
         }
         
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
