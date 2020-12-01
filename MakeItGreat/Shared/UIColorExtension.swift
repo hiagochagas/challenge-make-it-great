@@ -25,6 +25,10 @@ extension UIColor {
         return UIColor(displayP3Red: 105/255, green: 180/255, blue: 194/255, alpha: 1)
     }()
     
+    static var blueSecondaryColor: UIColor = {
+        return UIColor(displayP3Red: 122/255, green: 188/255, blue: 201/255, alpha: 7/100)
+    }()
+    
     static var grayBackground: UIColor = {
         return UIColor(displayP3Red: 216/255, green: 216/255, blue: 216/255, alpha: 1)
     }()
