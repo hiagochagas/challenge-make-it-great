@@ -43,6 +43,7 @@ class HomeViewController: UIViewController {
         
         view = contentView
         contentView.delegate = self
+        getUserNotificationAuthorization()
     }
     
     func setupTableView() {
