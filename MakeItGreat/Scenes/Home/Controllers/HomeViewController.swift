@@ -6,7 +6,13 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, ModalHandler {
+    
+    func modalDismissed() {
+        self.dismiss(animated: true, completion: nil)
+        contentView.tasksTableView.reloadData()
+    }
+    
     
     var viewModel: HomeViewModel
     weak var homeCoordinator: HomeCoordinator?
@@ -104,7 +110,11 @@ extension HomeViewController: UITableViewDelegate {
             //open bottomsheet through coordinator
 //            print("go to bottomsheet")
 //            test
+            let controller = HomeViewModel()
+            let tasks = controller.getTaskList(list: self.currentShowingList)
             let modalViewController = BottomSheetViewController()
+            modalViewController.task = tasks[indexPath.row]
+            modalViewController.delegate = self
             modalViewController.modalPresentationStyle = .overCurrentContext
             self.present(modalViewController, animated: true, completion: nil)
         }
