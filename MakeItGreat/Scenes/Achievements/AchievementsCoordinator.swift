@@ -13,7 +13,7 @@ class AchievementsCoordinator: Coordinator {
         return achievementsViewController
     }
     
-    let achievementsViewController: AchievementsViewController
+    var achievementsViewController: AchievementsViewController
     
     init() {
         achievementsViewController = AchievementsViewController()

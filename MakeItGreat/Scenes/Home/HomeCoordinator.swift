@@ -13,11 +13,10 @@ class HomeCoordinator: Coordinator {
         return homeViewController
     }
     
-    let homeViewController: HomeViewController
+    var homeViewController: HomeViewController
     
     init() {
-        //let viewModel = HomeViewModel()
-        let viewModel = MockHomeViewModel()
+        let viewModel = HomeViewModel()
         homeViewController = HomeViewController(viewModel: viewModel)
         homeViewController.homeCoordinator = self
         // seta aqui quem é o viewModel da home,

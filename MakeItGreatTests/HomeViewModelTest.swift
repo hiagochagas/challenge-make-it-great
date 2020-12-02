@@ -157,6 +157,37 @@ class HomeViewModelTest: XCTestCase {
         XCTAssertTrue(project.tasks?.count ?? 0 == 1)
     }
     
+    func test_getNumberOfCells() {
+        guard let task = sut.createTask(name: "Task Created for Tests", viewContext: mockPersistantContainer.viewContext) else { return }
+        sut.insertTaskToList(task: task, list: .Inbox)
+        var tasks = sut.inbox?.tasks?.count ?? 0
+        var numberOfCells = sut.getNumberOfCells(from: .Inbox, context: mockPersistantContainer.viewContext)
+        XCTAssertTrue(tasks == numberOfCells - 1)
+        
+        sut.insertTaskToList(task: task, list: .Next)
+        tasks = sut.next?.tasks?.count ?? 0
+        numberOfCells = sut.getNumberOfCells(from: .Next, context: mockPersistantContainer.viewContext)
+        XCTAssertTrue(tasks == numberOfCells - 1)
+        
+        sut.insertTaskToList(task: task, list: .Maybe)
+        tasks = sut.maybe?.tasks?.count ?? 0
+        numberOfCells = sut.getNumberOfCells(from: .Maybe, context: mockPersistantContainer.viewContext)
+        XCTAssertTrue(tasks == numberOfCells - 1)
+        
+        sut.insertTaskToList(task: task, list: .Waiting)
+        tasks = sut.waiting?.tasks?.count ?? 0
+        numberOfCells = sut.getNumberOfCells(from: .Waiting, context: mockPersistantContainer.viewContext)
+        XCTAssertTrue(tasks == numberOfCells - 1)
+    }
+    
+    func test_getNumberOfCellsFromProjects() {
+        guard let project = sut.createProject(viewContext: mockPersistantContainer.viewContext, name: "Project Created for Tests") else {return}
+        guard let task = sut.createTask(name: "Task Created for Tests", viewContext: mockPersistantContainer.viewContext) else { return }
+        sut.insertTaskToProject(task: task, project: project)
+        let numberOfCells = sut.getNumberOfCellsFromProjects(context: mockPersistantContainer.viewContext)
+        XCTAssertTrue(numberOfCells == 4)
+    }
+    
     //MARK: mock in-memory persistant store
       lazy var managedObjectModel: NSManagedObjectModel = {
           let managedObjectModel = NSManagedObjectModel.mergedModel(from: [Bundle(for: type(of: self))] )!
