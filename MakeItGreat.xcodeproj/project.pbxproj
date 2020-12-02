@@ -12,6 +12,7 @@
 		6E0B6E40256D338000597E18 /* HomeViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0B6E3F256D338000597E18 /* HomeViewModelTest.swift */; };
 		6E0B6E4A256D4BCD00597E18 /* MakeItGreat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A5F2563FAC300C154F4 /* MakeItGreat.xcdatamodeld */; };
 		6E0B6E4E256D4BD900597E18 /* MakeItGreat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A5F2563FAC300C154F4 /* MakeItGreat.xcdatamodeld */; };
+		D89F83822577B933007E28A1 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89F83812577B933007E28A1 /* NotificationService.swift */; };
 		D7F0F69EEE07D05616C48141 /* Pods_MakeItGreat_MakeItGreatUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F9F5859EA1FCFB9F2003507 /* Pods_MakeItGreat_MakeItGreatUITests.framework */; };
 		6E773B6025752C2300C20636 /* TaskCompletedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E773B5F25752C2300C20636 /* TaskCompletedTableViewCell.swift */; };
 		6E773B5B257519ED00C20636 /* Badge+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E773B5A257519ED00C20636 /* Badge+CoreDataProperties.swift */; };
@@ -79,6 +80,7 @@
 		15EBFDC75F67D6FA62043313 /* Pods_MakeItGreatTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MakeItGreatTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		40D7550DB51538B584B5EE58 /* Pods-MakeItGreat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeItGreat.debug.xcconfig"; path = "Target Support Files/Pods-MakeItGreat/Pods-MakeItGreat.debug.xcconfig"; sourceTree = "<group>"; };
 		6E0B6E3F256D338000597E18 /* HomeViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTest.swift; sourceTree = "<group>"; };
+		D89F83812577B933007E28A1 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		E92BEBC1257126C400D21F6D /* HomeViewModel+Facade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewModel+Facade.swift"; sourceTree = "<group>"; };
 		6E773B5A257519ED00C20636 /* Badge+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Badge+CoreDataProperties.swift"; path = "/Users/hiagochagas/Developer/MakeItGreat/challenge-make-it-great/MakeItGreat/Scenes/Achievements/Model/Badge+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		6E773B5F25752C2300C20636 /* TaskCompletedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCompletedTableViewCell.swift; sourceTree = "<group>"; };
@@ -170,6 +172,14 @@
 			);
 			path = Model;
 			sourceTree = "<group>";
+		};
+		D89F83802577B91F007E28A1 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D89F83812577B933007E28A1 /* NotificationService.swift */,
+			);
+			path = Services;
+      sourceTree = "<group>";
 		};
 		6EDD5B16D1E1EC8DEFBE4DDC /* Frameworks */ = {
 			isa = PBXGroup;
@@ -368,6 +378,7 @@
 		E9D63A552563FAC300C154F4 /* MakeItGreat */ = {
 			isa = PBXGroup;
 			children = (
+				D89F83802577B91F007E28A1 /* Services */,
 				E93EB8BD2567F1A000E0071E /* Shared */,
 				E93EB8C22567F2B700E0071E /* Scenes */,
 				E9D63A972564130E00C154F4 /* Protocols */,
@@ -671,6 +682,7 @@
 				E93EB9272567F7AD00E0071E /* TabBarCoordinator.swift in Sources */,
 				E92BEBC2257126C400D21F6D /* HomeViewModel+Facade.swift in Sources */,
 				E93EB92F2567F81200E0071E /* HomeCoordinator.swift in Sources */,
+				D89F83822577B933007E28A1 /* NotificationService.swift in Sources */,
 				EF517659256BF1A900533B11 /* Project+CoreDataClass.swift in Sources */,
 				E93EB8E22567F4DA00E0071E /* HomeViewModel.swift in Sources */,
 				E93EB8CB2567F3C200E0071E /* Coordinator.swift in Sources */,
