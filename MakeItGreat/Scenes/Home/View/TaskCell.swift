@@ -32,18 +32,19 @@ class TaskCell: UITableViewCell, ViewCode {
     var id: UUID?
     var indexPath: IndexPath?
     var type: CellType?
-    var taskInfo: Task? {
-        didSet {
-            guard let task = taskInfo else { return }
-            taskLabel.text = task.name
-            isChecked = task.status
-            id = task.id
-        }
-    }
     
     var projectInfo: Project? {
         didSet {
-            guard let task = projectInfo else { return }
+            guard let project = projectInfo else { return }
+            taskLabel.text = project.name
+            isChecked = project.status
+            id = project.id
+        }
+    }
+    
+    var taskInfo: Task? {
+        didSet {
+            guard let task = taskInfo else { return }
             taskLabel.text = task.name
             isChecked = task.status
             id = task.id
@@ -203,7 +204,6 @@ class TaskCell: UITableViewCell, ViewCode {
     
     public func configCell() {
         setupViewCode()
-        editTaskLabel()
         switch type {
         case .normalTask:
             configureAsNormalTaskCell()
@@ -213,6 +213,10 @@ class TaskCell: UITableViewCell, ViewCode {
         case .subtask:
             configureAsNormalTaskCell()
         case .none:
+            print("Não implementado.")
+        }
+        let ghostCell = isGhostCell ?? false
+        if ghostCell {
             configureAsGhostCell()
         }
     }

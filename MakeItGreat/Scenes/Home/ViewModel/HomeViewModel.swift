@@ -44,6 +44,8 @@ class HomeViewModel {
     var projects: [Project]? {
         didSet {
             // Order by date
+            sortedProjects = []
+            
             let orderedProjects = projects?.sorted(by: {($0.createdAt ?? Date() < $1.createdAt ?? Date())})
 
             guard let projectsList = orderedProjects else { return }
@@ -53,9 +55,21 @@ class HomeViewModel {
             }
             
             sortedProjects = sortedProjects?.sorted(by: { $0.project.createdAt ?? Date() < $1.project.createdAt ?? Date() })
+            self.arrayOfProjectsIndexes = []
+            var count = 0
+            for project in sortedProjects! {
+                self.arrayOfProjectsIndexes.append(count)
+                count += project.tasks.count + 2
+            }
         }
     }
-    var maybe: List?
+    var maybe: List? {
+        didSet {
+            sortedMaybe = maybe?.tasks?.allObjects as? [Task]
+            sortedMaybe = sortedMaybe?.sorted(by: { ( $0.createdAt ?? Date() < $1.createdAt ?? Date() ) })
+            sortedMaybe = sortedMaybe?.filter({ $0.status != true })
+        }
+    }
     
     //sorted lists
     var sortedInbox: [Task]?
@@ -63,7 +77,7 @@ class HomeViewModel {
     var sortedNext: [Task]?
     var sortedProjects: [ProjectViewModel]?
     var sortedMaybe: [Task]?
-
+    var arrayOfProjectsIndexes: [Int] = []
     
     //context
     static let context: NSManagedObjectContext = AppDelegate.viewContext

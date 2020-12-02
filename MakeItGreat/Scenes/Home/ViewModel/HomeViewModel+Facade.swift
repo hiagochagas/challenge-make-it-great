@@ -8,6 +8,11 @@
 import UIKit
 import CoreData
 
+enum GhostCellResponse {
+    case projectGhost
+    case subtaskGhost
+}
+
 extension HomeViewModel {
     func getNumberOfCells(from list: EnumLists, context: NSManagedObjectContext = context) -> Int {
         fetchAllLists(viewContext: context)
@@ -28,11 +33,14 @@ extension HomeViewModel {
     
     func getNumberOfCellsFromProjects(context: NSManagedObjectContext = context) -> Int {
         _ = fetchProjects(viewContext: context)
-        guard let projects = self.projects else { return 1 }
+        guard let projects = sortedProjects else { return 1 }
         var cells = 1
         for item in projects {
-            cells += item.tasks?.count ?? 0
-            cells += 2
+            cells += 1
+            for _ in item.project.getTasks() {
+                cells += 1
+            }
+            cells += 1
         }
         return cells
     }
@@ -50,28 +58,62 @@ extension HomeViewModel {
         }
     }
     
-    func isGhostCellInProject(at index: Int) -> Bool {
-        guard let projectViewModel = sortedProjects else { return true }
-        var arrayOfProjectsIndexes: [Int] = []
-        var count = 0
-        for project in projectViewModel {
-            arrayOfProjectsIndexes.append(count)
-            count += project.tasks.count + 2
+    func isGhostCellInProject(at index: Int) -> (Bool, Bool) {
+        // Primeiro Bool -> é Ghost?
+        // Segundo Bool -> é ghost de projeto?                
+        // caso de ser antes de um projeto, então é de task
+        if arrayOfProjectsIndexes.contains(index + 1) {
+            return (true, false)
         }
         
-        if index == (arrayOfProjectsIndexes.last ?? -1) + 1 {
-            return true
+        // caso de vazio, retorna só uma de projeto
+        if arrayOfProjectsIndexes.count == 0 {
+            return (true, true)
         }
-        for indexOfProject in arrayOfProjectsIndexes {
-            if indexOfProject != 0 {
-                if index == indexOfProject - 1 {
-                    return true
-                } else {
-                    return false
+        
+        if arrayOfProjectsIndexes.count == 1 && arrayOfProjectsIndexes[0] == index - 1 {
+            return (true, false)
+        }
+        
+        // caso do último da lista, retorna uma de projeto
+        if index == arrayOfProjectsIndexes.last! + 2 {
+            return (true, true)
+        }
+        
+        if index == arrayOfProjectsIndexes.last! + 1 {
+            return (true, false)
+        }
+        
+        return (false, false)
+    }
+    
+    func getTaskInfoFromProject(at index: Int) -> Task? {
+        _ = fetchProjects()
+        let projectIndex = arrayOfProjectsIndexes.filter({ $0 < index }).last
+        let position = arrayOfProjectsIndexes.firstIndex(of: projectIndex!)
+        let task = sortedProjects?[position!].project.getTasks()[index - projectIndex! - 1]
+        
+        return task
+    }
+    
+    func getProjectFromIndex(_ index: Int) -> Project? {
+        let projectIndex = arrayOfProjectsIndexes.firstIndex(of: index)
+        return sortedProjects?[projectIndex!].project
+    }
+    
+    func getRelatedProjectFromGhostCell(at index: Int) -> Project? {
+        
+        let projectsIndexes = arrayOfProjectsIndexes
+
+        if index != 0 {
+            for i in 0..<projectsIndexes.count {
+                if projectsIndexes[i] > index {
+                    return sortedProjects?[i-1].project
                 }
             }
         }
-        return true
+        
+        return nil
     }
     
     

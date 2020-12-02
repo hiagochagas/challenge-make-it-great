@@ -59,17 +59,48 @@ class HomeViewController: UIViewController {
         let tableView = contentView.tasksTableView
         
         let isGhostCell = state ?? false
+        let row = indexPath?.row ?? 0
         
         if isGhostCell {
-            guard let cell = tableView.cellForRow(at: viewModel.getLastCellIndexPath(list: currentShowingList)) as? TaskCell else { return }
-            viewModel.addNewTask(name: cell.taskTextField.text ?? "", to: currentShowingList)
-            tableView.insertRows(at: [viewModel.getLastCellIndexPath(list: currentShowingList)], with: .automatic)
+            guard let cell = tableView.cellForRow(at: indexPath ?? IndexPath(row: 0, section: 0)) as? TaskCell else { return }
+            if isShowingProjects {
+                if viewModel.getRelatedProjectFromGhostCell(at: row) == nil {
+                    _ = viewModel.createProject(name: cell.taskTextField.text ?? "")
+                    tableView.insertRows(at: [IndexPath(row: row+1, section: 0), IndexPath(row: row+2, section: 0)], with: .automatic)
+
+                } else {
+                    guard let relatedProject = viewModel.getRelatedProjectFromGhostCell(at: row) else { return }
+                    guard let newTask = viewModel.createTask(name: cell.taskTextField.text ?? "") else { return }
+                    viewModel.insertTaskToProject(task: newTask, project: relatedProject)
+                    tableView.insertRows(at: [IndexPath(row: row+1, section: 0)], with: .automatic)
+                }
+            } else {
+                viewModel.addNewTask(name: cell.taskTextField.text ?? "", to: currentShowingList)
+                tableView.insertRows(at: [IndexPath(row: row+1, section: 0)], with: .automatic)
+            }
             tableView.reloadData()
         } else {
             guard let indexPath = indexPath, let cell = tableView.cellForRow(at: indexPath) as? TaskCell else { return }
-            let taskList = viewModel.getTaskList(list: currentShowingList)
-            let task = taskList[indexPath.row]
-            viewModel.updateTask(task: task, name: cell.taskTextField.text ?? "", finishedAt: task.finishedAt!, lastMovedAt: task.lastMovedAt!, priority: task.priority, status: task.status)
+            if isShowingProjects {
+                if viewModel.arrayOfProjectsIndexes.contains(row) {
+                    guard let project = viewModel.getProjectFromIndex(row) else {
+                        print("Não foi possível pegar projeto através do index.")
+                        return
+                    }
+                    viewModel.updateProject(project: project, name: cell.taskTextField.text ?? "", status: project.status, movedAt: project.movedAt ?? Date(), finishedAt: project.finishedAt ?? Date())
+                } else {
+                    guard let task = viewModel.getTaskInfoFromProject(at: row) else {
+                        print("Não foi possível pegar subtask através do index")
+                        return
+                    }
+                    viewModel.updateTask(task: task, name: cell.taskTextField.text ?? "", finishedAt: task.finishedAt ?? Date(), lastMovedAt: task.lastMovedAt ?? Date(), priority: task.priority, status: task.status)
+                }
+                
+            } else {
+                let taskList = viewModel.getTaskList(list: currentShowingList)
+                let task = taskList[indexPath.row]
+                viewModel.updateTask(task: task, name: cell.taskTextField.text ?? "", finishedAt: task.finishedAt!, lastMovedAt: task.lastMovedAt!, priority: task.priority, status: task.status)
+            }
             tableView.reloadData()
         }
     }
@@ -86,6 +117,16 @@ extension HomeViewController: UITableViewDelegate {
             cell.taskTextField.isHidden = false
             cell.taskTextField.becomeFirstResponder()
         }
+
+        guard let cell = tableView.cellForRow(at: indexPath) as? TaskCell else { return }
+        let isGhostCell = cell.isGhostCell ?? false
+        if isGhostCell {
+            cell.configureAsNormalTaskCell()
+            cell.taskLabel.isHidden = true
+            cell.taskTextField.isHidden = false
+            cell.taskTextField.becomeFirstResponder()
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -123,16 +164,12 @@ extension HomeViewController: UITableViewDelegate {
 // MARK: TableView DataSource
 extension HomeViewController: UITableViewDataSource {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        if isShowingProjects {
-            return viewModel.sortedProjects?.count ?? 1
-        } else {
-            return 1
-        }
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.getNumberOfCells(from: currentShowingList)
+        if isShowingProjects {
+            return viewModel.getNumberOfCellsFromProjects()
+        } else {
+            return viewModel.getNumberOfCells(from: currentShowingList)
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -146,11 +183,29 @@ extension HomeViewController: UITableViewDataSource {
         cell.returnFromEditingModeAction = returnFromEditingModeAction
         
         if isShowingProjects {
-            
-            if viewModel.isGhostCellInProject(at: indexPath.row) {
-                cell.isGhostCell = true
+            let (isGhostCell, isProjectGhostCell) = viewModel.isGhostCellInProject(at: indexPath.row)
+            // se for ghost cell da tela de projetos tem uma logica especifica
+            if isGhostCell {
+                if isProjectGhostCell {
+                    cell.type = .normalTask
+                    cell.isGhostCell = true
+                } else {
+                    cell.type = .subtask
+                    cell.isGhostCell = true
+                }
+            // se for uma celula normal, mas da tela de projetos
+            } else {
+                let projectIndexes = viewModel.arrayOfProjectsIndexes 
+                if projectIndexes.contains(indexPath.row) {
+                    cell.type = .project
+                    let indexOnList = projectIndexes.firstIndex(of: indexPath.row)
+                    let projectViewModel = viewModel.sortedProjects?[indexOnList ?? 0]
+                    cell.projectInfo = projectViewModel?.project
+                } else {
+                    cell.type = .subtask
+                    cell.taskInfo = viewModel.getTaskInfoFromProject(at: indexPath.row)
+                }
             }
-
             
         } else {
             if viewModel.isGhostCell(list: currentShowingList, at: indexPath.row) {
