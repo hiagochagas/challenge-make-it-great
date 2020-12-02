@@ -27,7 +27,21 @@ class TabBarCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
     }
     
     func setupTabBar() {
-        tabBarController.viewControllers = [homeCoordinator.homeViewController]
-        tabBarController.tabBar.isHidden = true
+        tabBarController.tabBar.tintColor = .blueActionColor
+        homeCoordinator.homeViewController = setupVc(viewController: homeCoordinator.homeViewController, image: UIImage(systemName: "list.bullet.rectangle")!, title: "Lists") as! HomeViewController
+        achievementsCoordinator.achievementsViewController = setupVc(viewController: achievementsCoordinator.achievementsViewController, image: UIImage(systemName: "calendar")!, title: "Progress") as! AchievementsViewController
+        
+        achievementsCoordinator.achievementsViewController.title = "Progress"
+        tabBarController.viewControllers = [homeCoordinator.homeViewController, achievementsCoordinator.achievementsViewController]
+        tabBarController.tabBar.isHidden = false
+    }
+    
+    func setupVc(viewController: UIViewController, image: UIImage, title: String) -> UIViewController {
+            viewController.tabBarItem.image = image
+            viewController.tabBarItem.selectedImage = image
+            viewController.tabBarItem.image?.withRenderingMode(.alwaysOriginal)
+            viewController.tabBarItem.selectedImage?.withRenderingMode(.alwaysOriginal)
+            viewController.title = title
+        return viewController
     }
 }
