@@ -6,19 +6,13 @@
 import Foundation
 import UIKit
 
-protocol ModalHandler {
-  func modalDismissed()
-}
-
 class BottomSheetView: UIView {
     var viewController: BottomSheetViewController?
-    var bottomConstraint: NSLayoutConstraint!
-    let safeInsets = UIApplication.shared.windows[0].safeAreaInsets
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setConstraints()
-        bottomConstraint = bottomSheet.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+//        bottomConstraint = bottomSheet.bottomAnchor.constraint(equalTo: self.bottomAnchor)
 //        keyboardNotifications()
     }
     
@@ -209,16 +203,16 @@ class BottomSheetView: UIView {
 //        self.endEditing(true)
 //    }
     
-    @objc func keyboardWillShow(notification: NSNotification) {
-           if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-           if bottomConstraint.constant == 0 {
-              bottomConstraint.constant = -keyboardSize.height + safeInsets.bottom
-              bottomSheet.layoutIfNeeded()
-            bottomSheet.bounds = CGRect(x: self.bounds.minX, y: self.bounds.minY, width: self.bounds.width, height: bottomSheet.bounds.height + keyboardSize.height)
-            
-           }
-        }
-    }
+//    @objc func keyboardWillShow(notification: NSNotification) {
+//           if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+//           if bottomConstraint.constant == 0 {
+//              bottomConstraint.constant = -keyboardSize.height + safeInsets.bottom
+//              bottomSheet.layoutIfNeeded()
+//            bottomSheet.bounds = CGRect(x: self.bounds.minX, y: self.bounds.minY, width: self.bounds.width, height: bottomSheet.bounds.height + keyboardSize.height)
+//            
+//           }
+//        }
+//    }
     
    
 //    func keyboardNotifications() {
