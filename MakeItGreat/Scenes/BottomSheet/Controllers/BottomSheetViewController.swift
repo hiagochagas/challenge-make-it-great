@@ -6,6 +6,9 @@
 
 import UIKit
 
+protocol ModalHandler {
+    func modalDismissed()
+}
 
 class BottomSheetViewController: UIViewController {
     let lists = ["Next", "Inbox", "Waiting", "Projects", "Maybe"]
