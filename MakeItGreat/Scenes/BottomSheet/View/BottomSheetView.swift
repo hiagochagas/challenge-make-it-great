@@ -6,19 +6,20 @@
 import Foundation
 import UIKit
 
+protocol ModalHandler {
+  func modalDismissed()
+}
+
 class BottomSheetView: UIView {
     var viewController: BottomSheetViewController?
-    
     var bottomConstraint: NSLayoutConstraint!
     let safeInsets = UIApplication.shared.windows[0].safeAreaInsets
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setConstraints()
-//        setupDismissKeyboard()
-  
         bottomConstraint = bottomSheet.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-        keyboardNotifications()
+//        keyboardNotifications()
     }
     
     required init?(coder: NSCoder) {
@@ -34,7 +35,7 @@ class BottomSheetView: UIView {
         return bottomSheet
     }()
     
-    lazy var saveButton: UIButton = {
+    @objc lazy var saveButton: UIButton = {
         let button = UIButton()
         button.setTitle("Save", for: .normal)
         button.setTitleColor(UIColor.blueActionColor, for: .normal)
@@ -49,6 +50,8 @@ class BottomSheetView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
+ 
     
     lazy var textFieldTaskTitle: UITextField = {
         let textField = UITextField()
@@ -74,6 +77,7 @@ class BottomSheetView: UIView {
         button.frame = CGRect(x: 0, y: 0, width: 52, height: 24)
         button.layer.cornerRadius = 5
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "checkmark")?.withTintColor(UIColor.white, renderingMode: .alwaysOriginal), for: .selected)
         return button
     }()
     
@@ -82,6 +86,7 @@ class BottomSheetView: UIView {
         button.backgroundColor = UIColor.greenPriority
         button.frame = CGRect(x: 0, y: 0, width: 52, height: 24)
         button.layer.cornerRadius = 5
+        button.setImage(UIImage(systemName: "checkmark")?.withTintColor(UIColor.white, renderingMode: .alwaysOriginal), for: .selected)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -91,6 +96,7 @@ class BottomSheetView: UIView {
         button.backgroundColor = UIColor.yellowPriority
         button.frame = CGRect(x: 0, y: 0, width: 52, height: 24)
         button.layer.cornerRadius = 5
+        button.setImage(UIImage(systemName: "checkmark")?.withTintColor(UIColor.white, renderingMode: .alwaysOriginal), for: .selected)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -191,6 +197,8 @@ class BottomSheetView: UIView {
         ])
     }
     
+    
+    
 //    private func setupDismissKeyboard() {
 //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
 //        tapGesture.cancelsTouchesInView = false
@@ -210,25 +218,23 @@ class BottomSheetView: UIView {
             
            }
         }
-        
-     
-       
     }
     
-    func keyboardNotifications() {
-        NotificationCenter.default.addObserver(self,
-            selector: #selector(keyboardWillShow),
-            name: NSNotification.Name(rawValue: "keyboardWillShow"),
-            object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-            selector: #selector(keyboardWillHide),
-            name: NSNotification.Name(rawValue: "keyboardWillHide"),
-            object: nil)
-    }
-    @objc func keyboardWillHide(notification: NSNotification) {
-           bottomConstraint.constant = 0
-           self.layoutIfNeeded()
-    }
+   
+//    func keyboardNotifications() {
+//        NotificationCenter.default.addObserver(self,
+//            selector: #selector(keyboardWillShow),
+//            name: NSNotification.Name(rawValue: "keyboardWillShow"),
+//            object: nil)
+//
+//        NotificationCenter.default.addObserver(self,
+//            selector: #selector(keyboardWillHide),
+//            name: NSNotification.Name(rawValue: "keyboardWillHide"),
+//            object: nil)
+//    }
+//    @objc func keyboardWillHide(notification: NSNotification) {
+//           bottomConstraint.constant = 0
+//           self.layoutIfNeeded()
+//    }
     
 }
