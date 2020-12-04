@@ -84,6 +84,9 @@ class BottomSheetViewController: UIViewController {
 
         // updating the task
         self.homeModel.updateTask(task: task, name: taskNameTextField?.text ?? "", finishedAt: Date(), lastMovedAt: task.lastMovedAt ?? Date(), priority: Int64(priority ?? 0), status: task.status, tags: tagTextField?.text ?? "")
+        
+        tagTextField?.text = task.tags
+        taskNameTextField?.text = task.name
       
         dismiss(animated: true) {
             self.delegate?.modalDismissed()
