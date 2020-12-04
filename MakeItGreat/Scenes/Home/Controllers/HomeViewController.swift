@@ -117,6 +117,14 @@ extension HomeViewController: UITableViewDelegate {
             modalViewController.delegate = self
             modalViewController.modalPresentationStyle = .overCurrentContext
             self.present(modalViewController, animated: true, completion: nil)
+            
+//            blur
+//            let blurEffect = UIBlurEffect(style: .dark)
+//            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+//            blurEffectView.frame = self.view.frame
+//            self.view.insertSubview(blurEffectView, at: 0)
+            
+
         }
         
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
