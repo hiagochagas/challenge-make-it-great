@@ -11,6 +11,7 @@ enum TaskCellPriority {
     case high
     case medium
     case low
+    case none
 }
 
 enum CellType {
@@ -145,6 +146,8 @@ class TaskCell: UITableViewCell, ViewCode {
             checkbox.tintColor = .yellowPriority
         case .low:
             checkbox.tintColor = .greenPriority
+        case .none:
+            checkbox.tintColor = .blueActionColor
         }
     }
         
@@ -180,7 +183,6 @@ class TaskCell: UITableViewCell, ViewCode {
         taskLabel.isUserInteractionEnabled = true
         editTaskLabel()
         changeCheckboxState()
-        checkbox.tintColor = .blueActionColor
         checkbox.addTarget(self, action: #selector(didTouchCheckbox), for: .touchUpInside)
     }
     
