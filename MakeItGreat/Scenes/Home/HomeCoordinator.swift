@@ -14,6 +14,7 @@ class HomeCoordinator: Coordinator {
     }
     
     var homeViewController: HomeViewController
+   
     
     init() {
         let viewModel = HomeViewModel()

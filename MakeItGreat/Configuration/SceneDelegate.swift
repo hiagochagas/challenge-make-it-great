@@ -18,6 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         let tabBarCoordinator = TabBarCoordinator()
         window?.rootViewController = tabBarCoordinator.rootViewController
+        //window?.rootViewController = OnboardingViewController()
         window?.makeKeyAndVisible()
         
         
