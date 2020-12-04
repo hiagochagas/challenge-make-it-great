@@ -76,6 +76,7 @@ class HomeViewController: UIViewController, ModalHandler {
             guard let indexPath = indexPath, let cell = tableView.cellForRow(at: indexPath) as? TaskCell else { return }
             let taskList = viewModel.getTaskList(list: currentShowingList)
             let task = taskList[indexPath.row]
+            
             viewModel.updateTask(task: task, name: cell.taskTextField.text ?? "", finishedAt: task.finishedAt!, lastMovedAt: task.lastMovedAt!, priority: task.priority, status: task.status)
             tableView.reloadData()
         }
@@ -182,6 +183,15 @@ extension HomeViewController: UITableViewDataSource {
             } else {
                 cell.type = .normalTask
                 cell.taskInfo = viewModel.getTaskList(list: currentShowingList)[indexPath.row]
+                if cell.taskInfo?.priority == 1 {
+                            cell.setTaskCellPriorityColor(priority: .low)
+                        } else if cell.taskInfo?.priority == 2 {
+                            cell.setTaskCellPriorityColor(priority: .medium)
+                        } else if cell.taskInfo?.priority == 3 {
+                            cell.setTaskCellPriorityColor(priority: .high)
+                        } else {
+                            cell.setTaskCellPriorityColor(priority: .none)
+                        }
             }
         }
         
