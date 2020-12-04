@@ -13,22 +13,40 @@ enum TaskCellPriority {
     case low
 }
 
+enum CellType {
+    case project
+    case subtask
+    case normalTask
+}
+
 protocol TaskCheckboxDelegate: class {
-    func didChangeStateCheckbox(id: UUID?)
+    func didChangeStateCheckbox(id: UUID?, indexPath: IndexPath?)
 }
 
 class TaskCell: UITableViewCell, ViewCode {
     
     static let reuseIdentifier = "taskCell"
+    var checkboxLeftAnchorConstant = 16
     var returnFromEditingModeAction: ((Bool?, IndexPath?) -> Void)?
     weak var taskDelegate: TaskCheckboxDelegate?
     var id: UUID?
     var indexPath: IndexPath?
-    var taskInfo: Task! {
+    var type: CellType?
+    var taskInfo: Task? {
         didSet {
-            taskLabel.text = taskInfo.name
-            isChecked = taskInfo.status
-            id = taskInfo.id
+            guard let task = taskInfo else { return }
+            taskLabel.text = task.name
+            isChecked = task.status
+            id = task.id
+        }
+    }
+    
+    var projectInfo: Project? {
+        didSet {
+            guard let task = projectInfo else { return }
+            taskLabel.text = task.name
+            isChecked = task.status
+            id = task.id
         }
     }
     
@@ -70,8 +88,6 @@ class TaskCell: UITableViewCell, ViewCode {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.selectionStyle = .none
-        setupViewCode()
-        editTaskLabel()
     }
     
     required init?(coder: NSCoder) {
@@ -85,9 +101,12 @@ class TaskCell: UITableViewCell, ViewCode {
     }
     
     internal func setConstraints() {
+        
+        checkboxLeftAnchorConstant = type == .subtask ? 32 : 16
+        
         NSLayoutConstraint.activate([
             
-            checkbox.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+            checkbox.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: CGFloat(checkboxLeftAnchorConstant)),
             checkbox.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             checkbox.heightAnchor.constraint(equalToConstant: 27),
             checkbox.widthAnchor.constraint(equalTo: checkbox.heightAnchor),
@@ -176,9 +195,31 @@ class TaskCell: UITableViewCell, ViewCode {
         checkbox.removeTarget(self, action: #selector(didTouchCheckbox), for: .touchUpInside)
     }
     
+    public func configAsProjectCell() {
+        let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: taskLabel.text ?? "",
+                                                                                    attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17)])
+        taskLabel.attributedText = attributeString
+    }
+    
+    public func configCell() {
+        setupViewCode()
+        editTaskLabel()
+        switch type {
+        case .normalTask:
+            configureAsNormalTaskCell()
+        case .project:
+            configureAsNormalTaskCell()
+            configAsProjectCell()
+        case .subtask:
+            configureAsNormalTaskCell()
+        case .none:
+            configureAsGhostCell()
+        }
+    }
+    
     @objc func didTouchCheckbox() {
         isChecked?.toggle()
-        taskDelegate?.didChangeStateCheckbox(id: id)
+        taskDelegate?.didChangeStateCheckbox(id: id, indexPath: self.indexPath)
     }
 
     @objc func didTouchLabel() {

@@ -13,34 +13,46 @@ import Foundation
 import UIKit
 import CoreData
 
+struct ProjectViewModel {
+    var project: Project
+    var tasks: [Task]
+}
+
 class HomeViewModel {
     //lists
     var inbox: List? {
         didSet {
             sortedInbox = inbox?.tasks?.allObjects as? [Task]
             sortedInbox = sortedInbox?.sorted(by: { ( $0.createdAt ?? Date() < $1.createdAt ?? Date() ) })
+            sortedInbox = sortedInbox?.filter({ $0.status != true })
         }
     }
     var waiting: List? {
         didSet {
             sortedWaiting = waiting?.tasks?.allObjects as? [Task]
             sortedWaiting = sortedWaiting?.sorted(by: { ( $0.createdAt ?? Date() < $1.createdAt ?? Date() ) })
+            sortedWaiting = sortedWaiting?.filter({ $0.status != true })
         }
     }
     var next: List? {
         didSet {
             sortedNext = next?.tasks?.allObjects as? [Task]
             sortedNext = sortedNext?.sorted(by: { ( $0.createdAt ?? Date() < $1.createdAt ?? Date() ) })
+            sortedNext = sortedNext?.filter({ $0.status != true })
         }
     }
     var projects: [Project]? {
         didSet {
             // Order by date
             let orderedProjects = projects?.sorted(by: {($0.createdAt ?? Date() < $1.createdAt ?? Date())})
-            
+
             guard let projectsList = orderedProjects else { return }
             
-            for project in projectsList { sortedProjects?[project] = project.getTasks() }
+            for project in projectsList {
+                sortedProjects?.append(ProjectViewModel(project: project, tasks: project.getTasks()))
+            }
+            
+            sortedProjects = sortedProjects?.sorted(by: { $0.project.createdAt ?? Date() < $1.project.createdAt ?? Date() })
         }
     }
     var maybe: List?
@@ -49,7 +61,7 @@ class HomeViewModel {
     var sortedInbox: [Task]?
     var sortedWaiting: [Task]?
     var sortedNext: [Task]?
-    var sortedProjects: [Project: [Task]?]?
+    var sortedProjects: [ProjectViewModel]?
     var sortedMaybe: [Task]?
 
     

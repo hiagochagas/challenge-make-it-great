@@ -49,6 +49,7 @@ class HomeViewController: UIViewController, ModalHandler {
         
         view = contentView
         contentView.delegate = self
+        getUserNotificationAuthorization()
     }
     
     func setupTableView() {
@@ -166,13 +167,25 @@ extension HomeViewController: UITableViewDataSource {
         }
         cell.taskDelegate = self
         cell.returnFromEditingModeAction = returnFromEditingModeAction
-        if viewModel.isGhostCell(list: currentShowingList, at: indexPath.row){
-            cell.isGhostCell = true
-            cell.configureAsGhostCell()
+        
+        if isShowingProjects {
+            
+            if viewModel.isGhostCellInProject(at: indexPath.row) {
+                cell.isGhostCell = true
+            }
+
+            
         } else {
-            cell.taskInfo = viewModel.getTaskList(list: currentShowingList)[indexPath.row]
-            cell.configureAsNormalTaskCell()
+            if viewModel.isGhostCell(list: currentShowingList, at: indexPath.row) {
+                cell.isGhostCell = true
+                cell.type = .none
+            } else {
+                cell.type = .normalTask
+                cell.taskInfo = viewModel.getTaskList(list: currentShowingList)[indexPath.row]
+            }
         }
+        
+        cell.configCell()
         cell.indexPath = indexPath
 
         return cell
@@ -181,9 +194,11 @@ extension HomeViewController: UITableViewDataSource {
 
 extension HomeViewController: TaskCheckboxDelegate {
     
-    func didChangeStateCheckbox(id: UUID?) {
-        guard let id = id else { return }
+    func didChangeStateCheckbox(id: UUID?, indexPath: IndexPath?) {
+        guard let id = id, let indexPath = indexPath else { return }
         viewModel.toggleTaskById(id: id)
+        _ = viewModel.fetchAllTasks()
+        contentView.tasksTableView.deleteRows(at: [indexPath], with: .automatic)
     }
 }
 

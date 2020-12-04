@@ -14,13 +14,13 @@ extension HomeViewModel {
         var numberOfCells = 0
         switch list {
         case .Inbox:
-            numberOfCells = inbox?.tasks?.count ?? 0
+            numberOfCells = sortedInbox?.count ?? 0
         case .Maybe:
-            numberOfCells = maybe?.tasks?.count ?? 0
+            numberOfCells = sortedMaybe?.count ?? 0
         case .Next:
-            numberOfCells = next?.tasks?.count ?? 0
+            numberOfCells = sortedNext?.count ?? 0
         case .Waiting:
-            numberOfCells = waiting?.tasks?.count ?? 0
+            numberOfCells = sortedWaiting?.count ?? 0
         }
         // returns one extra cell for presenting the ghost cell
         return numberOfCells + 1
@@ -40,14 +40,38 @@ extension HomeViewModel {
     func isGhostCell(list: EnumLists, at index: Int) -> Bool {
         switch list {
         case .Inbox:
-            return index == (inbox?.tasks?.count ?? 0)
+            return index == (sortedInbox?.count ?? 0)
         case .Maybe:
-            return index == (maybe?.tasks?.count ?? 0)
+            return index == (sortedMaybe?.count ?? 0)
         case .Next:
-            return index == (next?.tasks?.count ?? 0)
+            return index == (sortedNext?.count ?? 0)
         case .Waiting:
-            return index == (waiting?.tasks?.count ?? 0)
+            return index == (sortedWaiting?.count ?? 0)
         }
+    }
+    
+    func isGhostCellInProject(at index: Int) -> Bool {
+        guard let projectViewModel = sortedProjects else { return true }
+        var arrayOfProjectsIndexes: [Int] = []
+        var count = 0
+        for project in projectViewModel {
+            arrayOfProjectsIndexes.append(count)
+            count += project.tasks.count + 2
+        }
+        
+        if index == (arrayOfProjectsIndexes.last ?? -1) + 1 {
+            return true
+        }
+        for indexOfProject in arrayOfProjectsIndexes {
+            if indexOfProject != 0 {
+                if index == indexOfProject - 1 {
+                    return true
+                } else {
+                    return false
+                }
+            }
+        }
+        return true
     }
     
     
@@ -84,13 +108,13 @@ extension HomeViewModel {
     func getLastCellIndexPath(list: EnumLists) -> IndexPath {
         switch list {
         case .Inbox:
-            return IndexPath(row: inbox?.tasks?.count ?? 0, section: 0)
+            return IndexPath(row: sortedInbox?.count ?? 0, section: 0)
         case .Maybe:
-            return IndexPath(row: maybe?.tasks?.count ?? 0, section: 0)
+            return IndexPath(row: sortedMaybe?.count ?? 0, section: 0)
         case .Next:
-            return IndexPath(row: next?.tasks?.count ?? 0, section: 0)
+            return IndexPath(row: sortedNext?.count ?? 0, section: 0)
         case .Waiting:
-            return IndexPath(row: waiting?.tasks?.count ?? 0, section: 0)
+            return IndexPath(row: sortedWaiting?.count ?? 0, section: 0)
         }
     }
     
