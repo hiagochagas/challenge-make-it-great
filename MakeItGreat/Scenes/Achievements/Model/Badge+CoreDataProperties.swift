@@ -2,7 +2,6 @@
 //  Badge+CoreDataProperties.swift
 //  MakeItGreat
 //
-
 import Foundation
 import CoreData
 
