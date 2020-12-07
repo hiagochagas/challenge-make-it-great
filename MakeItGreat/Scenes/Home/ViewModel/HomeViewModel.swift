@@ -115,7 +115,7 @@ class HomeViewModel {
             return taskItem
     }
     //After creating the task, please, insert it into its respective List
-    func insertTaskToList(task: Task, list: EnumLists) {
+    func insertTaskToList(task: Task, list: EnumLists, viewContext: NSManagedObjectContext = context) {
         switch list {
         case .Inbox:
             inbox?.addToTasks(task)
@@ -128,6 +128,7 @@ class HomeViewModel {
         case .Projects:
             projects?.addToTasks(task)
         }
+        save(context: viewContext)
     }
     
     func insertTaskToProject(task: Task, project: Project) {

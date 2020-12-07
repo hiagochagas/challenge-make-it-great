@@ -23,7 +23,7 @@ class ListCollectionViewCell: UICollectionViewCell, ViewCode {
         
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Varta-Regular", size: 15)
+        label.font = UIFont(name: "Varta-Regular", size: 17)
         
         return label
     }()
