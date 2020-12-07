@@ -36,12 +36,11 @@ class BottomSheetView: UIView {
     }()
     
     lazy var blurView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .dark)
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         //        blurEffectView.alpha = 0.9
         blurEffectView.frame = self.frame
         blurEffectView.translatesAutoresizingMaskIntoConstraints = false
-        //        blurEffectView.insertSubview(blurEffectView, at: 0)
         return blurEffectView
     }()
     
@@ -155,12 +154,9 @@ class BottomSheetView: UIView {
         return label
     }()
     
-    
-    
     func setConstraints() {
-        //        self.insertSubview(blurView, at: 0)
+        self.insertSubview(blurView, at: 0)
         self.addSubview(bottomSheet)
-        //        blurView.addSubview(bottomSheet)
         bottomSheet.addSubview(saveButton)
         bottomSheet.addSubview(cancelButton)
         bottomSheet.addSubview(textFieldTaskTitle)
@@ -174,8 +170,8 @@ class BottomSheetView: UIView {
         
         NSLayoutConstraint.activate([
             
-            //            blurView.heightAnchor.constraint(equalTo: self.heightAnchor),
-            //            blurView.widthAnchor.constraint(equalTo: self.widthAnchor),
+            blurView.heightAnchor.constraint(equalTo: self.heightAnchor),
+            blurView.widthAnchor.constraint(equalTo: self.widthAnchor),
             
             bottomSheet.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             bottomSheet.leftAnchor.constraint(equalTo: self.leftAnchor),
@@ -213,7 +209,6 @@ class BottomSheetView: UIView {
             
             
         ])
-        //        bottomSheet.layoutIfNeeded()
     }
     
     @objc func keyboardWillShow(sender: NSNotification) {
