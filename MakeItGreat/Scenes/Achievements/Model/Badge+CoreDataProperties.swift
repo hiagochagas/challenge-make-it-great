@@ -2,10 +2,6 @@
 //  Badge+CoreDataProperties.swift
 //  MakeItGreat
 //
-//  Created by Jhennyfer Rodrigues de Oliveira on 26/11/20.
-//
-//
-
 import Foundation
 import CoreData
 
@@ -21,5 +17,7 @@ extension Badge {
     @NSManaged public var id: UUID?
     @NSManaged public var name: String?
     @NSManaged public var progress: Int64
+    @NSManaged public var status: Bool
+    @NSManaged public var unlockValue: Int64
 
 }

@@ -6,7 +6,13 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, ModalHandler {
+    
+    func modalDismissed() {
+        self.dismiss(animated: true, completion: nil)
+        contentView.tasksTableView.reloadData()
+    }
+    
     
     var viewModel: HomeViewModel
     weak var homeCoordinator: HomeCoordinator?
@@ -43,6 +49,7 @@ class HomeViewController: UIViewController {
         
         view = contentView
         contentView.delegate = self
+        getUserNotificationAuthorization()
     }
     
     func setupTableView() {
@@ -120,7 +127,23 @@ extension HomeViewController: UITableViewDelegate {
             view.backgroundColor = .infoActionBackground
             
             //open bottomsheet through coordinator
-            print("go to bottomsheet")
+//            print("go to bottomsheet")
+//            test
+            let controller = HomeViewModel()
+            let tasks = controller.getTaskList(list: self.currentShowingList)
+            let modalViewController = BottomSheetViewController()
+            modalViewController.task = tasks[indexPath.row]
+            modalViewController.delegate = self
+            modalViewController.modalPresentationStyle = .overCurrentContext
+            self.present(modalViewController, animated: true, completion: nil)
+            
+//            blur
+//            let blurEffect = UIBlurEffect(style: .dark)
+//            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+//            blurEffectView.frame = self.view.frame
+//            self.view.insertSubview(blurEffectView, at: 0)
+            
+
         }
         
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, completionHandler) in

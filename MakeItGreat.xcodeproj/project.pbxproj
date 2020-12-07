@@ -3,13 +3,18 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B5D42F747D5589061CF4128 /* Pods_MakeItGreat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B834BD88226BC27F24025683 /* Pods_MakeItGreat.framework */; };
+		439F24FD44E92CC28A6EADCF /* Pods_MakeItGreatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15EBFDC75F67D6FA62043313 /* Pods_MakeItGreatTests.framework */; };
 		6E0B6E40256D338000597E18 /* HomeViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0B6E3F256D338000597E18 /* HomeViewModelTest.swift */; };
 		6E0B6E4A256D4BCD00597E18 /* MakeItGreat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A5F2563FAC300C154F4 /* MakeItGreat.xcdatamodeld */; };
 		6E0B6E4E256D4BD900597E18 /* MakeItGreat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A5F2563FAC300C154F4 /* MakeItGreat.xcdatamodeld */; };
+		6E773B6025752C2300C20636 /* TaskCompletedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E773B5F25752C2300C20636 /* TaskCompletedTableViewCell.swift */; };
+		D7F0F69EEE07D05616C48141 /* Pods_MakeItGreat_MakeItGreatUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F9F5859EA1FCFB9F2003507 /* Pods_MakeItGreat_MakeItGreatUITests.framework */; };
+		D89F83822577B933007E28A1 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89F83812577B933007E28A1 /* NotificationService.swift */; };
 		E92BEBC2257126C400D21F6D /* HomeViewModel+Facade.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92BEBC1257126C400D21F6D /* HomeViewModel+Facade.swift */; };
 		E930FC50256FC8B3000705E3 /* MockHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E930FC4F256FC8B3000705E3 /* MockHomeViewModel.swift */; };
 		E93EB8CB2567F3C200E0071E /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93EB8CA2567F3C200E0071E /* Coordinator.swift */; };
@@ -42,13 +47,13 @@
 		E9D63A7C2563FAC700C154F4 /* MakeItGreatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A7B2563FAC700C154F4 /* MakeItGreatUITests.swift */; };
 		E9D63A932564109400C154F4 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A922564109400C154F4 /* TabBarController.swift */; };
 		E9D63A992564131B00C154F4 /* ViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A982564131B00C154F4 /* ViewCode.swift */; };
+		EF2408DC2579E43C00242CD1 /* Badge+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2408DB2579E43C00242CD1 /* Badge+CoreDataProperties.swift */; };
 		EF517656256BF1A900533B11 /* List+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF517652256BF19000533B11 /* List+CoreDataClass.swift */; };
 		EF517657256BF1A900533B11 /* Task+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF517650256BF19000533B11 /* Task+CoreDataClass.swift */; };
 		EF517658256BF1A900533B11 /* List+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF517653256BF19000533B11 /* List+CoreDataProperties.swift */; };
 		EF517659256BF1A900533B11 /* Project+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF517654256BF19000533B11 /* Project+CoreDataClass.swift */; };
 		EF51765A256BF1A900533B11 /* Project+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF517655256BF19000533B11 /* Project+CoreDataProperties.swift */; };
 		EF51765B256BF1A900533B11 /* Task+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF517651256BF19000533B11 /* Task+CoreDataProperties.swift */; };
-		EFA98C89256FEC1B002A0F4F /* Badge+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6B746F256FE86300AE0825 /* Badge+CoreDataProperties.swift */; };
 		EFA98C8D256FEC20002A0F4F /* Badge+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6B746E256FE86300AE0825 /* Badge+CoreDataClass.swift */; };
 		EFA98C95256FF01C002A0F4F /* AchievementsViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA98C94256FF01C002A0F4F /* AchievementsViewModelTest.swift */; };
 /* End PBXBuildFile section */
@@ -71,7 +76,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		07BB2EED67B2FEFD2775D453 /* Pods-MakeItGreat-MakeItGreatUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeItGreat-MakeItGreatUITests.release.xcconfig"; path = "Target Support Files/Pods-MakeItGreat-MakeItGreatUITests/Pods-MakeItGreat-MakeItGreatUITests.release.xcconfig"; sourceTree = "<group>"; };
+		15EBFDC75F67D6FA62043313 /* Pods_MakeItGreatTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MakeItGreatTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		40D7550DB51538B584B5EE58 /* Pods-MakeItGreat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeItGreat.debug.xcconfig"; path = "Target Support Files/Pods-MakeItGreat/Pods-MakeItGreat.debug.xcconfig"; sourceTree = "<group>"; };
 		6E0B6E3F256D338000597E18 /* HomeViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTest.swift; sourceTree = "<group>"; };
+		6E773B5F25752C2300C20636 /* TaskCompletedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCompletedTableViewCell.swift; sourceTree = "<group>"; };
+		6F9F5859EA1FCFB9F2003507 /* Pods_MakeItGreat_MakeItGreatUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MakeItGreat_MakeItGreatUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		76FBCDDFAAB7C49324380D2F /* Pods-MakeItGreatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeItGreatTests.debug.xcconfig"; path = "Target Support Files/Pods-MakeItGreatTests/Pods-MakeItGreatTests.debug.xcconfig"; sourceTree = "<group>"; };
+		94590CB8F6C59C7BEA5C24B0 /* Pods-MakeItGreat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeItGreat.release.xcconfig"; path = "Target Support Files/Pods-MakeItGreat/Pods-MakeItGreat.release.xcconfig"; sourceTree = "<group>"; };
+		A3F630DA7035B369E112FE54 /* Pods-MakeItGreatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeItGreatTests.release.xcconfig"; path = "Target Support Files/Pods-MakeItGreatTests/Pods-MakeItGreatTests.release.xcconfig"; sourceTree = "<group>"; };
+		A69986CDB795813B98B3BE66 /* Pods-MakeItGreat-MakeItGreatUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeItGreat-MakeItGreatUITests.debug.xcconfig"; path = "Target Support Files/Pods-MakeItGreat-MakeItGreatUITests/Pods-MakeItGreat-MakeItGreatUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		B834BD88226BC27F24025683 /* Pods_MakeItGreat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MakeItGreat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D89F83812577B933007E28A1 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		E92BEBC1257126C400D21F6D /* HomeViewModel+Facade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewModel+Facade.swift"; sourceTree = "<group>"; };
 		E930FC4F256FC8B3000705E3 /* MockHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeViewModel.swift; sourceTree = "<group>"; };
 		E93EB8CA2567F3C200E0071E /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -110,6 +126,7 @@
 		E9D63A7D2563FAC700C154F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9D63A922564109400C154F4 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		E9D63A982564131B00C154F4 /* ViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCode.swift; sourceTree = "<group>"; };
+		EF2408DB2579E43C00242CD1 /* Badge+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Badge+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		EF517650256BF19000533B11 /* Task+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataClass.swift"; sourceTree = "<group>"; };
 		EF517651256BF19000533B11 /* Task+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		EF517652256BF19000533B11 /* List+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -117,7 +134,6 @@
 		EF517654256BF19000533B11 /* Project+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+CoreDataClass.swift"; sourceTree = "<group>"; };
 		EF517655256BF19000533B11 /* Project+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		EF6B746E256FE86300AE0825 /* Badge+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Badge+CoreDataClass.swift"; sourceTree = "<group>"; };
-		EF6B746F256FE86300AE0825 /* Badge+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Badge+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		EFA98C94256FF01C002A0F4F /* AchievementsViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsViewModelTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -126,6 +142,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B5D42F747D5589061CF4128 /* Pods_MakeItGreat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,6 +150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				439F24FD44E92CC28A6EADCF /* Pods_MakeItGreatTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7F0F69EEE07D05616C48141 /* Pods_MakeItGreat_MakeItGreatUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +171,37 @@
 				EF51765F256BF1CE00533B11 /* CoreDataModels */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		6EDD5B16D1E1EC8DEFBE4DDC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B834BD88226BC27F24025683 /* Pods_MakeItGreat.framework */,
+				6F9F5859EA1FCFB9F2003507 /* Pods_MakeItGreat_MakeItGreatUITests.framework */,
+				15EBFDC75F67D6FA62043313 /* Pods_MakeItGreatTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C69ACA851E0A5226BA96B764 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				40D7550DB51538B584B5EE58 /* Pods-MakeItGreat.debug.xcconfig */,
+				94590CB8F6C59C7BEA5C24B0 /* Pods-MakeItGreat.release.xcconfig */,
+				A69986CDB795813B98B3BE66 /* Pods-MakeItGreat-MakeItGreatUITests.debug.xcconfig */,
+				07BB2EED67B2FEFD2775D453 /* Pods-MakeItGreat-MakeItGreatUITests.release.xcconfig */,
+				76FBCDDFAAB7C49324380D2F /* Pods-MakeItGreatTests.debug.xcconfig */,
+				A3F630DA7035B369E112FE54 /* Pods-MakeItGreatTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		D89F83802577B91F007E28A1 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D89F83812577B933007E28A1 /* NotificationService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		E93EB8B92567F16C00E0071E /* Home */ = {
@@ -263,6 +313,7 @@
 				E93EB90D2567F5A900E0071E /* CalendarView.swift */,
 				E93EB9122567F5B100E0071E /* BadgesCollectionView.swift */,
 				E93EB9172567F5BC00E0071E /* FinishedTasksView.swift */,
+				6E773B5F25752C2300C20636 /* TaskCompletedTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -309,6 +360,8 @@
 				E9D63A6F2563FAC700C154F4 /* MakeItGreatTests */,
 				E9D63A7A2563FAC700C154F4 /* MakeItGreatUITests */,
 				E9D63A542563FAC300C154F4 /* Products */,
+				C69ACA851E0A5226BA96B764 /* Pods */,
+				6EDD5B16D1E1EC8DEFBE4DDC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -325,6 +378,7 @@
 		E9D63A552563FAC300C154F4 /* MakeItGreat */ = {
 			isa = PBXGroup;
 			children = (
+				D89F83802577B91F007E28A1 /* Services */,
 				E93EB8BD2567F1A000E0071E /* Shared */,
 				E93EB8C22567F2B700E0071E /* Scenes */,
 				E9D63A972564130E00C154F4 /* Protocols */,
@@ -379,7 +433,7 @@
 			isa = PBXGroup;
 			children = (
 				EF6B746E256FE86300AE0825 /* Badge+CoreDataClass.swift */,
-				EF6B746F256FE86300AE0825 /* Badge+CoreDataProperties.swift */,
+				EF2408DB2579E43C00242CD1 /* Badge+CoreDataProperties.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -391,9 +445,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E9D63A802563FAC700C154F4 /* Build configuration list for PBXNativeTarget "MakeItGreat" */;
 			buildPhases = (
+				B2BC41C163D016DB69C20773 /* [CP] Check Pods Manifest.lock */,
 				E9D63A4F2563FAC300C154F4 /* Sources */,
 				E9D63A502563FAC300C154F4 /* Frameworks */,
 				E9D63A512563FAC300C154F4 /* Resources */,
+				431A0FA6BE4C0D8573EDF670 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -408,6 +464,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E9D63A832563FAC700C154F4 /* Build configuration list for PBXNativeTarget "MakeItGreatTests" */;
 			buildPhases = (
+				245A381B82D0A40184E67609 /* [CP] Check Pods Manifest.lock */,
 				E9D63A682563FAC700C154F4 /* Sources */,
 				E9D63A692563FAC700C154F4 /* Frameworks */,
 				E9D63A6A2563FAC700C154F4 /* Resources */,
@@ -426,9 +483,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E9D63A862563FAC700C154F4 /* Build configuration list for PBXNativeTarget "MakeItGreatUITests" */;
 			buildPhases = (
+				4B8AD86AF32878F31FC3BC81 /* [CP] Check Pods Manifest.lock */,
 				E9D63A732563FAC700C154F4 /* Sources */,
 				E9D63A742563FAC700C154F4 /* Frameworks */,
 				E9D63A752563FAC700C154F4 /* Resources */,
+				C51AB751D73FC81FD6FA502E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -508,6 +567,109 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		245A381B82D0A40184E67609 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MakeItGreatTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		431A0FA6BE4C0D8573EDF670 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MakeItGreat/Pods-MakeItGreat-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MakeItGreat/Pods-MakeItGreat-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MakeItGreat/Pods-MakeItGreat-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4B8AD86AF32878F31FC3BC81 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MakeItGreat-MakeItGreatUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B2BC41C163D016DB69C20773 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MakeItGreat-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C51AB751D73FC81FD6FA502E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MakeItGreat-MakeItGreatUITests/Pods-MakeItGreat-MakeItGreatUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MakeItGreat-MakeItGreatUITests/Pods-MakeItGreat-MakeItGreatUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MakeItGreat-MakeItGreatUITests/Pods-MakeItGreat-MakeItGreatUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E9D63A4F2563FAC300C154F4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -520,8 +682,8 @@
 				E93EB9272567F7AD00E0071E /* TabBarCoordinator.swift in Sources */,
 				E92BEBC2257126C400D21F6D /* HomeViewModel+Facade.swift in Sources */,
 				E93EB92F2567F81200E0071E /* HomeCoordinator.swift in Sources */,
+				D89F83822577B933007E28A1 /* NotificationService.swift in Sources */,
 				EF517659256BF1A900533B11 /* Project+CoreDataClass.swift in Sources */,
-				EFA98C89256FEC1B002A0F4F /* Badge+CoreDataProperties.swift in Sources */,
 				E93EB8E22567F4DA00E0071E /* HomeViewModel.swift in Sources */,
 				E93EB8CB2567F3C200E0071E /* Coordinator.swift in Sources */,
 				E9D63A932564109400C154F4 /* TabBarController.swift in Sources */,
@@ -542,6 +704,7 @@
 				EF51765A256BF1A900533B11 /* Project+CoreDataProperties.swift in Sources */,
 				E9D63A592563FAC300C154F4 /* SceneDelegate.swift in Sources */,
 				E93EB90E2567F5A900E0071E /* CalendarView.swift in Sources */,
+				6E773B6025752C2300C20636 /* TaskCompletedTableViewCell.swift in Sources */,
 				EFA98C8D256FEC20002A0F4F /* Badge+CoreDataClass.swift in Sources */,
 				E93EB8D82567F41A00E0071E /* BottomSheetViewController.swift in Sources */,
 				E93EB9182567F5BC00E0071E /* FinishedTasksView.swift in Sources */,
@@ -549,6 +712,7 @@
 				E93EB9042567F59500E0071E /* AchievementsViewModel.swift in Sources */,
 				E930FC50256FC8B3000705E3 /* MockHomeViewModel.swift in Sources */,
 				E93EB8FF2567F58500E0071E /* GraphicsViewController.swift in Sources */,
+				EF2408DC2579E43C00242CD1 /* Badge+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -717,6 +881,7 @@
 		};
 		E9D63A812563FAC700C154F4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 40D7550DB51538B584B5EE58 /* Pods-MakeItGreat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -738,6 +903,7 @@
 		};
 		E9D63A822563FAC700C154F4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 94590CB8F6C59C7BEA5C24B0 /* Pods-MakeItGreat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -759,6 +925,7 @@
 		};
 		E9D63A842563FAC700C154F4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 76FBCDDFAAB7C49324380D2F /* Pods-MakeItGreatTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -781,6 +948,7 @@
 		};
 		E9D63A852563FAC700C154F4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A3F630DA7035B369E112FE54 /* Pods-MakeItGreatTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -803,6 +971,7 @@
 		};
 		E9D63A872563FAC700C154F4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A69986CDB795813B98B3BE66 /* Pods-MakeItGreat-MakeItGreatUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -823,6 +992,7 @@
 		};
 		E9D63A882563FAC700C154F4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 07BB2EED67B2FEFD2775D453 /* Pods-MakeItGreat-MakeItGreatUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
