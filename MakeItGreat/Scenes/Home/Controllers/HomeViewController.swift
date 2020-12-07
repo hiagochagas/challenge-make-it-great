@@ -113,7 +113,7 @@ class HomeViewController: UIViewController, ModalHandler {
 
     @objc func keyboardWillHide(notification:NSNotification) {
 
-        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+        let contentInset:UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
         contentView.tasksTableView.contentInset = contentInset
     }
 }
