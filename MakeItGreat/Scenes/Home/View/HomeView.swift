@@ -15,7 +15,7 @@ protocol HomeViewDelegate: class {
 
 class HomeView: UIView, ViewCode {    
     
-    let listName = ["Next", "Inbox", "Waiting", "Maybe", "Projects"]
+    let listName = ["Next", "Inbox", "Maybe", "Waiting", "Projects"]
     
     let tasksTableView: UITableView = {
         let tbv = UITableView()

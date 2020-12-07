@@ -41,6 +41,15 @@ class HomeViewModel {
             sortedNext = sortedNext?.filter({ $0.status != true })
         }
     }
+    
+    var maybe: List? {
+        didSet {
+            sortedMaybe = maybe?.tasks?.allObjects as? [Task]
+            sortedMaybe = sortedMaybe?.sorted(by: { ($0.createdAt ?? Date() < $1.createdAt ?? Date() ) })
+            sortedMaybe = sortedMaybe?.filter({ $0.status != true })
+        }
+    }
+
     var projects: [Project]? {
         didSet {
             // Order by date
@@ -55,7 +64,7 @@ class HomeViewModel {
             sortedProjects = sortedProjects?.sorted(by: { $0.project.createdAt ?? Date() < $1.project.createdAt ?? Date() })
         }
     }
-    var maybe: List?
+    
     
     //sorted lists
     var sortedInbox: [Task]?
