@@ -180,14 +180,6 @@ class HomeViewModelTest: XCTestCase {
         XCTAssertTrue(tasks == numberOfCells - 1)
     }
     
-    func test_getNumberOfCellsFromProjects() {
-        guard let project = sut.createProject(viewContext: mockPersistantContainer.viewContext, name: "Project Created for Tests") else {return}
-        guard let task = sut.createTask(name: "Task Created for Tests", viewContext: mockPersistantContainer.viewContext) else { return }
-        sut.insertTaskToProject(task: task, project: project)
-        let numberOfCells = sut.getNumberOfCellsFromProjects(context: mockPersistantContainer.viewContext)
-        XCTAssertTrue(numberOfCells == 4)
-    }
-    
     //MARK: mock in-memory persistant store
       lazy var managedObjectModel: NSManagedObjectModel = {
           let managedObjectModel = NSManagedObjectModel.mergedModel(from: [Bundle(for: type(of: self))] )!
