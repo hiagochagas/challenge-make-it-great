@@ -7,15 +7,28 @@ enum EnumLists {
     case Waiting
     case Next
     case Maybe
+    case Projects
 }
 
 import Foundation
 import UIKit
 import CoreData
 
-struct ProjectViewModel {
+class ProjectViewModel {
     var project: Project
-    var tasks: [Task]
+    var tasks: [Task] {
+        project.getTasks()
+    }
+    var tasksRows: [Int] = []
+    var projectRow: Int
+    var totalCells: Int {
+        return 1 + tasks.count
+    }
+    
+    init(project: Project, projectRow: Int) {
+        self.project = project
+        self.projectRow = projectRow
+    }
 }
 
 class HomeViewModel {
@@ -41,26 +54,11 @@ class HomeViewModel {
             sortedNext = sortedNext?.filter({ $0.status != true })
         }
     }
-    var projects: [Project]? {
+    var projects: List? {
         didSet {
-            // Order by date
-            sortedProjects = []
-            
-            let orderedProjects = projects?.sorted(by: {($0.createdAt ?? Date() < $1.createdAt ?? Date())})
-
-            guard let projectsList = orderedProjects else { return }
-            
-            for project in projectsList {
-                sortedProjects?.append(ProjectViewModel(project: project, tasks: project.getTasks()))
-            }
-            
-            sortedProjects = sortedProjects?.sorted(by: { $0.project.createdAt ?? Date() < $1.project.createdAt ?? Date() })
-            self.arrayOfProjectsIndexes = []
-            var count = 0
-            for project in sortedProjects! {
-                self.arrayOfProjectsIndexes.append(count)
-                count += project.tasks.count + 2
-            }
+            sortedProjects = projects?.tasks?.allObjects as? [Task]
+            sortedProjects = sortedProjects?.sorted(by: { ( $0.createdAt ?? Date() < $1.createdAt ?? Date() ) })
+            sortedProjects = sortedProjects?.filter({ $0.status != true })
         }
     }
     var maybe: List? {
@@ -75,9 +73,8 @@ class HomeViewModel {
     var sortedInbox: [Task]?
     var sortedWaiting: [Task]?
     var sortedNext: [Task]?
-    var sortedProjects: [ProjectViewModel]?
+    var sortedProjects: [Task]?
     var sortedMaybe: [Task]?
-    var arrayOfProjectsIndexes: [Int] = []
     
     //context
     static let context: NSManagedObjectContext = AppDelegate.viewContext
@@ -127,6 +124,8 @@ class HomeViewModel {
             next?.addToTasks(task)
         case .Waiting:
             waiting?.addToTasks(task)
+        case .Projects:
+            projects?.addToTasks(task)
         }
     }
     
@@ -181,6 +180,8 @@ class HomeViewModel {
                 next = list
             case "Maybe":
                 maybe = list
+            case "Projects":
+                projects = list
             default:
                 print("Nada acontece")
             
@@ -198,6 +199,8 @@ class HomeViewModel {
             return self.next
         case .Waiting:
             return self.waiting
+        case .Projects:
+            return self.projects
         }
     }
     
@@ -224,14 +227,14 @@ class HomeViewModel {
         projectItem.name = name
         projectItem.createdAt = Date()
         projectItem.movedAt = Date()
-        self.projects?.append(projectItem)
+        //self.projects?.append(projectItem)
         save(context: viewContext)
         return projectItem
     }
     
     func fetchProjects(viewContext: NSManagedObjectContext = context) -> [Project] {
         let fetchResults = Project.fetchAllProjects(viewContext: viewContext)
-        self.projects = fetchResults
+        //self.projects = fetchResults
         return fetchResults
     }
     

@@ -15,7 +15,6 @@ enum TaskCellPriority {
 
 enum CellType {
     case project
-    case subtask
     case normalTask
 }
 
@@ -27,7 +26,7 @@ class TaskCell: UITableViewCell, ViewCode {
     
     static let reuseIdentifier = "taskCell"
     var checkboxLeftAnchorConstant = 16
-    var returnFromEditingModeAction: ((Bool?, IndexPath?) -> Void)?
+    var returnFromEditingModeAction: ((Bool?, IndexPath?, CellType?) -> Void)?
     weak var taskDelegate: TaskCheckboxDelegate?
     var id: UUID?
     var indexPath: IndexPath?
@@ -102,12 +101,9 @@ class TaskCell: UITableViewCell, ViewCode {
     }
     
     internal func setConstraints() {
-        
-        checkboxLeftAnchorConstant = type == .subtask ? 32 : 16
-        
         NSLayoutConstraint.activate([
             
-            checkbox.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: CGFloat(checkboxLeftAnchorConstant)),
+            checkbox.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
             checkbox.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             checkbox.heightAnchor.constraint(equalToConstant: 27),
             checkbox.widthAnchor.constraint(equalTo: checkbox.heightAnchor),
@@ -210,8 +206,6 @@ class TaskCell: UITableViewCell, ViewCode {
         case .project:
             configureAsNormalTaskCell()
             configAsProjectCell()
-        case .subtask:
-            configureAsNormalTaskCell()
         case .none:
             print("Não implementado.")
         }
@@ -251,7 +245,7 @@ extension TaskCell: UITextFieldDelegate {
         taskLabel.isHidden = false
         self.taskLabel.text = taskTextField.text
         checkbox.isUserInteractionEnabled = true
-        returnFromEditingModeAction?(isGhostCell, self.indexPath)
+        returnFromEditingModeAction?(isGhostCell, self.indexPath, type)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

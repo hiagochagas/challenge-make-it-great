@@ -55,7 +55,7 @@ class HomeViewController: UIViewController {
     
 
     
-    private func returnFromEditingModeAction(_ state: Bool?, indexPath: IndexPath?) {
+    private func returnFromEditingModeAction(_ state: Bool?, indexPath: IndexPath?, type: CellType?) {
         let tableView = contentView.tasksTableView
         
         let isGhostCell = state ?? false
@@ -63,46 +63,23 @@ class HomeViewController: UIViewController {
         
         if isGhostCell {
             guard let cell = tableView.cellForRow(at: indexPath ?? IndexPath(row: 0, section: 0)) as? TaskCell else { return }
-            if isShowingProjects {
-                if viewModel.getRelatedProjectFromGhostCell(at: row) == nil {
-                    _ = viewModel.createProject(name: cell.taskTextField.text ?? "")
-                    tableView.insertRows(at: [IndexPath(row: row+1, section: 0), IndexPath(row: row+2, section: 0)], with: .automatic)
-
-                } else {
-                    guard let relatedProject = viewModel.getRelatedProjectFromGhostCell(at: row) else { return }
-                    guard let newTask = viewModel.createTask(name: cell.taskTextField.text ?? "") else { return }
-                    viewModel.insertTaskToProject(task: newTask, project: relatedProject)
-                    tableView.insertRows(at: [IndexPath(row: row+1, section: 0)], with: .automatic)
-                }
-            } else {
                 viewModel.addNewTask(name: cell.taskTextField.text ?? "", to: currentShowingList)
                 tableView.insertRows(at: [IndexPath(row: row+1, section: 0)], with: .automatic)
-            }
-            tableView.reloadData()
+            
         } else {
+            
             guard let indexPath = indexPath, let cell = tableView.cellForRow(at: indexPath) as? TaskCell else { return }
-            if isShowingProjects {
-                if viewModel.arrayOfProjectsIndexes.contains(row) {
-                    guard let project = viewModel.getProjectFromIndex(row) else {
-                        print("Não foi possível pegar projeto através do index.")
-                        return
-                    }
-                    viewModel.updateProject(project: project, name: cell.taskTextField.text ?? "", status: project.status, movedAt: project.movedAt ?? Date(), finishedAt: project.finishedAt ?? Date())
-                } else {
-                    guard let task = viewModel.getTaskInfoFromProject(at: row) else {
-                        print("Não foi possível pegar subtask através do index")
-                        return
-                    }
-                    viewModel.updateTask(task: task, name: cell.taskTextField.text ?? "", finishedAt: task.finishedAt ?? Date(), lastMovedAt: task.lastMovedAt ?? Date(), priority: task.priority, status: task.status)
-                }
-                
-            } else {
-                let taskList = viewModel.getTaskList(list: currentShowingList)
-                let task = taskList[indexPath.row]
-                viewModel.updateTask(task: task, name: cell.taskTextField.text ?? "", finishedAt: task.finishedAt!, lastMovedAt: task.lastMovedAt!, priority: task.priority, status: task.status)
-            }
-            tableView.reloadData()
+            let taskList = viewModel.getTaskList(list: currentShowingList)
+            let task = taskList[indexPath.row]
+            
+            viewModel.updateTask(task: task,
+                                 name: cell.taskTextField.text ?? "",
+                                 finishedAt: task.finishedAt!,
+                                 lastMovedAt: task.lastMovedAt!,
+                                 priority: task.priority,
+                                 status: task.status)
         }
+        tableView.reloadData()
     }
 }
 
@@ -146,13 +123,12 @@ extension HomeViewController: UITableViewDelegate {
             print("go to bottomsheet")
         }
         
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, completionHandler) in
             
             view.backgroundColor = .deleteActionBackground
             
             //delete task from core data through viewModel
-            
-            self.viewModel.deleteTask(at: indexPath.row, from: self.currentShowingList)
+            viewModel.deleteTask(at: indexPath.row, from: self.currentShowingList)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         
@@ -165,11 +141,7 @@ extension HomeViewController: UITableViewDelegate {
 extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isShowingProjects {
-            return viewModel.getNumberOfCellsFromProjects()
-        } else {
-            return viewModel.getNumberOfCells(from: currentShowingList)
-        }
+        return viewModel.getNumberOfCells(from: currentShowingList)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -181,40 +153,17 @@ extension HomeViewController: UITableViewDataSource {
         }
         cell.taskDelegate = self
         cell.returnFromEditingModeAction = returnFromEditingModeAction
-        
-        if isShowingProjects {
-            let (isGhostCell, isProjectGhostCell) = viewModel.isGhostCellInProject(at: indexPath.row)
-            // se for ghost cell da tela de projetos tem uma logica especifica
-            if isGhostCell {
-                if isProjectGhostCell {
-                    cell.type = .normalTask
-                    cell.isGhostCell = true
-                } else {
-                    cell.type = .subtask
-                    cell.isGhostCell = true
-                }
-            // se for uma celula normal, mas da tela de projetos
-            } else {
-                let projectIndexes = viewModel.arrayOfProjectsIndexes 
-                if projectIndexes.contains(indexPath.row) {
-                    cell.type = .project
-                    let indexOnList = projectIndexes.firstIndex(of: indexPath.row)
-                    let projectViewModel = viewModel.sortedProjects?[indexOnList ?? 0]
-                    cell.projectInfo = projectViewModel?.project
-                } else {
-                    cell.type = .subtask
-                    cell.taskInfo = viewModel.getTaskInfoFromProject(at: indexPath.row)
-                }
-            }
-            
+
+        if viewModel.isGhostCell(list: currentShowingList, at: indexPath.row) {
+            cell.isGhostCell = true
+            cell.type = .none
         } else {
-            if viewModel.isGhostCell(list: currentShowingList, at: indexPath.row) {
-                cell.isGhostCell = true
-                cell.type = .none
+            if isShowingProjects {
+                cell.type = .project
             } else {
                 cell.type = .normalTask
-                cell.taskInfo = viewModel.getTaskList(list: currentShowingList)[indexPath.row]
             }
+            cell.taskInfo = viewModel.getTaskList(list: currentShowingList)[indexPath.row]
         }
         
         cell.configCell()
