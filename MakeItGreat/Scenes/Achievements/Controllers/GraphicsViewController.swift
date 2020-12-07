@@ -45,6 +45,12 @@ class GraphicsViewController: UIViewController {
             contentView.nothingToShowLabel.isHidden = true
         }
     }
+    
+    func reloadCalendarAndTableView() {
+        self.contentView.calendar.reloadData()
+        self.displayTasks()
+        self.contentView.tableView.reloadData()
+    }
 }
 
 

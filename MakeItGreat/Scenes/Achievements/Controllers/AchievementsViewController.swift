@@ -11,6 +11,8 @@ class AchievementsViewController: UIViewController {
     let graphicsVC = GraphicsViewController()
     let badgesVC = BadgesViewController()
     
+    weak var coordinator: AchievementsCoordinator?
+    
     override func loadView() {
         view = contentView
     }
