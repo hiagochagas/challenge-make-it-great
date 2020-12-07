@@ -175,7 +175,7 @@ extension HomeView: UICollectionViewDelegate {
             
         case 4:
             
-            delegate?.changeCurrentListView(list: .Inbox, shouldShowProjects: true)
+            delegate?.changeCurrentListView(list: .Projects, shouldShowProjects: true)
             selectCollectionViewCell(at: indexPath)
             deselectItemsCollectionViewCell(at: listOfIndexsToDeselected)
             

@@ -8,6 +8,11 @@
 import UIKit
 import CoreData
 
+enum GhostCellResponse {
+    case projectGhost
+    case subtaskGhost
+}
+
 extension HomeViewModel {
     func getNumberOfCells(from list: EnumLists, context: NSManagedObjectContext = context) -> Int {
         fetchAllLists(viewContext: context)
@@ -21,20 +26,11 @@ extension HomeViewModel {
             numberOfCells = sortedNext?.count ?? 0
         case .Waiting:
             numberOfCells = sortedWaiting?.count ?? 0
+        case .Projects:
+            numberOfCells = sortedProjects?.count ?? 0
         }
         // returns one extra cell for presenting the ghost cell
         return numberOfCells + 1
-    }
-    
-    func getNumberOfCellsFromProjects(context: NSManagedObjectContext = context) -> Int {
-        _ = fetchProjects(viewContext: context)
-        guard let projects = self.projects else { return 1 }
-        var cells = 1
-        for item in projects {
-            cells += item.tasks?.count ?? 0
-            cells += 2
-        }
-        return cells
     }
     
     func isGhostCell(list: EnumLists, at index: Int) -> Bool {
@@ -47,34 +43,10 @@ extension HomeViewModel {
             return index == (sortedNext?.count ?? 0)
         case .Waiting:
             return index == (sortedWaiting?.count ?? 0)
+        case .Projects:
+            return index == (sortedProjects?.count ?? 0)
         }
     }
-    
-    func isGhostCellInProject(at index: Int) -> Bool {
-        guard let projectViewModel = sortedProjects else { return true }
-        var arrayOfProjectsIndexes: [Int] = []
-        var count = 0
-        for project in projectViewModel {
-            arrayOfProjectsIndexes.append(count)
-            count += project.tasks.count + 2
-        }
-        
-        if index == (arrayOfProjectsIndexes.last ?? -1) + 1 {
-            return true
-        }
-        for indexOfProject in arrayOfProjectsIndexes {
-            if indexOfProject != 0 {
-                if index == indexOfProject - 1 {
-                    return true
-                } else {
-                    return false
-                }
-            }
-        }
-        return true
-    }
-    
-    
     
     func getTaskList(list: EnumLists) -> [Task] {
         switch list {
@@ -86,6 +58,8 @@ extension HomeViewModel {
             return sortedNext ?? []
         case .Waiting:
             return sortedWaiting ?? []
+        case .Projects:
+            return sortedProjects ?? []
         }
     }
     
@@ -115,6 +89,8 @@ extension HomeViewModel {
             return IndexPath(row: sortedNext?.count ?? 0, section: 0)
         case .Waiting:
             return IndexPath(row: sortedWaiting?.count ?? 0, section: 0)
+        case .Projects:
+            return IndexPath(row: sortedProjects?.count ?? 0, section: 0)
         }
     }
     
@@ -137,6 +113,9 @@ extension HomeViewModel {
             removeTaskFromList(task: task, context: context)
         case .Waiting:
             guard let task = sortedWaiting?[index] else { return }
+            removeTaskFromList(task: task, context: context)
+        case .Projects:
+            guard let task = sortedProjects?[index] else { return }
             removeTaskFromList(task: task, context: context)
         }
     }

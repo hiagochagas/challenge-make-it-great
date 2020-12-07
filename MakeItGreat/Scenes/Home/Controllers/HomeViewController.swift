@@ -62,23 +62,32 @@ class HomeViewController: UIViewController, ModalHandler {
     
 
     
-    private func returnFromEditingModeAction(_ state: Bool?, indexPath: IndexPath?) {
+    private func returnFromEditingModeAction(_ state: Bool?, indexPath: IndexPath?, type: CellType?) {
         let tableView = contentView.tasksTableView
         
         let isGhostCell = state ?? false
+        let row = indexPath?.row ?? 0
         
         if isGhostCell {
-            guard let cell = tableView.cellForRow(at: viewModel.getLastCellIndexPath(list: currentShowingList)) as? TaskCell else { return }
-            viewModel.addNewTask(name: cell.taskTextField.text ?? "", to: currentShowingList)
-            tableView.insertRows(at: [viewModel.getLastCellIndexPath(list: currentShowingList)], with: .automatic)
-            tableView.reloadData()
+            guard let cell = tableView.cellForRow(at: indexPath ?? IndexPath(row: 0, section: 0)) as? TaskCell else { return }
+                viewModel.addNewTask(name: cell.taskTextField.text ?? "", to: currentShowingList)
+                tableView.insertRows(at: [IndexPath(row: row+1, section: 0)], with: .automatic)
+            
         } else {
+            
             guard let indexPath = indexPath, let cell = tableView.cellForRow(at: indexPath) as? TaskCell else { return }
             let taskList = viewModel.getTaskList(list: currentShowingList)
             let task = taskList[indexPath.row]
-            viewModel.updateTask(task: task, name: cell.taskTextField.text ?? "", finishedAt: task.finishedAt!, lastMovedAt: task.lastMovedAt!, priority: task.priority, status: task.status)
-            tableView.reloadData()
+            
+            viewModel.updateTask(task: task,
+                                 name: cell.taskTextField.text ?? "",
+                                 finishedAt: task.finishedAt!,
+                                 lastMovedAt: task.lastMovedAt!,
+                                 priority: task.priority,
+                                 status: task.status)
         }
+        
+        tableView.reloadData()
     }
 }
 
@@ -86,12 +95,22 @@ class HomeViewController: UIViewController, ModalHandler {
 extension HomeViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == tableView.numberOfRows(inSection: 0)-1 {
-            guard let cell = tableView.cellForRow(at: indexPath) as? TaskCell else { return }
+        
+        guard let cell = tableView.cellForRow(at: indexPath) as? TaskCell else { return }
+        let isGhostCell = cell.isGhostCell ?? false
+        
+        if isGhostCell {
+            
             cell.configureAsNormalTaskCell()
             cell.taskLabel.isHidden = true
             cell.taskTextField.isHidden = false
             cell.taskTextField.becomeFirstResponder()
+            
+        } else {
+            
+            cell.taskLabel.isHidden = true
+            cell.taskTextField.isHidden = false
+            cell.taskTextField.text = cell.taskLabel.text
         }
     }
     
@@ -128,13 +147,12 @@ extension HomeViewController: UITableViewDelegate {
 
         }
         
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, completionHandler) in
             
             view.backgroundColor = .deleteActionBackground
             
             //delete task from core data through viewModel
-            
-            self.viewModel.deleteTask(at: indexPath.row, from: self.currentShowingList)
+            viewModel.deleteTask(at: indexPath.row, from: self.currentShowingList)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         
@@ -146,16 +164,8 @@ extension HomeViewController: UITableViewDelegate {
 // MARK: TableView DataSource
 extension HomeViewController: UITableViewDataSource {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        if isShowingProjects {
-            return viewModel.sortedProjects?.count ?? 1
-        } else {
-            return 1
-        }
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.getNumberOfCells(from: currentShowingList)
+        return viewModel.getNumberOfCells(from: currentShowingList)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -167,22 +177,17 @@ extension HomeViewController: UITableViewDataSource {
         }
         cell.taskDelegate = self
         cell.returnFromEditingModeAction = returnFromEditingModeAction
-        
-        if isShowingProjects {
-            
-            if viewModel.isGhostCellInProject(at: indexPath.row) {
-                cell.isGhostCell = true
-            }
 
-            
+        if viewModel.isGhostCell(list: currentShowingList, at: indexPath.row) {
+            cell.isGhostCell = true
+            cell.type = .none
         } else {
-            if viewModel.isGhostCell(list: currentShowingList, at: indexPath.row) {
-                cell.isGhostCell = true
-                cell.type = .none
+            if isShowingProjects {
+                cell.type = .project
             } else {
                 cell.type = .normalTask
-                cell.taskInfo = viewModel.getTaskList(list: currentShowingList)[indexPath.row]
             }
+            cell.taskInfo = viewModel.getTaskList(list: currentShowingList)[indexPath.row]
         }
         
         cell.configCell()
