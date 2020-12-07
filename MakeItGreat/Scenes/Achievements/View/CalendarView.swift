@@ -37,6 +37,7 @@ class CalendarView: UIView, ViewCode {
         let label = UILabel()
         label.text = "Nothing to show here :("
         label.font = .systemFont(ofSize: 16)
+        label.tintColor = .gray
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -71,6 +72,8 @@ class CalendarView: UIView, ViewCode {
         let distanceFromLeft = (UIScreen.main.bounds.width - width) / 2
         self.calendar = FSCalendar(frame: CGRect(x: distanceFromLeft, y: 0, width: width, height: height))
         self.calendar.placeholderType = .none
+        self.calendar.appearance.headerTitleColor = .black
+        self.calendar.appearance.weekdayTextColor = .blueActionColor
         setupViewCode()
     }
     

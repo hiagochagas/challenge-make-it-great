@@ -18,19 +18,9 @@ class GraphicsViewController: UIViewController {
         contentView.tableView.delegate = self
         contentView.tableView.dataSource = self
         contentView.tableView.register(TaskCompletedTableViewCell.self, forCellReuseIdentifier: "TaskCompletedCell")
-//        mockTask()
         displayTasks()
     }
     
-    func mockTask() {
-        let model = HomeViewModel()
-        guard let task = model.createTask(name: "Test task", viewContext: AppDelegate.viewContext) else {return}
-        model.updateTask(task: task, name: "Test task", finishedAt: Date(), lastMovedAt: Date(), priority: 1, status: false, viewContext: AppDelegate.viewContext)
-        guard let task2 = model.createTask(name: "Test task", viewContext: AppDelegate.viewContext) else {return}
-        model.updateTask(task: task2, name: "Test task", finishedAt: Date(), lastMovedAt: Date(), priority: 2, status: false, viewContext: AppDelegate.viewContext)
-        guard let task3 = model.createTask(name: "Test task", viewContext: AppDelegate.viewContext) else {return}
-        model.updateTask(task: task3, name: "Test task", finishedAt: Date(), lastMovedAt: Date(), priority: 3, status: true, viewContext: AppDelegate.viewContext)
-    }
     func displayTasks(_ date: Date = Date()) {
         let calendar = NSCalendar(calendarIdentifier:NSCalendar.Identifier.gregorian)
         let month = getMonthName(date, calendar: calendar!)

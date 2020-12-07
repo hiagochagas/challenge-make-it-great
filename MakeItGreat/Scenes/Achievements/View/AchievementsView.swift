@@ -11,11 +11,11 @@ class AchievementView: UIView, ViewCode {
     let segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["Calendar", "Milestones"])
         segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.backgroundColor = .lightBlueSegmentedControlColor
-        segmentedControl.selectedSegmentTintColor = .darkBlueSegmentedControlColor
+        segmentedControl.backgroundColor = .blueSecondaryColor
+        segmentedControl.selectedSegmentTintColor = .blueActionColor
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         
-        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.darkBlueSegmentedControlColor]
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.blueActionColor]
         segmentedControl.setTitleTextAttributes(titleTextAttributes, for:.normal)
         
         let titleTextAttributes1 = [NSAttributedString.Key.foregroundColor: UIColor.white]
