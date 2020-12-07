@@ -97,6 +97,7 @@ class HomeViewController: UIViewController, ModalHandler {
                                  priority: task.priority,
                                  status: task.status)
         }
+        
         tableView.reloadData()
     }
     
@@ -122,15 +123,23 @@ class HomeViewController: UIViewController, ModalHandler {
 extension HomeViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         guard let cell = tableView.cellForRow(at: indexPath) as? TaskCell else { return }
         let isGhostCell = cell.isGhostCell ?? false
+        
         if isGhostCell {
+            
             cell.configureAsNormalTaskCell()
             cell.taskLabel.isHidden = true
             cell.taskTextField.isHidden = false
             cell.taskTextField.becomeFirstResponder()
+            
+        } else {
+            
+            cell.taskLabel.isHidden = true
+            cell.taskTextField.isHidden = false
+            cell.taskTextField.text = cell.taskLabel.text
         }
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

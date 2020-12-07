@@ -69,6 +69,7 @@ class HomeViewModel {
         }
     }
     
+    
     //sorted lists
     var sortedInbox: [Task]?
     var sortedWaiting: [Task]?

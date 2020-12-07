@@ -122,13 +122,6 @@ class TaskCell: UITableViewCell, ViewCode {
         super.layoutSubviews()
     }
     
-    private func editTaskLabel() {
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(didTouchLabel))
-        taskLabel.addGestureRecognizer(tap)
-       
-    }
-    
     public func setTaskLabelText(_ text: String) {
         taskLabel.text = text
     }
@@ -173,9 +166,9 @@ class TaskCell: UITableViewCell, ViewCode {
     }
     
     public func configureAsNormalTaskCell() {
+        
         taskLabel.textColor = .black
         taskLabel.isUserInteractionEnabled = true
-        editTaskLabel()
         changeCheckboxState()
         checkbox.tintColor = .blueActionColor
         checkbox.addTarget(self, action: #selector(didTouchCheckbox), for: .touchUpInside)
@@ -207,7 +200,7 @@ class TaskCell: UITableViewCell, ViewCode {
             configureAsNormalTaskCell()
             configAsProjectCell()
         case .none:
-            print("Não implementado.")
+            configureAsGhostCell()
         }
         let ghostCell = isGhostCell ?? false
         if ghostCell {
@@ -216,19 +209,13 @@ class TaskCell: UITableViewCell, ViewCode {
     }
     
     @objc func didTouchCheckbox() {
+        
         isChecked?.toggle()
         taskDelegate?.didChangeStateCheckbox(id: id, indexPath: self.indexPath)
     }
-
-    @objc func didTouchLabel() {
-        
-        taskLabel.isHidden = true
-        taskTextField.isHidden = false
-        taskTextField.text = taskLabel.text
-        checkbox.isUserInteractionEnabled = false
-    }
     
     override func prepareForReuse() {
+        
         super.prepareForReuse()
         isChecked = nil
         isGhostCell = nil
