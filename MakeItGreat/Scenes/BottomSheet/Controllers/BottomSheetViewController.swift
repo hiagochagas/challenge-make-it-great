@@ -11,18 +11,21 @@ protocol ModalHandler {
 }
 
 class BottomSheetViewController: UIViewController {
-    let lists = ["Next", "Inbox", "Waiting", "Projects", "Maybe"]
+    let lists = ["Next", "Inbox", "Waiting", "Maybe"]
     let homeModel = HomeViewModel()
     var task: Task?
+    var list: EnumLists?
     var delegate: ModalHandler?
     var contentView: UIView = UIView() // trocar pela view especifica depois
     var viewModel: BottomSheetViewModel?
     var taskNameTextField: UITextField?
+    var pickerTextField: UITextField?
     var tagTextField: UITextField?
     var priority: Int?
     var greenButton: UIButton?
     var yellowButton: UIButton?
     var redButton: UIButton?
+    var picker: UIPickerView?
     
     //    let homeController = HomeViewController(viewModel: HomeViewModel())
     //    weak var homeCoordinator: HomeCoordinator?
@@ -44,6 +47,10 @@ class BottomSheetViewController: UIViewController {
         bottomView.viewController = BottomSheetViewController()
         bottomView.saveButton.addTarget(self, action: #selector(saveButton(_:)), for: .touchUpInside)
         bottomView.cancelButton.addTarget(self, action: #selector(cancelButton(_:)), for: .touchUpInside)
+        pickerTextField = bottomView.textFieldPicker
+        picker = bottomView.listPicker
+        picker?.dataSource = self
+        picker?.delegate = self
         taskNameTextField = bottomView.textFieldTaskTitle
         taskNameTextField?.text = task?.name
         tagTextField = bottomView.textFieldTag
@@ -63,8 +70,14 @@ class BottomSheetViewController: UIViewController {
             redButton?.isSelected = true
         }
         
-        //        bottomView.listPicker.dataSource = self
-        //        bottomView.listPicker.delegate = self
+        if task?.list?.name == "Inbox"  {
+            pickerTextField?.text = "Inbox"
+        } else if task?.list?.name == "Next"  {
+            pickerTextField?.text = "Next"
+        } else if task?.list?.name == "Maybe"  {
+            pickerTextField?.text = "Maybe"
+        }
+    
         self.view = bottomView
         
     }
@@ -84,6 +97,8 @@ class BottomSheetViewController: UIViewController {
 
         // updating the task
         self.homeModel.updateTask(task: task, name: taskNameTextField?.text ?? "", finishedAt: Date(), lastMovedAt: task.lastMovedAt ?? Date(), priority: Int64(priority ?? 0), status: task.status, tags: tagTextField?.text ?? "")
+        
+        self.homeModel.insertTaskToList(task: task, list: list ?? .Inbox )
         
         tagTextField?.text = task.tags
         taskNameTextField?.text = task.name
@@ -136,20 +151,36 @@ class BottomSheetViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardAppeared(notification:)), name: .expandModal, object: nil)
+
     }
-    //    @objc func keyboardAppeared(notification: NSNotification){
-    //        // expand view
-    //    }
+
 }
 
-extension BottomSheetViewController: UIPickerViewDataSource,UIPickerViewDelegate {
+extension BottomSheetViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         lists.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        if lists[row] == "Inbox"  {
+            pickerTextField?.text = "Inbox"
+            list = .Inbox
+        } else if lists[row] == "Next"  {
+            pickerTextField?.text = "Next"
+            list = .Next
+        } else if lists[row] == "Maybe"  {
+            pickerTextField?.text = "Maybe"
+            list = .Maybe
+        } else if lists[row] == "Waiting"  {
+            pickerTextField?.text = "Waiting"
+            list = .Waiting
+        }
+        
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
@@ -162,9 +193,3 @@ extension BottomSheetViewController: UIPickerViewDataSource,UIPickerViewDelegate
     }
     
 }
-
-extension Notification.Name {
-    static let expandModal = Notification.Name("expandModal")
-    
-}
-
