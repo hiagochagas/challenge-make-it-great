@@ -10,7 +10,13 @@ class BottomSheetView: UIView {
     var viewController: BottomSheetViewController?
     weak var bottomSheetHeightConstraint: NSLayoutConstraint?
     weak var bottomSheetHeightConstraintAfterUpdate: NSLayoutConstraint?
+    var keyboardHeight: CGFloat?
     let bottomSheetTopAnchorValue: CGFloat = 300
+    let sizeForTitles: CGFloat = 17
+    let fontSemibold: String = "Varta-SemiBold"
+    let sizeForText: CGFloat = 17
+    let fontRegular: String = "Varta-Regular"
+//    let fontBold
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -48,6 +54,7 @@ class BottomSheetView: UIView {
     @objc lazy var saveButton: UIButton = {
         let button = UIButton()
         button.setTitle("Save", for: .normal)
+        button.titleLabel?.font = UIFont(name: fontSemibold, size: 20)
         button.setTitleColor(UIColor.blueActionColor, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -56,6 +63,7 @@ class BottomSheetView: UIView {
     lazy var cancelButton: UIButton = {
         let button = UIButton()
         button.setTitle("Cancel", for: .normal)
+        button.titleLabel?.font = UIFont(name: fontSemibold, size: 20)
         button.setTitleColor(UIColor.blueActionColor, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -67,6 +75,8 @@ class BottomSheetView: UIView {
         let textField = UITextField()
         textField.backgroundColor = UIColor.blueSecondaryColor
         textField.placeholder = "title of the task"
+        textField.font = UIFont(name: fontSemibold, size: sizeForText)
+        textField.autocorrectionType = .no
         textField.textColor = .black
         textField.textAlignment = .center
         textField.borderStyle = .none
@@ -76,14 +86,13 @@ class BottomSheetView: UIView {
     }()
     
     
-        lazy var listPicker: UIPickerView = {
-            let picker = UIPickerView()
-            picker.backgroundColor = UIColor.blueSecondaryColor
-//            picker.layer.cornerRadius = 10
-//            picker.transform = CGAffineTransform(scaleX: 0.8, y: 0.8);
-            picker.translatesAutoresizingMaskIntoConstraints = false
-            return picker
-        }()
+    lazy var listPicker: UIPickerView = {
+        let picker = UIPickerView()
+        picker.backgroundColor = UIColor.blueSecondaryColor
+//        picker.heightAnchor.constraint(equalToConstant: keyboardHeight ?? 20).isActive = true
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        return picker
+    }()
     
     lazy var redButton: UIButton = {
         let button = UIButton()
@@ -118,6 +127,7 @@ class BottomSheetView: UIView {
     lazy var listLabel: UILabel = {
         let label = UILabel()
         label.text = "List"
+        label.font = UIFont(name: fontSemibold, size: sizeForTitles)
         label.tintColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -127,6 +137,8 @@ class BottomSheetView: UIView {
         let textField = UITextField()
         textField.backgroundColor = UIColor.blueSecondaryColor
         textField.placeholder = "@tag"
+        textField.autocorrectionType = .no
+        textField.font = UIFont(name: fontRegular, size: 17)
         textField.textColor = .black
         textField.textAlignment = .center
         textField.borderStyle = .none
@@ -138,11 +150,13 @@ class BottomSheetView: UIView {
     lazy var textFieldPicker: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = UIColor.blueSecondaryColor
-//        textField.placeholder = "list"
+        //        textField.placeholder = "list"
         textField.inputView = listPicker
+        textField.font = UIFont(name: fontRegular, size: 17)
         textField.textColor = .black
         textField.textAlignment = .center
         textField.borderStyle = .none
+        textField.autocorrectionType = .no
         textField.layer.cornerRadius = 8
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
@@ -151,6 +165,7 @@ class BottomSheetView: UIView {
     lazy var tagLabel: UILabel = {
         let label = UILabel()
         label.text = "Tag"
+        label.font = UIFont(name: fontSemibold, size: sizeForTitles)
         label.tintColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -167,6 +182,7 @@ class BottomSheetView: UIView {
     lazy var priorityLabel: UILabel = {
         let label = UILabel()
         label.text = "Priority"
+        label.font = UIFont(name: fontSemibold, size: sizeForTitles)
         label.tintColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -214,19 +230,19 @@ class BottomSheetView: UIView {
             textFieldPicker.topAnchor.constraint(equalTo: textFieldTaskTitle.bottomAnchor, constant: 35),
             textFieldPicker.widthAnchor.constraint(equalToConstant: 200),
             textFieldPicker.heightAnchor.constraint(equalToConstant: 30),
-            textFieldPicker.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 30),
-
+            textFieldPicker.leftAnchor.constraint(equalTo: listLabel.rightAnchor, constant: 56),
+            
             tagLabel.topAnchor.constraint(equalTo: listLabel.bottomAnchor, constant: 32),
             tagLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35),
-
+            
             textFieldTag.topAnchor.constraint(equalTo: listLabel.bottomAnchor, constant: 27),
             textFieldTag.widthAnchor.constraint(equalToConstant: 200),
             textFieldTag.heightAnchor.constraint(equalToConstant: 30),
             textFieldTag.leftAnchor.constraint(equalTo: tagLabel.rightAnchor, constant: 56),
-
+            
             priorityLabel.topAnchor.constraint(equalTo: tagLabel.bottomAnchor, constant: 32),
             priorityLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35),
-
+            
             priority.topAnchor.constraint(equalTo: tagLabel.bottomAnchor, constant: 32),
             priority.leftAnchor.constraint(equalTo: priorityLabel.rightAnchor, constant: 32),
             priority.widthAnchor.constraint(equalToConstant: 200),
@@ -235,10 +251,18 @@ class BottomSheetView: UIView {
         ])
     }
     
+
     @objc func keyboardWillShow(sender: NSNotification) {
         let info = sender.userInfo!
-        let keyboardSize = (info[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
-        bottomSheetHeightConstraintAfterUpdate = bottomSheet.topAnchor.constraint(equalTo: self.topAnchor, constant: bottomSheetTopAnchorValue - keyboardSize)
+        let keyboardFrame = (info[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue)
+        let keyboardRectangle = keyboardFrame.cgRectValue
+        let keyboardHeight = keyboardRectangle.height
+        removeConstraints(listPicker.constraints)
+        NSLayoutConstraint.deactivate(listPicker.constraints)
+        
+        listPicker.heightAnchor.constraint(equalToConstant: keyboardHeight).isActive = true
+        
+        bottomSheetHeightConstraintAfterUpdate = bottomSheet.topAnchor.constraint(equalTo: self.topAnchor, constant: 100)
         removeConstraint(bottomSheetHeightConstraint ?? NSLayoutConstraint())
         bottomSheetHeightConstraintAfterUpdate?.isActive = true
     }
