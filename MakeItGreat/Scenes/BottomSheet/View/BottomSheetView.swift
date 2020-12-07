@@ -211,7 +211,6 @@ class BottomSheetView: UIView {
             textFieldTaskTitle.centerXAnchor.constraint(equalTo: bottomSheet.centerXAnchor),
             
             listLabel.topAnchor.constraint(equalTo: textFieldTaskTitle.bottomAnchor, constant: 42),
-//            listLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             listLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35),
             
             textFieldPicker.topAnchor.constraint(equalTo: textFieldTaskTitle.bottomAnchor, constant: 35),
@@ -219,12 +218,7 @@ class BottomSheetView: UIView {
             textFieldPicker.heightAnchor.constraint(equalToConstant: 30),
             textFieldPicker.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 30),
 
-            
-//        listPicker.topAnchor.constraint(equalTo: textFieldTaskTitle.bottomAnchor, constant: 20),
-//            listPicker.leftAnchor.constraint(equalTo: listLabel.rightAnchor, constant: 0),
-
             tagLabel.topAnchor.constraint(equalTo: listLabel.bottomAnchor, constant: 32),
-
             tagLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35),
 
             textFieldTag.topAnchor.constraint(equalTo: listLabel.bottomAnchor, constant: 27),

@@ -11,7 +11,7 @@ protocol ModalHandler {
 }
 
 class BottomSheetViewController: UIViewController {
-    let lists = ["Next", "Inbox", "Waiting", "Maybe"]
+    let lists = ["Next", "Inbox", "Waiting", "Maybe", "Projects"]
     let homeModel = HomeViewModel()
     var task: Task?
     var list: EnumLists?
@@ -26,21 +26,6 @@ class BottomSheetViewController: UIViewController {
     var yellowButton: UIButton?
     var redButton: UIButton?
     var picker: UIPickerView?
-    
-    //    let homeController = HomeViewController(viewModel: HomeViewModel())
-    //    weak var homeCoordinator: HomeCoordinator?
-    
-    
-    //    init(viewModel: BottomSheetViewModel, homeCoordinator: HomeCoordinator, view: BottomSheetView) {
-    //        self.viewModel = viewModel
-    //        self.homeCoordinator = homeCoordinator
-    //        super.init(nibName: nil, bundle: nil)
-    //        self.view = view
-    //    }
-    //
-    //    required init?(coder: NSCoder) {
-    //        super.init(coder: coder)
-    //    }
     
     override func loadView() {
         let bottomView = BottomSheetView()
@@ -62,6 +47,24 @@ class BottomSheetViewController: UIViewController {
         yellowButton?.addTarget(self, action: #selector(checkPriorityButton(_:)), for: .touchUpInside)
         redButton?.addTarget(self, action: #selector(checkPriorityButton(_:)), for: .touchUpInside)
         
+        configPriority()
+        configTextFieldPicker()
+        self.view = bottomView
+    }
+    
+    func configTextFieldPicker() {
+        if task?.list?.name == "Inbox"  {
+            pickerTextField?.text = "Inbox"
+        } else if task?.list?.name == "Next"  {
+            pickerTextField?.text = "Next"
+        } else if task?.list?.name == "Maybe"  {
+            pickerTextField?.text = "Maybe"
+        } else {
+            pickerTextField?.text = "Projects"
+        }
+    }
+    
+    func configPriority() {
         if task?.priority == 1 {
             greenButton?.isSelected = true
         } else if task?.priority == 2 {
@@ -69,16 +72,6 @@ class BottomSheetViewController: UIViewController {
         } else if task?.priority == 3 {
             redButton?.isSelected = true
         }
-        
-        if task?.list?.name == "Inbox"  {
-            pickerTextField?.text = "Inbox"
-        } else if task?.list?.name == "Next"  {
-            pickerTextField?.text = "Next"
-        } else if task?.list?.name == "Maybe"  {
-            pickerTextField?.text = "Maybe"
-        }
-    
-        self.view = bottomView
         
     }
     
@@ -179,6 +172,9 @@ extension BottomSheetViewController: UIPickerViewDataSource, UIPickerViewDelegat
         } else if lists[row] == "Waiting"  {
             pickerTextField?.text = "Waiting"
             list = .Waiting
+        } else if lists[row] == "Projects"  {
+            pickerTextField?.text = "Projects"
+            list = .Projects
         }
         
     }
@@ -193,3 +189,4 @@ extension BottomSheetViewController: UIPickerViewDataSource, UIPickerViewDelegat
     }
     
 }
+

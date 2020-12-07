@@ -26,6 +26,9 @@ public class List: NSManagedObject {
         let maybeList = List(context: AppDelegate.viewContext)
             maybeList.name = "Maybe"
             maybeList.id = UUID()
+        let projectsList = List(context: AppDelegate.viewContext)
+            projectsList.id = UUID()
+            projectsList.name = "Projects"
         do {
             try AppDelegate.viewContext.save()
         } catch {
