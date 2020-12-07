@@ -209,18 +209,17 @@ extension HomeViewController: UITableViewDataSource {
                 cell.type = .project
             } else {
                 cell.type = .normalTask
-                cell.taskInfo = viewModel.getTaskList(list: currentShowingList)[indexPath.row]
-                if cell.taskInfo?.priority == 1 {
-                            cell.setTaskCellPriorityColor(priority: .low)
-                        } else if cell.taskInfo?.priority == 2 {
-                            cell.setTaskCellPriorityColor(priority: .medium)
-                        } else if cell.taskInfo?.priority == 3 {
-                            cell.setTaskCellPriorityColor(priority: .high)
-                        } else {
-                            cell.setTaskCellPriorityColor(priority: .none)
-                        }
             }
             cell.taskInfo = viewModel.getTaskList(list: currentShowingList)[indexPath.row]
+            if cell.taskInfo?.priority == 1 {
+                        cell.setTaskCellPriorityColor(priority: .low)
+                    } else if cell.taskInfo?.priority == 2 {
+                        cell.setTaskCellPriorityColor(priority: .medium)
+                    } else if cell.taskInfo?.priority == 3 {
+                        cell.setTaskCellPriorityColor(priority: .high)
+                    } else {
+                        cell.setTaskCellPriorityColor(priority: .none)
+                    }
         }
         
         cell.configCell()
