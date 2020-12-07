@@ -15,7 +15,7 @@ class HomeViewController: UIViewController, ModalHandler {
     
     
     var viewModel: HomeViewModel
-    weak var homeCoordinator: HomeCoordinator?
+    var homeCoordinator: HomeCoordinator?
     
     // Should change with each touch on lists menu cells
     var currentShowingList: EnumLists = .Inbox {
@@ -223,15 +223,21 @@ extension HomeViewController: UITableViewDataSource {
 
         return cell
     }
+    
+    func deleteRowAt(_ indexPath: IndexPath?, id: UUID?) {
+        guard let id = id, let indexPath = indexPath else { return }
+        self.contentView.tasksTableView.beginUpdates()
+        viewModel.toggleTaskById(id: id)
+        contentView.tasksTableView.deleteRows(at: [indexPath], with: .fade)
+        self.contentView.tasksTableView.endUpdates()
+    }
 }
 
 extension HomeViewController: TaskCheckboxDelegate {
     
     func didChangeStateCheckbox(id: UUID?, indexPath: IndexPath?) {
-        guard let id = id, let indexPath = indexPath else { return }
-        viewModel.toggleTaskById(id: id)
-        _ = viewModel.fetchAllTasks()
-        contentView.tasksTableView.deleteRows(at: [indexPath], with: .automatic)
+        deleteRowAt(indexPath, id: id)
+        homeCoordinator?.reloadCalendarUponCompletingTask()
     }
 }
 

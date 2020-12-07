@@ -21,7 +21,7 @@ class TabBarCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
         achievementsCoordinator = AchievementsCoordinator()
         
         super.init()
-        
+        homeCoordinator.tabBarCoordinator = self
         tabBarController.delegate = self
         setupTabBar()
     }
@@ -49,5 +49,9 @@ class TabBarCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
             viewController.tabBarItem.selectedImage?.withRenderingMode(.alwaysOriginal)
             viewController.title = title
         return viewController
+    }
+    
+    func reloadCalendar() {
+        achievementsCoordinator.reloadCalendar()
     }
 }
