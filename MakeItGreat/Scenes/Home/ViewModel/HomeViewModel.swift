@@ -215,6 +215,8 @@ class HomeViewModel {
             return getList(list: .Next)
         case "Waiting":
             return getList(list: .Waiting)
+        case "Projects":
+            return getList(list: .Projects)
         default:
             return nil
         }
