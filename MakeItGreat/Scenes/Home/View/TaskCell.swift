@@ -15,7 +15,6 @@ enum TaskCellPriority {
 
 enum CellType {
     case project
-    case subtask
     case normalTask
 }
 
@@ -27,23 +26,24 @@ class TaskCell: UITableViewCell, ViewCode {
     
     static let reuseIdentifier = "taskCell"
     var checkboxLeftAnchorConstant = 16
-    var returnFromEditingModeAction: ((Bool?, IndexPath?) -> Void)?
+    var returnFromEditingModeAction: ((Bool?, IndexPath?, CellType?) -> Void)?
     weak var taskDelegate: TaskCheckboxDelegate?
     var id: UUID?
     var indexPath: IndexPath?
     var type: CellType?
-    var taskInfo: Task? {
-        didSet {
-            guard let task = taskInfo else { return }
-            taskLabel.text = task.name
-            isChecked = task.status
-            id = task.id
-        }
-    }
     
     var projectInfo: Project? {
         didSet {
-            guard let task = projectInfo else { return }
+            guard let project = projectInfo else { return }
+            taskLabel.text = project.name
+            isChecked = project.status
+            id = project.id
+        }
+    }
+    
+    var taskInfo: Task? {
+        didSet {
+            guard let task = taskInfo else { return }
             taskLabel.text = task.name
             isChecked = task.status
             id = task.id
@@ -62,6 +62,7 @@ class TaskCell: UITableViewCell, ViewCode {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = true
+        label.font = UIFont(name: "Varta-Regular", size: 15)
         return label
     }()
     
@@ -78,6 +79,7 @@ class TaskCell: UITableViewCell, ViewCode {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.textColor = .black
         textField.borderStyle = .none
+        textField.font = UIFont(name: "Varta-Regular", size: 16)
         textField.isHidden = true
         textField.delegate = self
         
@@ -101,12 +103,9 @@ class TaskCell: UITableViewCell, ViewCode {
     }
     
     internal func setConstraints() {
-        
-        checkboxLeftAnchorConstant = type == .subtask ? 32 : 16
-        
         NSLayoutConstraint.activate([
             
-            checkbox.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: CGFloat(checkboxLeftAnchorConstant)),
+            checkbox.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
             checkbox.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             checkbox.heightAnchor.constraint(equalToConstant: 27),
             checkbox.widthAnchor.constraint(equalTo: checkbox.heightAnchor),
@@ -123,13 +122,6 @@ class TaskCell: UITableViewCell, ViewCode {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-    }
-    
-    private func editTaskLabel() {
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(didTouchLabel))
-        taskLabel.addGestureRecognizer(tap)
-       
     }
     
     public func setTaskLabelText(_ text: String) {
@@ -176,9 +168,9 @@ class TaskCell: UITableViewCell, ViewCode {
     }
     
     public func configureAsNormalTaskCell() {
+        
         taskLabel.textColor = .black
         taskLabel.isUserInteractionEnabled = true
-        editTaskLabel()
         changeCheckboxState()
         checkbox.tintColor = .blueActionColor
         checkbox.addTarget(self, action: #selector(didTouchCheckbox), for: .touchUpInside)
@@ -197,40 +189,35 @@ class TaskCell: UITableViewCell, ViewCode {
     
     public func configAsProjectCell() {
         let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: taskLabel.text ?? "",
-                                                                                    attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17)])
+                                                                                    attributes: [NSAttributedString.Key.font: UIFont(name: "Varta-Bold", size: 16)])
         taskLabel.attributedText = attributeString
     }
     
     public func configCell() {
         setupViewCode()
-        editTaskLabel()
         switch type {
         case .normalTask:
             configureAsNormalTaskCell()
         case .project:
             configureAsNormalTaskCell()
             configAsProjectCell()
-        case .subtask:
-            configureAsNormalTaskCell()
         case .none:
+            configureAsGhostCell()
+        }
+        let ghostCell = isGhostCell ?? false
+        if ghostCell {
             configureAsGhostCell()
         }
     }
     
     @objc func didTouchCheckbox() {
+        
         isChecked?.toggle()
         taskDelegate?.didChangeStateCheckbox(id: id, indexPath: self.indexPath)
     }
-
-    @objc func didTouchLabel() {
-        
-        taskLabel.isHidden = true
-        taskTextField.isHidden = false
-        taskTextField.text = taskLabel.text
-        checkbox.isUserInteractionEnabled = false
-    }
     
     override func prepareForReuse() {
+        
         super.prepareForReuse()
         isChecked = nil
         isGhostCell = nil
@@ -247,7 +234,7 @@ extension TaskCell: UITextFieldDelegate {
         taskLabel.isHidden = false
         self.taskLabel.text = taskTextField.text
         checkbox.isUserInteractionEnabled = true
-        returnFromEditingModeAction?(isGhostCell, self.indexPath)
+        returnFromEditingModeAction?(isGhostCell, self.indexPath, type)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

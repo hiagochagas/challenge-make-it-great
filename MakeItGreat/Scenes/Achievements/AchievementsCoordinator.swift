@@ -17,5 +17,10 @@ class AchievementsCoordinator: Coordinator {
     
     init() {
         achievementsViewController = AchievementsViewController()
+        achievementsViewController.coordinator = self
+    }
+    
+    func reloadCalendar() {
+        achievementsViewController.graphicsVC.reloadCalendarAndTableView()
     }
 }

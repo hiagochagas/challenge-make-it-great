@@ -11,7 +11,7 @@ class TaskCompletedTableViewCell: UITableViewCell, ViewCode {
     let taskLabel: UILabel = {
         let lbl = UILabel()
             lbl.text = "Completed task"
-            lbl.font = .systemFont(ofSize: 16)
+            lbl.font = UIFont(name: "Regular", size: 16)
             lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()

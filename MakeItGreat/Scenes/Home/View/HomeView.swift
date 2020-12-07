@@ -15,7 +15,7 @@ protocol HomeViewDelegate: class {
 
 class HomeView: UIView, ViewCode {    
     
-    let listName = ["Next", "Inbox", "Waiting", "Maybe", "Projects"]
+    let listName = ["Next", "Inbox", "Maybe", "Waiting", "Projects"]
     
     let tasksTableView: UITableView = {
         let tbv = UITableView()
@@ -175,7 +175,7 @@ extension HomeView: UICollectionViewDelegate {
             
         case 4:
             
-            delegate?.changeCurrentListView(list: .Inbox, shouldShowProjects: true)
+            delegate?.changeCurrentListView(list: .Projects, shouldShowProjects: true)
             selectCollectionViewCell(at: indexPath)
             deselectItemsCollectionViewCell(at: listOfIndexsToDeselected)
             
@@ -215,3 +215,5 @@ extension HomeView: UICollectionViewDelegateFlowLayout {
     }
     
 }
+
+

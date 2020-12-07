@@ -15,6 +15,11 @@
 		6E773B6025752C2300C20636 /* TaskCompletedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E773B5F25752C2300C20636 /* TaskCompletedTableViewCell.swift */; };
 		6EB19EE4257E514400A4DDD6 /* BadgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB19EE3257E514400A4DDD6 /* BadgeCollectionViewCell.swift */; };
 		D7F0F69EEE07D05616C48141 /* Pods_MakeItGreat_MakeItGreatUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F9F5859EA1FCFB9F2003507 /* Pods_MakeItGreat_MakeItGreatUITests.framework */; };
+		D863169A257E6A040017363B /* Varta-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D8631695257E6A040017363B /* Varta-Medium.ttf */; };
+		D863169B257E6A040017363B /* Varta-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D8631696257E6A040017363B /* Varta-SemiBold.ttf */; };
+		D863169C257E6A040017363B /* Varta-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D8631697257E6A040017363B /* Varta-Light.ttf */; };
+		D863169D257E6A040017363B /* Varta-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D8631698257E6A040017363B /* Varta-Bold.ttf */; };
+		D863169E257E6A040017363B /* Varta-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D8631699257E6A040017363B /* Varta-Regular.ttf */; };
 		D89F83822577B933007E28A1 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89F83812577B933007E28A1 /* NotificationService.swift */; };
 		E92BEBC2257126C400D21F6D /* HomeViewModel+Facade.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92BEBC1257126C400D21F6D /* HomeViewModel+Facade.swift */; };
 		E930FC50256FC8B3000705E3 /* MockHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E930FC4F256FC8B3000705E3 /* MockHomeViewModel.swift */; };
@@ -89,6 +94,11 @@
 		A3F630DA7035B369E112FE54 /* Pods-MakeItGreatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeItGreatTests.release.xcconfig"; path = "Target Support Files/Pods-MakeItGreatTests/Pods-MakeItGreatTests.release.xcconfig"; sourceTree = "<group>"; };
 		A69986CDB795813B98B3BE66 /* Pods-MakeItGreat-MakeItGreatUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeItGreat-MakeItGreatUITests.debug.xcconfig"; path = "Target Support Files/Pods-MakeItGreat-MakeItGreatUITests/Pods-MakeItGreat-MakeItGreatUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B834BD88226BC27F24025683 /* Pods_MakeItGreat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MakeItGreat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D8631695257E6A040017363B /* Varta-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Varta-Medium.ttf"; sourceTree = "<group>"; };
+		D8631696257E6A040017363B /* Varta-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Varta-SemiBold.ttf"; sourceTree = "<group>"; };
+		D8631697257E6A040017363B /* Varta-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Varta-Light.ttf"; sourceTree = "<group>"; };
+		D8631698257E6A040017363B /* Varta-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Varta-Bold.ttf"; sourceTree = "<group>"; };
+		D8631699257E6A040017363B /* Varta-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Varta-Regular.ttf"; sourceTree = "<group>"; };
 		D89F83812577B933007E28A1 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		E92BEBC1257126C400D21F6D /* HomeViewModel+Facade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewModel+Facade.swift"; sourceTree = "<group>"; };
 		E930FC4F256FC8B3000705E3 /* MockHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeViewModel.swift; sourceTree = "<group>"; };
@@ -198,6 +208,18 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		D8631694257E698E0017363B /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				D8631698257E6A040017363B /* Varta-Bold.ttf */,
+				D8631697257E6A040017363B /* Varta-Light.ttf */,
+				D8631695257E6A040017363B /* Varta-Medium.ttf */,
+				D8631699257E6A040017363B /* Varta-Regular.ttf */,
+				D8631696257E6A040017363B /* Varta-SemiBold.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		D89F83802577B91F007E28A1 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -249,6 +271,7 @@
 		E93EB8BD2567F1A000E0071E /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				D8631694257E698E0017363B /* Fonts */,
 				E9D63A622563FAC600C154F4 /* Assets.xcassets */,
 				E9D63A642563FAC600C154F4 /* LaunchScreen.storyboard */,
 				E9D63A5F2563FAC300C154F4 /* MakeItGreat.xcdatamodeld */,
@@ -549,6 +572,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D863169D257E6A040017363B /* Varta-Bold.ttf in Resources */,
+				D863169E257E6A040017363B /* Varta-Regular.ttf in Resources */,
+				D863169B257E6A040017363B /* Varta-SemiBold.ttf in Resources */,
+				D863169C257E6A040017363B /* Varta-Light.ttf in Resources */,
+				D863169A257E6A040017363B /* Varta-Medium.ttf in Resources */,
 				E9D63A662563FAC600C154F4 /* LaunchScreen.storyboard in Resources */,
 				E9D63A632563FAC600C154F4 /* Assets.xcassets in Resources */,
 			);

@@ -35,6 +35,12 @@ class GraphicsViewController: UIViewController {
             contentView.nothingToShowLabel.isHidden = true
         }
     }
+    
+    func reloadCalendarAndTableView() {
+        self.contentView.calendar.reloadData()
+        self.displayTasks()
+        self.contentView.tableView.reloadData()
+    }
 }
 
 
@@ -124,6 +130,7 @@ extension GraphicsViewController: UITableViewDelegate, UITableViewDataSource {
         let task = tasksFromDate[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCompletedCell", for: indexPath) as! TaskCompletedTableViewCell
             cell.taskLabel.text = task.name
+            cell.taskLabel.font = UIFont(name: "Varta-SemiBold", size: 15)
             cell.priorityRect.backgroundColor = getColorFromPriority(task)
         return cell
     }
