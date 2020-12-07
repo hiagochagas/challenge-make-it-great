@@ -63,7 +63,7 @@ class TaskCell: UITableViewCell, ViewCode {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = true
-        label.font = UIFont(name: "Varta-Regular", size: 15)
+        label.font = UIFont(name: "Varta-Regular", size: 17)
         return label
     }()
     
@@ -80,7 +80,7 @@ class TaskCell: UITableViewCell, ViewCode {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.textColor = .black
         textField.borderStyle = .none
-        textField.font = UIFont(name: "Varta-Regular", size: 16)
+        textField.font = UIFont(name: "Varta-Regular", size: 18)
         textField.isHidden = true
         textField.delegate = self
         
@@ -108,7 +108,7 @@ class TaskCell: UITableViewCell, ViewCode {
             
             checkbox.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
             checkbox.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            checkbox.heightAnchor.constraint(equalToConstant: 27),
+            checkbox.heightAnchor.constraint(equalToConstant: 30),
             checkbox.widthAnchor.constraint(equalTo: checkbox.heightAnchor),
             
             taskLabel.leadingAnchor.constraint(equalTo: checkbox.trailingAnchor, constant: 8),
@@ -180,7 +180,8 @@ class TaskCell: UITableViewCell, ViewCode {
     
     public func configureAsGhostCell() {
         taskLabel.textColor = .gray
-        taskLabel.text = "Novo Item"
+        taskLabel.text = "New Item"
+        taskLabel.font = UIFont(name: "Varta-Regular", size: 17)
         taskLabel.isUserInteractionEnabled = false
         taskTextField.isHidden = true
         checkbox.setBackgroundImage(UIImage(systemName: "plus"), for: .normal)
@@ -191,7 +192,7 @@ class TaskCell: UITableViewCell, ViewCode {
     
     public func configAsProjectCell() {
         let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: taskLabel.text ?? "",
-                                                                                    attributes: [NSAttributedString.Key.font: UIFont(name: "Varta-Bold", size: 16)])
+                                                                                    attributes: [NSAttributedString.Key.font: UIFont(name: "Varta-Bold", size: 17)])
         taskLabel.attributedText = attributeString
     }
     
