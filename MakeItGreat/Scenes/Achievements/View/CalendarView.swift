@@ -13,7 +13,7 @@ class CalendarView: UIView, ViewCode {
     let doneTasksLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "Done Tasks"
-        lbl.font = .systemFont(ofSize: 20)
+        lbl.font = UIFont(name: "Varta-Regular", size: 20)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
@@ -21,7 +21,7 @@ class CalendarView: UIView, ViewCode {
     let dayOfTheMonthLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "Monday, 1"
-        lbl.font = .systemFont(ofSize: 16, weight: .semibold)
+        lbl.font = UIFont(name: "Varta-SemiBold", size: 16)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
@@ -36,7 +36,7 @@ class CalendarView: UIView, ViewCode {
     let nothingToShowLabel: UILabel = {
         let label = UILabel()
         label.text = "Nothing to show here :("
-        label.font = .systemFont(ofSize: 16)
+        label.font = UIFont(name: "Varta-Regular", size: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
