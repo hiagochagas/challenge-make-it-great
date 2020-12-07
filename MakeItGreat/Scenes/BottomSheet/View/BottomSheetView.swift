@@ -74,11 +74,15 @@ class BottomSheetView: UIView {
         return textField
     }()
     
-    //    lazy var listPicker: UIPickerView = {
-    //        let picker = UIPickerView()
-    //        picker.backgroundColor = .blue
-    //        return picker
-    //    }()
+    
+        lazy var listPicker: UIPickerView = {
+            let picker = UIPickerView()
+            picker.backgroundColor = UIColor.blueSecondaryColor
+//            picker.layer.cornerRadius = 10
+//            picker.transform = CGAffineTransform(scaleX: 0.8, y: 0.8);
+            picker.translatesAutoresizingMaskIntoConstraints = false
+            return picker
+        }()
     
     lazy var redButton: UIButton = {
         let button = UIButton()
@@ -130,6 +134,19 @@ class BottomSheetView: UIView {
         return textField
     }()
     
+    lazy var textFieldPicker: UITextField = {
+        let textField = UITextField()
+        textField.backgroundColor = UIColor.blueSecondaryColor
+//        textField.placeholder = "list"
+        textField.inputView = listPicker
+        textField.textColor = .black
+        textField.textAlignment = .center
+        textField.borderStyle = .none
+        textField.layer.cornerRadius = 8
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
     lazy var tagLabel: UILabel = {
         let label = UILabel()
         label.text = "Tag"
@@ -157,18 +174,23 @@ class BottomSheetView: UIView {
     func setConstraints() {
         self.insertSubview(blurView, at: 0)
         self.addSubview(bottomSheet)
+//        self.addSubview(listPicker)
         bottomSheet.addSubview(saveButton)
         bottomSheet.addSubview(cancelButton)
         bottomSheet.addSubview(textFieldTaskTitle)
         bottomSheet.addSubview(listLabel)
+//        bottomSheet.addSubview(chooseButton)
+//        bottomSheet.addSubview(listPicker)
+        bottomSheet.addSubview(textFieldPicker)
         bottomSheet.addSubview(tagLabel)
         bottomSheet.addSubview(textFieldTag)
         bottomSheet.addSubview(priorityLabel)
         bottomSheet.addSubview(priority)
-        bottomSheetHeightConstraint = bottomSheet.topAnchor.constraint(equalTo: self.topAnchor, constant: 320)
+        bottomSheetHeightConstraint = bottomSheet.topAnchor.constraint(equalTo: self.topAnchor, constant: 100)
         bottomSheetHeightConstraint?.isActive = true
         
         NSLayoutConstraint.activate([
+            
             
             blurView.heightAnchor.constraint(equalTo: self.heightAnchor),
             blurView.widthAnchor.constraint(equalTo: self.widthAnchor),
@@ -189,24 +211,34 @@ class BottomSheetView: UIView {
             textFieldTaskTitle.centerXAnchor.constraint(equalTo: bottomSheet.centerXAnchor),
             
             listLabel.topAnchor.constraint(equalTo: textFieldTaskTitle.bottomAnchor, constant: 42),
+//            listLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             listLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35),
             
-            tagLabel.topAnchor.constraint(equalTo: listLabel.bottomAnchor, constant: 32),
-            tagLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35),
+            textFieldPicker.topAnchor.constraint(equalTo: textFieldTaskTitle.bottomAnchor, constant: 35),
+            textFieldPicker.widthAnchor.constraint(equalToConstant: 200),
+            textFieldPicker.heightAnchor.constraint(equalToConstant: 30),
+            textFieldPicker.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 30),
+
             
+//        listPicker.topAnchor.constraint(equalTo: textFieldTaskTitle.bottomAnchor, constant: 20),
+//            listPicker.leftAnchor.constraint(equalTo: listLabel.rightAnchor, constant: 0),
+
+            tagLabel.topAnchor.constraint(equalTo: listLabel.bottomAnchor, constant: 32),
+
+            tagLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35),
+
             textFieldTag.topAnchor.constraint(equalTo: listLabel.bottomAnchor, constant: 27),
             textFieldTag.widthAnchor.constraint(equalToConstant: 200),
             textFieldTag.heightAnchor.constraint(equalToConstant: 30),
             textFieldTag.leftAnchor.constraint(equalTo: tagLabel.rightAnchor, constant: 56),
-            
+
             priorityLabel.topAnchor.constraint(equalTo: tagLabel.bottomAnchor, constant: 32),
             priorityLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 35),
-            
+
             priority.topAnchor.constraint(equalTo: tagLabel.bottomAnchor, constant: 32),
             priority.leftAnchor.constraint(equalTo: priorityLabel.rightAnchor, constant: 32),
             priority.widthAnchor.constraint(equalToConstant: 200),
-            priority.heightAnchor.constraint(equalToConstant: 24)
-            
+            priority.heightAnchor.constraint(equalToConstant: 24),
             
         ])
     }
@@ -221,7 +253,7 @@ class BottomSheetView: UIView {
     
     @objc func keyboardWillHide(sender: NSNotification) {
         removeConstraint(bottomSheetHeightConstraintAfterUpdate ?? NSLayoutConstraint())
-        bottomSheetHeightConstraint = bottomSheet.topAnchor.constraint(equalTo: self.topAnchor, constant: 320)
+        bottomSheetHeightConstraint = bottomSheet.topAnchor.constraint(equalTo: self.topAnchor, constant: 100)
         bottomSheetHeightConstraint?.isActive = true
     }
     
