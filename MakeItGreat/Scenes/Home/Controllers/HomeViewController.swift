@@ -94,14 +94,6 @@ class HomeViewController: UIViewController, ModalHandler {
 extension HomeViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == tableView.numberOfRows(inSection: 0)-1 {
-            guard let cell = tableView.cellForRow(at: indexPath) as? TaskCell else { return }
-            cell.configureAsNormalTaskCell()
-            cell.taskLabel.isHidden = true
-            cell.taskTextField.isHidden = false
-            cell.taskTextField.becomeFirstResponder()
-        }
-
         guard let cell = tableView.cellForRow(at: indexPath) as? TaskCell else { return }
         let isGhostCell = cell.isGhostCell ?? false
         if isGhostCell {
