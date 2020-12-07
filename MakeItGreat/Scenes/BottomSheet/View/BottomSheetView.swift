@@ -10,6 +10,7 @@ class BottomSheetView: UIView {
     var viewController: BottomSheetViewController?
     weak var bottomSheetHeightConstraint: NSLayoutConstraint?
     weak var bottomSheetHeightConstraintAfterUpdate: NSLayoutConstraint?
+    let bottomSheetTopAnchorValue: CGFloat = 300
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -174,23 +175,20 @@ class BottomSheetView: UIView {
     func setConstraints() {
         self.insertSubview(blurView, at: 0)
         self.addSubview(bottomSheet)
-//        self.addSubview(listPicker)
         bottomSheet.addSubview(saveButton)
         bottomSheet.addSubview(cancelButton)
         bottomSheet.addSubview(textFieldTaskTitle)
         bottomSheet.addSubview(listLabel)
-//        bottomSheet.addSubview(chooseButton)
-//        bottomSheet.addSubview(listPicker)
         bottomSheet.addSubview(textFieldPicker)
         bottomSheet.addSubview(tagLabel)
         bottomSheet.addSubview(textFieldTag)
         bottomSheet.addSubview(priorityLabel)
         bottomSheet.addSubview(priority)
-        bottomSheetHeightConstraint = bottomSheet.topAnchor.constraint(equalTo: self.topAnchor, constant: 100)
+        
+        bottomSheetHeightConstraint = bottomSheet.topAnchor.constraint(equalTo: self.topAnchor, constant: bottomSheetTopAnchorValue)
         bottomSheetHeightConstraint?.isActive = true
         
         NSLayoutConstraint.activate([
-            
             
             blurView.heightAnchor.constraint(equalTo: self.heightAnchor),
             blurView.widthAnchor.constraint(equalTo: self.widthAnchor),
@@ -240,14 +238,14 @@ class BottomSheetView: UIView {
     @objc func keyboardWillShow(sender: NSNotification) {
         let info = sender.userInfo!
         let keyboardSize = (info[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
-        bottomSheetHeightConstraintAfterUpdate = bottomSheet.topAnchor.constraint(equalTo: self.topAnchor, constant: 320 - keyboardSize)
+        bottomSheetHeightConstraintAfterUpdate = bottomSheet.topAnchor.constraint(equalTo: self.topAnchor, constant: bottomSheetTopAnchorValue - keyboardSize)
         removeConstraint(bottomSheetHeightConstraint ?? NSLayoutConstraint())
         bottomSheetHeightConstraintAfterUpdate?.isActive = true
     }
     
     @objc func keyboardWillHide(sender: NSNotification) {
         removeConstraint(bottomSheetHeightConstraintAfterUpdate ?? NSLayoutConstraint())
-        bottomSheetHeightConstraint = bottomSheet.topAnchor.constraint(equalTo: self.topAnchor, constant: 100)
+        bottomSheetHeightConstraint = bottomSheet.topAnchor.constraint(equalTo: self.topAnchor, constant: bottomSheetTopAnchorValue)
         bottomSheetHeightConstraint?.isActive = true
     }
     
