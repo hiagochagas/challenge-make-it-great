@@ -63,6 +63,7 @@ class TaskCell: UITableViewCell, ViewCode {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = true
+        label.font = UIFont(name: "Varta-Regular", size: 15)
         return label
     }()
     
@@ -79,6 +80,7 @@ class TaskCell: UITableViewCell, ViewCode {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.textColor = .black
         textField.borderStyle = .none
+        textField.font = UIFont(name: "Varta-Regular", size: 16)
         textField.isHidden = true
         textField.delegate = self
         
@@ -189,7 +191,7 @@ class TaskCell: UITableViewCell, ViewCode {
     
     public func configAsProjectCell() {
         let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: taskLabel.text ?? "",
-                                                                                    attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17)])
+                                                                                    attributes: [NSAttributedString.Key.font: UIFont(name: "Varta-Bold", size: 16)])
         taskLabel.attributedText = attributeString
     }
     

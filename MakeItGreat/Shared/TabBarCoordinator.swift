@@ -21,17 +21,23 @@ class TabBarCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
         achievementsCoordinator = AchievementsCoordinator()
         
         super.init()
-        
+        homeCoordinator.tabBarCoordinator = self
         tabBarController.delegate = self
         setupTabBar()
     }
     
     func setupTabBar() {
         tabBarController.tabBar.tintColor = .blueActionColor
+        
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Varta-Regular", size: 13)!], for: .normal)
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Varta-Regular", size: 13)!], for: .selected)
+        
         homeCoordinator.homeViewController = setupVc(viewController: homeCoordinator.homeViewController, image: UIImage(systemName: "list.bullet.rectangle")!, title: "Lists") as! HomeViewController
+        
         achievementsCoordinator.achievementsViewController = setupVc(viewController: achievementsCoordinator.achievementsViewController, image: UIImage(systemName: "calendar")!, title: "Progress") as! AchievementsViewController
         
         achievementsCoordinator.achievementsViewController.title = "Progress"
+        
         tabBarController.viewControllers = [homeCoordinator.homeViewController, achievementsCoordinator.achievementsViewController]
         tabBarController.tabBar.isHidden = false
     }
@@ -43,5 +49,9 @@ class TabBarCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
             viewController.tabBarItem.selectedImage?.withRenderingMode(.alwaysOriginal)
             viewController.title = title
         return viewController
+    }
+    
+    func reloadCalendar() {
+        achievementsCoordinator.reloadCalendar()
     }
 }

@@ -15,6 +15,10 @@ class AchievementView: UIView, ViewCode {
         segmentedControl.selectedSegmentTintColor = .darkBlueSegmentedControlColor
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         
+        let fontTitleTextAttributes = [NSAttributedString.Key.font:  UIFont(name: "Varta-SemiBold", size: 15)]
+        segmentedControl.setTitleTextAttributes(fontTitleTextAttributes as [NSAttributedString.Key : Any], for: .normal)
+        segmentedControl.setTitleTextAttributes(fontTitleTextAttributes as [NSAttributedString.Key : Any], for: .selected)
+        
         let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.darkBlueSegmentedControlColor]
         segmentedControl.setTitleTextAttributes(titleTextAttributes, for:.normal)
         
