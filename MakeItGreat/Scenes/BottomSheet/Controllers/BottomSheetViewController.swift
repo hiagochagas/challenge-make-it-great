@@ -55,12 +55,16 @@ class BottomSheetViewController: UIViewController {
     func configTextFieldPicker() {
         if task?.list?.name == "Inbox"  {
             pickerTextField?.text = "Inbox"
+            list = .Inbox
         } else if task?.list?.name == "Next"  {
             pickerTextField?.text = "Next"
+            list = .Next
         } else if task?.list?.name == "Maybe"  {
             pickerTextField?.text = "Maybe"
+            list = .Maybe
         } else {
             pickerTextField?.text = "Projects"
+            list = .Projects
         }
     }
     
