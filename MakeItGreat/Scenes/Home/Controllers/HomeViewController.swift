@@ -45,6 +45,17 @@ class HomeViewController: UIViewController, ModalHandler {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        addObserverForKeyboard()
+        
+    }
+    
+    private func addObserverForKeyboard() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     override func loadView() {
         
         view = contentView
@@ -88,6 +99,23 @@ class HomeViewController: UIViewController, ModalHandler {
         }
         
         tableView.reloadData()
+    }
+    
+    @objc func keyboardWillShow(notification:NSNotification) {
+
+        guard let userInfo = notification.userInfo else { return }
+        var keyboardFrame:CGRect = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+
+        var contentInset:UIEdgeInsets = self.contentView.tasksTableView.contentInset
+        contentInset.bottom = keyboardFrame.size.height + 20
+        contentView.tasksTableView.contentInset = contentInset
+    }
+
+    @objc func keyboardWillHide(notification:NSNotification) {
+
+        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+        contentView.tasksTableView.contentInset = contentInset
     }
 }
 
