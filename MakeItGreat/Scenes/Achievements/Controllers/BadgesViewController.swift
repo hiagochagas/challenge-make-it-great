@@ -43,7 +43,7 @@ extension BadgesViewController: UICollectionViewDelegate, UICollectionViewDataSo
             model.save(context: AppDelegate.viewContext)
         }
         cell.badgeImageView.image = UIImage(data: badge?.icon ?? Data())
-        cell.tasksDoneLabel.text = badge?.descriptionBadge
+        cell.tasksDoneLabel.text = (String(badge?.unlockValue ?? 0)) + " Tasks Done".localized()
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

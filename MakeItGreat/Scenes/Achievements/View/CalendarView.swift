@@ -2,8 +2,6 @@
 //  CalendarView.swift
 //  MakeItGreat
 //
-//  Created by Tales Conrado on 20/11/20.
-//
 
 import UIKit
 import FSCalendar
@@ -12,7 +10,7 @@ class CalendarView: UIView, ViewCode {
     
     let doneTasksLabel: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Done Tasks"
+        lbl.text = "Done Tasks".localized()
         lbl.font = UIFont(name: "Varta-Regular", size: 20)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
@@ -35,7 +33,7 @@ class CalendarView: UIView, ViewCode {
     
     let nothingToShowLabel: UILabel = {
         let label = UILabel()
-        label.text = "Nothing to show here :("
+        label.text = "Nothing to show here".localized()
         label.font = UIFont(name: "Varta-Regular", size: 16)
         label.tintColor = .gray
         label.translatesAutoresizingMaskIntoConstraints = false

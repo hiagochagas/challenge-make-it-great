@@ -71,19 +71,19 @@ extension GraphicsViewController: FSCalendarDelegate, FSCalendarDataSource, FSCa
         let weekDay = calendar.components([.weekday], from: date).weekday
         switch weekDay {
             case 1:
-                return "Sunday"
+                return "Sunday".localized()
             case 2:
-                return "Monday"
+                return "Monday".localized()
             case 3:
-                return "Tuesday"
+                return "Tuesday".localized()
             case 4:
-                return "Wednesday"
+                return "Wednesday".localized()
             case 5:
-                return "Thursday"
+                return "Thursday".localized()
             case 6:
-                return "Friday"
+                return "Friday".localized()
             case 7:
-                return "Saturday"
+                return "Saturday".localized()
             default:
                 return "None"
         }
@@ -92,29 +92,29 @@ extension GraphicsViewController: FSCalendarDelegate, FSCalendarDataSource, FSCa
         let month = calendar.components([.month], from: date).month
         switch month {
         case 1:
-            return "January"
+            return "January".localized()
         case 2:
-            return "February"
+            return "February".localized()
         case 3:
-            return "March"
+            return "March".localized()
         case 4:
-            return "April"
+            return "April".localized()
         case 5:
-            return "May"
+            return "May".localized()
         case 6:
-            return "June"
+            return "June".localized()
         case 7:
-            return "July"
+            return "July".localized()
         case 8:
-            return "August"
+            return "August".localized()
         case 9:
-            return "September"
+            return "September".localized()
         case 10:
-            return "October"
+            return "October".localized()
         case 11:
-            return "November"
+            return "November".localized()
         case 12:
-            return "December"
+            return "December".localized()
         default:
             return "None"
         }

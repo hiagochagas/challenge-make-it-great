@@ -53,7 +53,7 @@ class BottomSheetView: UIView {
     
     @objc lazy var saveButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Save", for: .normal)
+        button.setTitle("Save".localized(), for: .normal)
         button.titleLabel?.font = UIFont(name: fontSemibold, size: 20)
         button.setTitleColor(UIColor.blueActionColor, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -62,7 +62,7 @@ class BottomSheetView: UIView {
     
     lazy var cancelButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Cancel", for: .normal)
+        button.setTitle("Cancel".localized(), for: .normal)
         button.titleLabel?.font = UIFont(name: fontSemibold, size: 20)
         button.setTitleColor(UIColor.blueActionColor, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -74,7 +74,7 @@ class BottomSheetView: UIView {
     lazy var textFieldTaskTitle: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = UIColor.blueSecondaryColor
-        textField.placeholder = "title of the task"
+        textField.placeholder = "title of the task".localized()
         textField.font = UIFont(name: fontSemibold, size: sizeForText)
         textField.autocorrectionType = .no
         textField.textColor = .black
@@ -126,7 +126,7 @@ class BottomSheetView: UIView {
     
     lazy var listLabel: UILabel = {
         let label = UILabel()
-        label.text = "List"
+        label.text = "List".localized()
         label.font = UIFont(name: fontSemibold, size: sizeForTitles)
         label.tintColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -164,7 +164,7 @@ class BottomSheetView: UIView {
     
     lazy var tagLabel: UILabel = {
         let label = UILabel()
-        label.text = "Tag"
+        label.text = "Tag".localized()
         label.font = UIFont(name: fontSemibold, size: sizeForTitles)
         label.tintColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -181,7 +181,7 @@ class BottomSheetView: UIView {
     
     lazy var priorityLabel: UILabel = {
         let label = UILabel()
-        label.text = "Priority"
+        label.text = "Priority".localized()
         label.font = UIFont(name: fontSemibold, size: sizeForTitles)
         label.tintColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false

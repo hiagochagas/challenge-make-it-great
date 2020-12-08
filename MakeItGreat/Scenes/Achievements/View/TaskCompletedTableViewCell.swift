@@ -2,15 +2,13 @@
 //  TaskCompletedTableViewCell.swift
 //  MakeItGreat
 //
-//  Created by Hiago Chagas on 30/11/20.
-//
 
 import UIKit
 
 class TaskCompletedTableViewCell: UITableViewCell, ViewCode {
     let taskLabel: UILabel = {
         let lbl = UILabel()
-            lbl.text = "Completed task"
+        lbl.text = "Completed task".localized()
             lbl.font = UIFont(name: "Regular", size: 16)
             lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl

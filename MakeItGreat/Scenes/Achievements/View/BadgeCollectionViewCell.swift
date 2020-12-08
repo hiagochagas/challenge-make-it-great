@@ -18,6 +18,7 @@ class BadgeCollectionViewCell: UICollectionViewCell, ViewCode {
         let label = UILabel()
             label.text = "-0 tasks done"
             label.font = .systemFont(ofSize: 12)
+            label.numberOfLines = 0
             label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -34,7 +35,8 @@ class BadgeCollectionViewCell: UICollectionViewCell, ViewCode {
             badgeImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.8),
             badgeImageView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.8),
             tasksDoneLabel.centerXAnchor.constraint(equalTo: badgeImageView.centerXAnchor),
-            tasksDoneLabel.topAnchor.constraint(equalTo: badgeImageView.bottomAnchor, constant: 5)
+            tasksDoneLabel.topAnchor.constraint(equalTo: badgeImageView.bottomAnchor, constant: 5),
+            tasksDoneLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.6)
         ])
     }
     
