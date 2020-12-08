@@ -19,6 +19,13 @@ class BadgesViewController: UIViewController {
         contentView.collectionView.delegate = self
         contentView.collectionView.dataSource = self
     }
+    
+    func reloadBadgesData() {
+        model.badges?.forEach({
+            _ = model.updateBadgeProgress(badge: $0, progress: $0.progress + 1, viewContext: AppDelegate.viewContext)
+        })
+        contentView.collectionView.reloadData()
+    }
 }
 
 extension BadgesViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {

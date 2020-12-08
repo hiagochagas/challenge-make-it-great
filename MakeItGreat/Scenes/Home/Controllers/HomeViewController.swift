@@ -242,6 +242,7 @@ extension HomeViewController: TaskCheckboxDelegate {
     func didChangeStateCheckbox(id: UUID?, indexPath: IndexPath?) {
         deleteRowAt(indexPath, id: id)
         homeCoordinator?.reloadCalendarUponCompletingTask()
+        homeCoordinator?.reloadBadgesDataUponCompletingTask()
     }
 }
 
