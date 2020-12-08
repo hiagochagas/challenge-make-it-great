@@ -34,11 +34,13 @@ class HomeViewModelTest: XCTestCase {
         sut.insertTaskToList(task: sut.createTask(name: "3", viewContext: mockPersistantContainer.viewContext)!, list: .Next)
         sut.insertTaskToList(task: sut.createTask(name: "4", viewContext: mockPersistantContainer.viewContext)!, list: .Maybe)
         sut.insertTaskToList(task: sut.createTask(name: "5", viewContext: mockPersistantContainer.viewContext)!, list: .Waiting)
+        sut.insertTaskToList(task: sut.createTask(name: "6", viewContext: mockPersistantContainer.viewContext)!, list: .Projects)
         let _ = sut.fetchAllLists(viewContext: mockPersistantContainer.viewContext)
         XCTAssertEqual(sut.inbox?.tasks?.count, 2)
         XCTAssertEqual(sut.waiting?.tasks?.count, 1)
         XCTAssertEqual(sut.next?.tasks?.count, 1)
         XCTAssertEqual(sut.maybe?.tasks?.count, 1)
+        XCTAssertEqual(sut.projects?.tasks?.count, 1)
     }
     
     func test_insert_task_into_list() {
@@ -59,6 +61,10 @@ class HomeViewModelTest: XCTestCase {
         sut.insertTaskToList(task: task, list: .Maybe)
         countAfterChanges = sut.maybe?.tasks?.count ?? 0
         XCTAssertTrue(countBeforeChanges == countAfterChanges - 1)
+        countBeforeChanges = sut.projects?.tasks?.count ?? 0
+        sut.insertTaskToList(task: task, list: .Projects)
+        countAfterChanges = sut.projects?.tasks?.count ?? 0
+        XCTAssertTrue(countBeforeChanges == countAfterChanges - 1)
     }
     
     func test_get_list() {
@@ -70,6 +76,8 @@ class HomeViewModelTest: XCTestCase {
         XCTAssertNotNil(list3)
         let list4 = sut.getList(list: .Next)
         XCTAssertNotNil(list4)
+        let list5 = sut.getList(list: .Projects)
+        XCTAssertNotNil(list5)
     }
     
     func test_remove_task_from_list() {
@@ -100,7 +108,60 @@ class HomeViewModelTest: XCTestCase {
         sut.removeTaskFromList(task: task4, context: mockPersistantContainer.viewContext)
         listAfterRemoving = sut.waiting?.tasks?.count ?? 0
         XCTAssertTrue(listBeforeRemoving == listAfterRemoving + 1)
+        
+        guard let task5 = sut.createTask(name: "Task Created for Tests", viewContext: mockPersistantContainer.viewContext) else { return }
+        sut.insertTaskToList(task: task5, list: .Projects)
+        listBeforeRemoving = sut.projects?.tasks?.count ?? 0
+        sut.removeTaskFromList(task: task5, context: mockPersistantContainer.viewContext)
+        listAfterRemoving = sut.projects?.tasks?.count ?? 0
+        XCTAssertTrue(listBeforeRemoving == listAfterRemoving + 1)
     }
+    
+    func test_checkIfIsGhostCell() {
+        XCTAssertTrue(sut.isGhostCell(list: .Inbox, at: 0))
+        XCTAssertTrue(sut.isGhostCell(list: .Maybe, at: 0))
+        XCTAssertTrue(sut.isGhostCell(list: .Next, at: 0))
+        XCTAssertTrue(sut.isGhostCell(list: .Waiting, at: 0))
+        XCTAssertTrue(sut.isGhostCell(list: .Projects, at: 0))
+    }
+    
+    func test_numberOfCells() {
+        XCTAssertEqual(sut.getNumberOfCells(from: .Inbox),  1)
+        XCTAssertEqual(sut.getNumberOfCells(from: .Maybe),  1)
+        XCTAssertEqual(sut.getNumberOfCells(from: .Next),  1)
+        XCTAssertEqual(sut.getNumberOfCells(from: .Waiting),  1)
+        XCTAssertEqual(sut.getNumberOfCells(from: .Projects),  1)
+    }
+    
+    func test_getTaskList() {
+        XCTAssertTrue(sut.getTaskList(list: .Inbox).isEmpty)
+        XCTAssertTrue(sut.getTaskList(list: .Waiting).isEmpty)
+        XCTAssertTrue(sut.getTaskList(list: .Projects).isEmpty)
+        XCTAssertTrue(sut.getTaskList(list: .Maybe).isEmpty)
+        XCTAssertTrue(sut.getTaskList(list: .Next).isEmpty)
+    }
+    
+    func test_togglingTaskById() {
+        guard let task = sut.createTask(name: "Task Created for Tests", viewContext: mockPersistantContainer.viewContext) else { return }
+        let id = task.id!
+        sut.toggleTaskById(id: id, context: mockPersistantContainer.viewContext)
+        XCTAssertTrue(task.status)
+    }
+    
+    func test_lastCellIndexPath() {
+        let lastPath = IndexPath(row: 0, section: 0)
+        XCTAssertEqual(sut.getLastCellIndexPath(list: .Inbox), lastPath)
+        XCTAssertEqual(sut.getLastCellIndexPath(list: .Maybe), lastPath)
+        XCTAssertEqual(sut.getLastCellIndexPath(list: .Projects), lastPath)
+        XCTAssertEqual(sut.getLastCellIndexPath(list: .Next), lastPath)
+        XCTAssertEqual(sut.getLastCellIndexPath(list: .Waiting), lastPath)
+    }
+    
+    func test_addingNewTask() {
+        sut.addNewTask(name: "Test", to: .Inbox, context: mockPersistantContainer.viewContext)
+        XCTAssertTrue(sut.inbox?.tasks?.count == 1)
+    }
+
     
     func test_update_task() {
         guard let task = sut.createTask(name: "Task Created for Tests", viewContext: mockPersistantContainer.viewContext) else { return }
@@ -221,6 +282,7 @@ extension HomeViewModelTest {
         sut.waiting = insertListItem(name: "Waiting")
         sut.maybe = insertListItem(name: "Maybe")
         sut.next = insertListItem(name: "Next")
+        sut.projects = insertListItem(name: "Projects")
         
         do {
             try mockPersistantContainer.viewContext.save()
