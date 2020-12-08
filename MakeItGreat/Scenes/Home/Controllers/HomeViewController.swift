@@ -90,12 +90,14 @@ class HomeViewController: UIViewController, ModalHandler {
             let taskList = viewModel.getTaskList(list: currentShowingList)
             let task = taskList[indexPath.row]
             
+
             viewModel.updateTask(task: task,
                                  name: cell.taskTextField.text ?? "",
                                  finishedAt: task.finishedAt!,
                                  lastMovedAt: task.lastMovedAt!,
                                  priority: task.priority,
                                  status: task.status)
+
         }
         
         tableView.reloadData()
@@ -165,13 +167,6 @@ extension HomeViewController: UITableViewDelegate {
             modalViewController.delegate = self
             modalViewController.modalPresentationStyle = .overCurrentContext
             self.present(modalViewController, animated: true, completion: nil)
-            
-//            blur
-//            let blurEffect = UIBlurEffect(style: .dark)
-//            let blurEffectView = UIVisualEffectView(effect: blurEffect)
-//            blurEffectView.frame = self.view.frame
-//            self.view.insertSubview(blurEffectView, at: 0)
-            
 
         }
         
@@ -216,6 +211,15 @@ extension HomeViewController: UITableViewDataSource {
                 cell.type = .normalTask
             }
             cell.taskInfo = viewModel.getTaskList(list: currentShowingList)[indexPath.row]
+            if cell.taskInfo?.priority == 1 {
+                        cell.setTaskCellPriorityColor(priority: .low)
+                    } else if cell.taskInfo?.priority == 2 {
+                        cell.setTaskCellPriorityColor(priority: .medium)
+                    } else if cell.taskInfo?.priority == 3 {
+                        cell.setTaskCellPriorityColor(priority: .high)
+                    } else {
+                        cell.setTaskCellPriorityColor(priority: .none)
+                    }
         }
         
         cell.configCell()
