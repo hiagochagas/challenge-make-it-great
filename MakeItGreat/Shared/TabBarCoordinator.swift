@@ -53,5 +53,10 @@ class TabBarCoordinator: NSObject, Coordinator, UITabBarControllerDelegate {
     
     func reloadCalendar() {
         achievementsCoordinator.reloadCalendar()
+        
+    }
+    
+    func reloadBadges() {
+        achievementsCoordinator.reloadBadges()
     }
 }

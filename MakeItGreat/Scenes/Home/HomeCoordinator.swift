@@ -27,4 +27,7 @@ class HomeCoordinator: Coordinator {
     func reloadCalendarUponCompletingTask() {
         tabBarCoordinator?.reloadCalendar()
     }
+    func reloadBadgesDataUponCompletingTask() {
+        tabBarCoordinator?.reloadBadges()
+    }
 }
