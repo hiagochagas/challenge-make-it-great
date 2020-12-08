@@ -234,6 +234,7 @@ extension HomeViewController: UITableViewDataSource {
         viewModel.toggleTaskById(id: id)
         contentView.tasksTableView.deleteRows(at: [indexPath], with: .fade)
         self.contentView.tasksTableView.endUpdates()
+        contentView.tasksTableView.reloadData()
     }
 }
 
