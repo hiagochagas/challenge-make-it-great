@@ -11,7 +11,7 @@ protocol ModalHandler {
 }
 
 class BottomSheetViewController: UIViewController {
-    let lists = ["Next", "Inbox", "Waiting", "Maybe", "Projects"]
+    let lists = ["Next".localized(), "Inbox".localized(), "Waiting".localized(), "Maybe".localized(), "Projects".localized()]
     let homeModel = HomeViewModel()
     var task: Task?
     var list: EnumLists?
@@ -53,17 +53,17 @@ class BottomSheetViewController: UIViewController {
     }
     
     func configTextFieldPicker() {
-        if task?.list?.name == "Inbox"  {
-            pickerTextField?.text = "Inbox"
+        if task?.list?.name == "Inbox".localized()  {
+            pickerTextField?.text = "Inbox".localized()
             list = .Inbox
-        } else if task?.list?.name == "Next"  {
-            pickerTextField?.text = "Next"
+        } else if task?.list?.name == "Next".localized()  {
+            pickerTextField?.text = "Next".localized()
             list = .Next
-        } else if task?.list?.name == "Maybe"  {
-            pickerTextField?.text = "Maybe"
+        } else if task?.list?.name == "Maybe".localized()  {
+            pickerTextField?.text = "Maybe".localized()
             list = .Maybe
         } else {
-            pickerTextField?.text = "Projects"
+            pickerTextField?.text = "Projects".localized()
             list = .Projects
         }
     }
@@ -164,20 +164,20 @@ extension BottomSheetViewController: UIPickerViewDataSource, UIPickerViewDelegat
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
-        if lists[row] == "Inbox"  {
-            pickerTextField?.text = "Inbox"
+        if lists[row] == "Inbox".localized()  {
+            pickerTextField?.text = "Inbox".localized()
             list = .Inbox
-        } else if lists[row] == "Next"  {
-            pickerTextField?.text = "Next"
+        } else if lists[row] == "Next".localized()  {
+            pickerTextField?.text = "Next".localized()
             list = .Next
-        } else if lists[row] == "Maybe"  {
-            pickerTextField?.text = "Maybe"
+        } else if lists[row] == "Maybe".localized()  {
+            pickerTextField?.text = "Maybe".localized()
             list = .Maybe
-        } else if lists[row] == "Waiting"  {
-            pickerTextField?.text = "Waiting"
+        } else if lists[row] == "Waiting".localized() {
+            pickerTextField?.text = "Waiting".localized()
             list = .Waiting
-        } else if lists[row] == "Projects"  {
-            pickerTextField?.text = "Projects"
+        } else if lists[row] == "Projects".localized()  {
+            pickerTextField?.text = "Projects".localized()
             list = .Projects
         }
         

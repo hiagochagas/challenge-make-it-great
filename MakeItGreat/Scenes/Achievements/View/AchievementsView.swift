@@ -9,7 +9,7 @@ class AchievementView: UIView, ViewCode {
     
     
     let segmentedControl: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl(items: ["Calendar", "Milestones"])
+        let segmentedControl = UISegmentedControl(items: ["Calendar".localized(), "Milestones".localized()])
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.backgroundColor = .blueSecondaryColor
         segmentedControl.selectedSegmentTintColor = .blueActionColor

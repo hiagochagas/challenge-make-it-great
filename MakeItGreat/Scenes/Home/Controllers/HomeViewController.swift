@@ -170,7 +170,7 @@ extension HomeViewController: UITableViewDelegate {
 
         }
         
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, completionHandler) in
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete".localized()) { [self] (action, view, completionHandler) in
             
             view.backgroundColor = .deleteActionBackground
             
