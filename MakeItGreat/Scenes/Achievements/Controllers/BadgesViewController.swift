@@ -12,7 +12,9 @@ class BadgesViewController: UIViewController {
     
     override func loadView() {
         view = contentView
-        badges = model.badges
+        badges = model.badges?.sorted(by: ({
+            $0.unlockValue < $1.unlockValue
+        }))
     }
     
     override func viewDidLoad() {
