@@ -31,8 +31,6 @@ class BadgesCollectionView: UIView, ViewCode {
             collectionView.rightAnchor.constraint(equalTo: rightAnchor),
             collectionView.topAnchor.constraint(equalTo: topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
-
-        
         ])
         
     }
