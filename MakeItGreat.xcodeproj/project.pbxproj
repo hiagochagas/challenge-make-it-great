@@ -44,6 +44,7 @@
 		E93EB92F2567F81200E0071E /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93EB92E2567F81200E0071E /* HomeCoordinator.swift */; };
 		E93EB9342567FA7600E0071E /* AchievementsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93EB9332567FA7600E0071E /* AchievementsCoordinator.swift */; };
 		E94DA3D0256D2DF6008F3260 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94DA3CF256D2DF6008F3260 /* UIColorExtension.swift */; };
+		E989B9522580F214008C3152 /* BottomSheetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E989B9512580F214008C3152 /* BottomSheetTests.swift */; };
 		E9D63A572563FAC300C154F4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A562563FAC300C154F4 /* AppDelegate.swift */; };
 		E9D63A592563FAC300C154F4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A582563FAC300C154F4 /* SceneDelegate.swift */; };
 		E9D63A612563FAC300C154F4 /* MakeItGreat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E9D63A5F2563FAC300C154F4 /* MakeItGreat.xcdatamodeld */; };
@@ -125,6 +126,7 @@
 		E93EB92E2567F81200E0071E /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		E93EB9332567FA7600E0071E /* AchievementsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsCoordinator.swift; sourceTree = "<group>"; };
 		E94DA3CF256D2DF6008F3260 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		E989B9512580F214008C3152 /* BottomSheetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomSheetTests.swift; sourceTree = "<group>"; };
 		E9D63A532563FAC300C154F4 /* MakeItGreat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakeItGreat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9D63A562563FAC300C154F4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E9D63A582563FAC300C154F4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -418,6 +420,7 @@
 		E9D63A6F2563FAC700C154F4 /* MakeItGreatTests */ = {
 			isa = PBXGroup;
 			children = (
+				E989B9512580F214008C3152 /* BottomSheetTests.swift */,
 				E9D63A702563FAC700C154F4 /* MakeItGreatTests.swift */,
 				E9D63A722563FAC700C154F4 /* Info.plist */,
 				EFA98C94256FF01C002A0F4F /* AchievementsViewModelTest.swift */,
@@ -756,6 +759,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6E0B6E40256D338000597E18 /* HomeViewModelTest.swift in Sources */,
+				E989B9522580F214008C3152 /* BottomSheetTests.swift in Sources */,
 				EFA98C95256FF01C002A0F4F /* AchievementsViewModelTest.swift in Sources */,
 				E9D63A712563FAC700C154F4 /* MakeItGreatTests.swift in Sources */,
 				6E0B6E4A256D4BCD00597E18 /* MakeItGreat.xcdatamodeld in Sources */,
