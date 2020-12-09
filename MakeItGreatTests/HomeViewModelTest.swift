@@ -220,22 +220,22 @@ class HomeViewModelTest: XCTestCase {
     
     func test_getNumberOfCells() {
         guard let task = sut.createTask(name: "Task Created for Tests", viewContext: mockPersistantContainer.viewContext) else { return }
-        sut.insertTaskToList(task: task, list: .Inbox)
+        sut.insertTaskToList(task: task, list: .Inbox, viewContext: mockPersistantContainer.viewContext)
         var tasks = sut.inbox?.tasks?.count ?? 0
         var numberOfCells = sut.getNumberOfCells(from: .Inbox, context: mockPersistantContainer.viewContext)
         XCTAssertTrue(tasks == numberOfCells - 1)
         
-        sut.insertTaskToList(task: task, list: .Next)
+        sut.insertTaskToList(task: task, list: .Next, viewContext: mockPersistantContainer.viewContext)
         tasks = sut.next?.tasks?.count ?? 0
         numberOfCells = sut.getNumberOfCells(from: .Next, context: mockPersistantContainer.viewContext)
         XCTAssertTrue(tasks == numberOfCells - 1)
         
-        sut.insertTaskToList(task: task, list: .Maybe)
+        sut.insertTaskToList(task: task, list: .Maybe, viewContext: mockPersistantContainer.viewContext)
         tasks = sut.maybe?.tasks?.count ?? 0
         numberOfCells = sut.getNumberOfCells(from: .Maybe, context: mockPersistantContainer.viewContext)
         XCTAssertTrue(tasks == numberOfCells - 1)
         
-        sut.insertTaskToList(task: task, list: .Waiting)
+        sut.insertTaskToList(task: task, list: .Waiting, viewContext: mockPersistantContainer.viewContext)
         tasks = sut.waiting?.tasks?.count ?? 0
         numberOfCells = sut.getNumberOfCells(from: .Waiting, context: mockPersistantContainer.viewContext)
         XCTAssertTrue(tasks == numberOfCells - 1)
