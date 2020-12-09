@@ -62,7 +62,10 @@ class BottomSheetViewController: UIViewController {
         } else if task?.list?.name == "Maybe"  {
             pickerTextField?.text = "Maybe"
             list = .Maybe
-        } else {
+        } else if task?.list?.name == "Waiting" {
+            pickerTextField?.text = "Waiting"
+            list = .Waiting
+        } else if task?.list?.name == "Projects" {
             pickerTextField?.text = "Projects"
             list = .Projects
         }
@@ -105,6 +108,10 @@ class BottomSheetViewController: UIViewController {
         }
     }
     
+    func updateTask() {
+        
+    }
+    
     @objc func cancelButton(_ sender: UIButton) {
         dismiss(animated: true) {
             self.delegate?.modalDismissed()
@@ -145,10 +152,6 @@ class BottomSheetViewController: UIViewController {
             }
             
         }
-    }
-    
-    override func viewDidLoad() {
-
     }
 
 }
