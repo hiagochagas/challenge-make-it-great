@@ -18,19 +18,9 @@ class GraphicsViewController: UIViewController {
         contentView.tableView.delegate = self
         contentView.tableView.dataSource = self
         contentView.tableView.register(TaskCompletedTableViewCell.self, forCellReuseIdentifier: "TaskCompletedCell")
-//        mockTask()
         displayTasks()
     }
     
-    func mockTask() {
-        let model = HomeViewModel()
-        guard let task = model.createTask(name: "Test task", viewContext: AppDelegate.viewContext) else {return}
-        model.updateTask(task: task, name: "Test task", finishedAt: Date(), lastMovedAt: Date(), priority: 1, status: false, viewContext: AppDelegate.viewContext)
-        guard let task2 = model.createTask(name: "Test task", viewContext: AppDelegate.viewContext) else {return}
-        model.updateTask(task: task2, name: "Test task", finishedAt: Date(), lastMovedAt: Date(), priority: 2, status: false, viewContext: AppDelegate.viewContext)
-        guard let task3 = model.createTask(name: "Test task", viewContext: AppDelegate.viewContext) else {return}
-        model.updateTask(task: task3, name: "Test task", finishedAt: Date(), lastMovedAt: Date(), priority: 3, status: true, viewContext: AppDelegate.viewContext)
-    }
     func displayTasks(_ date: Date = Date()) {
         let calendar = NSCalendar(calendarIdentifier:NSCalendar.Identifier.gregorian)
         let month = getMonthName(date, calendar: calendar!)
@@ -81,19 +71,19 @@ extension GraphicsViewController: FSCalendarDelegate, FSCalendarDataSource, FSCa
         let weekDay = calendar.components([.weekday], from: date).weekday
         switch weekDay {
             case 1:
-                return "Sunday"
+                return "Sunday".localized()
             case 2:
-                return "Monday"
+                return "Monday".localized()
             case 3:
-                return "Tuesday"
+                return "Tuesday".localized()
             case 4:
-                return "Wednesday"
+                return "Wednesday".localized()
             case 5:
-                return "Thursday"
+                return "Thursday".localized()
             case 6:
-                return "Friday"
+                return "Friday".localized()
             case 7:
-                return "Saturday"
+                return "Saturday".localized()
             default:
                 return "None"
         }
@@ -102,29 +92,29 @@ extension GraphicsViewController: FSCalendarDelegate, FSCalendarDataSource, FSCa
         let month = calendar.components([.month], from: date).month
         switch month {
         case 1:
-            return "January"
+            return "January".localized()
         case 2:
-            return "February"
+            return "February".localized()
         case 3:
-            return "March"
+            return "March".localized()
         case 4:
-            return "April"
+            return "April".localized()
         case 5:
-            return "May"
+            return "May".localized()
         case 6:
-            return "June"
+            return "June".localized()
         case 7:
-            return "July"
+            return "July".localized()
         case 8:
-            return "August"
+            return "August".localized()
         case 9:
-            return "September"
+            return "September".localized()
         case 10:
-            return "October"
+            return "October".localized()
         case 11:
-            return "November"
+            return "November".localized()
         case 12:
-            return "December"
+            return "December".localized()
         default:
             return "None"
         }

@@ -14,23 +14,6 @@ import Foundation
 import UIKit
 import CoreData
 
-class ProjectViewModel {
-    var project: Project
-    var tasks: [Task] {
-        project.getTasks()
-    }
-    var tasksRows: [Int] = []
-    var projectRow: Int
-    var totalCells: Int {
-        return 1 + tasks.count
-    }
-    
-    init(project: Project, projectRow: Int) {
-        self.project = project
-        self.projectRow = projectRow
-    }
-}
-
 class HomeViewModel {
     //lists
     var inbox: List? {

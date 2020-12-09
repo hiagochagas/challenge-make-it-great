@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
             if UserDefaults.standard.bool(forKey: "First Launch") == false {
                 List.initAllLists()
+                Badge.initBadges()
             }
             UserDefaults.standard.set(true, forKey: "First Launch")
 

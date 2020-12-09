@@ -19,7 +19,7 @@ public func getUserNotificationAuthorization() {
             
         } else {
             
-            print(error?.localizedDescription)
+            print(error?.localizedDescription ?? "")
         }
     }
 }
@@ -29,8 +29,8 @@ private func setLocalNotification() {
     //setting what i want to show to the user
     
     let notificationContent = UNMutableNotificationContent()
-    notificationContent.title = "Bom dia!"
-    notificationContent.body = "Vamos começar o dia organizando tarefas? Vai ser divertido!"
+    notificationContent.title = "Good Morning!".localized()
+    notificationContent.body = "Let's start the day organizing tasks? It will be fun!".localized()
     notificationContent.sound = .default
     
     //indicating when the notification should be displayed

@@ -23,4 +23,8 @@ class AchievementsCoordinator: Coordinator {
     func reloadCalendar() {
         achievementsViewController.graphicsVC.reloadCalendarAndTableView()
     }
+    
+    func reloadBadges() {
+        achievementsViewController.badgesVC.reloadBadgesData()
+    }
 }

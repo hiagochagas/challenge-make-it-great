@@ -170,7 +170,7 @@ extension HomeViewController: UITableViewDelegate {
 
         }
         
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [self] (action, view, completionHandler) in
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete".localized()) { [self] (action, view, completionHandler) in
             
             view.backgroundColor = .deleteActionBackground
             
@@ -234,6 +234,7 @@ extension HomeViewController: UITableViewDataSource {
         viewModel.toggleTaskById(id: id)
         contentView.tasksTableView.deleteRows(at: [indexPath], with: .fade)
         self.contentView.tasksTableView.endUpdates()
+        contentView.tasksTableView.reloadData()
     }
 }
 
@@ -242,6 +243,7 @@ extension HomeViewController: TaskCheckboxDelegate {
     func didChangeStateCheckbox(id: UUID?, indexPath: IndexPath?) {
         deleteRowAt(indexPath, id: id)
         homeCoordinator?.reloadCalendarUponCompletingTask()
+        homeCoordinator?.reloadBadgesDataUponCompletingTask()
     }
 }
 

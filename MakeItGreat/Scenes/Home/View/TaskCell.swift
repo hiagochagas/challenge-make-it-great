@@ -180,7 +180,7 @@ class TaskCell: UITableViewCell, ViewCode {
     
     public func configureAsGhostCell() {
         taskLabel.textColor = .gray
-        taskLabel.text = "New Item"
+        taskLabel.text = "New Item".localized()
         taskLabel.font = UIFont(name: "Varta-Regular", size: 17)
         taskLabel.isUserInteractionEnabled = false
         taskTextField.isHidden = true

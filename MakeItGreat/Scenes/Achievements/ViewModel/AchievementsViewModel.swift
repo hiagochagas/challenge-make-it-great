@@ -43,7 +43,6 @@ class AchievementsViewModel {
     }
     
     func updateBadgeProgress(badge: Badge, progress: Int64, viewContext: NSManagedObjectContext) -> Badge? {
-        guard let badge = NSEntityDescription.insertNewObject(forEntityName: "Badge", into: viewContext) as? Badge else {return nil}
         badge.progress = progress
         save(context: viewContext)
         return badge
