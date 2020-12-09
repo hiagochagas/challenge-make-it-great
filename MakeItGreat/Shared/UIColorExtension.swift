@@ -41,14 +41,6 @@ extension UIColor {
         return UIColor(displayP3Red: 255/255, green: 0/255, blue: 50/255, alpha: 1)
     }()
     
-    static var lightBlueSegmentedControlColor: UIColor = {
-        return UIColor(displayP3Red: 236/255, green: 240/255, blue: 247/255, alpha: 1)
-    }()
-    
-    static var darkBlueSegmentedControlColor: UIColor = {
-        return UIColor(displayP3Red: 99/255, green: 130/255, blue: 191/255, alpha: 1)
-    }()
-    
     static var oneTaskInDateColor: UIColor = {
         return UIColor(displayP3Red: 117/255, green: 196/255, blue: 206/255, alpha: 1)
     }()
