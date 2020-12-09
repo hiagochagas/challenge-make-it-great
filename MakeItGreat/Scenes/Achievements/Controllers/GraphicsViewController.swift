@@ -144,7 +144,7 @@ extension GraphicsViewController: UITableViewDelegate, UITableViewDataSource {
         case 3:
             return .redPriority
         default:
-            return .gray
+            return .blueActionColor
         }
     }
     

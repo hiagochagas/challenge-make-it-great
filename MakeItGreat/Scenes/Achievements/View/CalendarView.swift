@@ -72,6 +72,9 @@ class CalendarView: UIView, ViewCode {
         self.calendar.placeholderType = .none
         self.calendar.appearance.headerTitleColor = .black
         self.calendar.appearance.weekdayTextColor = .blueActionColor
+        self.calendar.appearance.selectionColor = .blueActionColor
+        self.calendar.appearance.weekdayFont = UIFont(name: "Varta-SemiBold", size: 15)
+        self.calendar.appearance.headerTitleFont = UIFont(name: "Varta-Bold", size: 15)
         setupViewCode()
     }
     
