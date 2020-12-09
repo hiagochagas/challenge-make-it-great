@@ -126,11 +126,11 @@ class HomeViewModelTest: XCTestCase {
     }
     
     func test_numberOfCells() {
-        XCTAssertEqual(sut.getNumberOfCells(from: .Inbox),  1)
-        XCTAssertEqual(sut.getNumberOfCells(from: .Maybe),  1)
-        XCTAssertEqual(sut.getNumberOfCells(from: .Next),  1)
-        XCTAssertEqual(sut.getNumberOfCells(from: .Waiting),  1)
-        XCTAssertEqual(sut.getNumberOfCells(from: .Projects),  1)
+        XCTAssertEqual(sut.getNumberOfCells(from: .Inbox, context: mockPersistantContainer.viewContext),  1)
+        XCTAssertEqual(sut.getNumberOfCells(from: .Maybe, context: mockPersistantContainer.viewContext),  1)
+        XCTAssertEqual(sut.getNumberOfCells(from: .Next, context: mockPersistantContainer.viewContext),  1)
+        XCTAssertEqual(sut.getNumberOfCells(from: .Waiting, context: mockPersistantContainer.viewContext),  1)
+        XCTAssertEqual(sut.getNumberOfCells(from: .Projects, context: mockPersistantContainer.viewContext),  1)
     }
     
     func test_getTaskList() {
