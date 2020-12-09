@@ -62,10 +62,13 @@ class BottomSheetViewController: UIViewController {
         } else if task?.list?.name == "Maybe".localized()  {
             pickerTextField?.text = "Maybe".localized()
             list = .Maybe
-        } else {
-            pickerTextField?.text = "Projects".localized()
+        } else if task?.list?.name == "Waiting" {
+            pickerTextField?.text = "Waiting"
+            list = .Waiting
+        } else if task?.list?.name == "Projects" {
+            pickerTextField?.text = "Projects"
             list = .Projects
-        }
+    }
     }
     
     func configPriority() {
@@ -76,7 +79,7 @@ class BottomSheetViewController: UIViewController {
         } else if task?.priority == 3 {
             redButton?.isSelected = true
         }
-        
+
     }
     
     @objc func saveButton(_ sender: UIButton) {
@@ -103,6 +106,10 @@ class BottomSheetViewController: UIViewController {
         dismiss(animated: true) {
             self.delegate?.modalDismissed()
         }
+    }
+    
+    func updateTask() {
+        
     }
     
     @objc func cancelButton(_ sender: UIButton) {
@@ -145,10 +152,6 @@ class BottomSheetViewController: UIViewController {
             }
             
         }
-    }
-    
-    override func viewDidLoad() {
-
     }
 
 }
